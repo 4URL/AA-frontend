@@ -1,0 +1,44 @@
+body {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+button{
+	padding: 0;
+	margin: 0;
+	border: none;
+	outline: 0;
+
+	&:active{
+		border: none;
+	}
+	&:focus{
+		border: none;
+	}
+}
+
+input{
+	padding: 0;
+	margin: 0;
+	border: none;
+	outline: 0;
+}
+
+#root{
+	position: relative;
+	width: 100%;
+	height: 100%;
+}
+
+[show="on"]{
+	display: block;
+}
+
+[show="off"]{
+	display: none;
+}
+
+@import "./Login/Awesome.Login.scss";

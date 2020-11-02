@@ -14,7 +14,7 @@ module.exports = {
   },
   plugins: ['react', 'prettier', 'html'],
   rules: {
-    'prettier/prettier': 'error',
+    'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react/prop-types': ['error', { skipUndeclared: true }],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-unused-vars': 'warn',

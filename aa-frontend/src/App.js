@@ -1,8 +1,13 @@
-import React from 'react';
-import './App.css';
+import React, { Fragment } from 'react';
+import Awesome from './js/Awesome';
+import './css/Awesome.css';
 
 function App() {
-  return <div className="App">어썸!!</div>;
+  return (
+    <Fragment>
+      <Awesome />
+    </Fragment>
+  );
 }
 
 export default App;
