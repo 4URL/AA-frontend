@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
 import styled from 'styled-components';
-import styledVariable from '../../../StyledVariable';
+import styledVariable from './StyledVariable';
 
-function LoginInput(props) {
-  // const { className, id, placeholder, onChange } = props;
+const InputVC = memo(props => {
   const { id, placeholder, onChange } = props;
   let { type } = props;
 
@@ -11,20 +10,10 @@ function LoginInput(props) {
     type = 'text';
   }
 
-  return (
-    // <input
-    // 	className = 'login-input'
-    // 	id =  { 'login-input-' + id }
-    // 	placeholder = { placeholder }
-    // 	type = { type }
-    // 	onChange = { onChange }
-    // />
+  return <InputView id={'input-' + id} placeholder={placeholder} type={type} onChange={onChange} />;
+});
 
-    <LoginInputTag id={'login-input-' + id} placeholder={placeholder} type={type} onChange={onChange} />
-  );
-}
-
-const LoginInputTag = styled.input.attrs(props => ({
+const InputView = styled.input.attrs(props => ({
   type: props.type
 }))`
 	width: ${styledVariable.LOGIN_INPUT_WIDTH}
@@ -47,4 +36,5 @@ const LoginInputTag = styled.input.attrs(props => ({
 	}
 `;
 
-export default LoginInput;
+InputVC.displayName = 'InputVC';
+export default InputVC;
