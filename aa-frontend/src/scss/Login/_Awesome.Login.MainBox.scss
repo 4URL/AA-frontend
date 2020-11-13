@@ -1,0 +1,130 @@
+$loginInputWidth: 460px;
+$loginInputMinWidth: 460px;
+$loginInputHeight: 63px;
+$loginInputMinHeight: 63px;
+
+$snsLoginButtonWidth: 460px;
+$snsLoginButtonMinWidth: 460px;
+$snsLoginButtonHeight: 63px;
+$snsLoginButtonMinHeight: 63px;
+
+$loginButtonBG: #c4c4c4;
+$googleLoginButtonBG:  #ee5050;
+$naverLoginButtonBG: #68e865;
+$kakaoLoginButtonBG: #f8e434;
+
+.login-container{
+	position: relative;
+	/* display: inline-block; */
+	width: 60%;
+	min-width: 300px;
+	height: 100%;
+	background-color: aqua;
+	float: left;
+	&::after{
+		content: '';
+		display: block;
+		clear: both;
+	}
+
+	.login-box{
+		display: flex;
+		align-items: center;
+		flex-flow: column;
+		// .login-input{
+		// 	width: $loginInputWidth;
+		// 	min-width: $loginInputMinWidth;
+	
+		// 	height: $loginInputHeight;
+		// 	min-height: $loginInputMinHeight;
+	
+		// 	padding: 16px 27px;
+	
+		// 	border-radius: 10px;
+		// 	border: solid 1px #000000;
+		// 	background-color: #ffffff;
+	
+		// 	box-sizing: border-box;
+	
+		// 	margin-top: 36px;
+		// 	&:first-child{
+		// 		margin-top: 0px;
+		// 	}
+		// }
+	
+		// .login-button{
+		// 	width: $snsLoginButtonWidth;
+		// 	min-width: $snsLoginButtonMinWidth;
+		// 	height: $snsLoginButtonHeight;
+		// 	min-height: $snsLoginButtonMinHeight;
+		// 	border-radius: 10px;
+		// 	text-align: center;
+		// 	line-height: $snsLoginButtonHeight;
+		// 	cursor: pointer;
+	
+		// 	background-color: $loginButtonBG;
+	
+		// 	margin-top: 73px;
+		// }
+	}
+	
+	.sns-login-box{
+		display: flex;
+		align-items: center;
+		flex-flow: column;
+		// .sns-login-button{
+		// 	width: $snsLoginButtonWidth;
+		// 	min-width: $snsLoginButtonMinWidth;
+		// 	height: $snsLoginButtonHeight;
+		// 	min-height: $snsLoginButtonMinHeight;
+		// 	border-radius: 10px;
+			
+		// 	text-align: center;
+		// 	line-height: $snsLoginButtonHeight;
+	
+		// 	cursor: pointer;
+	
+		// 	margin-top: 25px;
+			
+		// 	&[btntype="google"]{
+		// 		background-color: $googleLoginButtonBG;
+		// 	}
+		// 	&[btntype="naver"]{
+		// 		background-color: $naverLoginButtonBG;
+		// 	}
+		// 	&[btntype="kakao"]{
+		// 		background-color: $kakaoLoginButtonBG;
+		// 	}
+		// }
+	}
+	
+
+	// .login-line-box{
+	// 	display: flex;
+	// 	justify-content: center;
+	// 	align-items: center;
+
+	// 	height: 27px;
+
+	// 	margin-top: 25px;
+	// 	margin-bottom: 25px;
+
+	// 	.login-line{
+	// 		display: flex;
+	// 		width: 201px;
+	// 		height: 2px;
+	// 		background-color: #000000;
+	// 	}
+	
+	// 	.or-text{
+	// 		display: flex;
+	// 		width: 23px;
+	// 		height: 27px;
+	// 		font-size: 1.5rem;
+	// 		color: #000000;
+			
+	// 		margin-left: 21px;
+	// 		margin-right: 21px;
+	// 	}
+	// }
+}
