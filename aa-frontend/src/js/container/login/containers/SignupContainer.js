@@ -5,7 +5,7 @@ import ButtonVC from '../components/views/ButtonVC';
 import InputVC from '../components/views/InputVC';
 import LineVC from '../components/views/LineVC';
 
-import { getEncodingText, onClickSnsLogin } from '../LoginFunction';
+import { encodingText, onClickSnsLogin } from '../LoginFunction';
 
 const SignupContainer = memo(props => {
   const [id, setId] = React.useState('');
@@ -47,8 +47,11 @@ const SignupContainer = memo(props => {
 
     if (pwd === pwdCheck) {
       console.log('signup! ');
-      const encodingPassword = getEncodingText(pwd);
-      console.log('encodingPassword :: ', encodingPassword);
+      const encodingCallback = encodingText => {
+        console.log('signup Button onClick encodingTextCallback func encoding Text ::: ', encodingText);
+      };
+      encodingText(pwd, encodingCallback);
+      // console.log('encodingPassword :: ', encodingPassword);
       // const repeatCount = 100000;
       // const crypto = require('crypto');
       // crypto.randomBytes(64, (err, buf) => {

@@ -6,7 +6,7 @@ import LineVC from '../components/views/LineVC';
 
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-import { getEncodingText, onClickSnsLogin } from '../LoginFunction';
+import { encodingText, onClickSnsLogin } from '../LoginFunction';
 
 const SNSBUTTONS = [
   { type: 'google', id: 'google', text: 'Google', onClick: onClickSnsLogin },
@@ -55,8 +55,10 @@ class LoginContainer extends PureComponent {
     //   });
     // });
 
-    const encodingPassword = getEncodingText(pwd);
-    console.log('encodingPassword :: ', encodingPassword);
+    const encodingCallback = encodingText => {
+      console.log('login Button onClick encodingTextCallback func encoding Text ::: ', encodingText);
+    };
+    encodingText(pwd, encodingCallback);
 
     let reqData = {
       resCode: '200',

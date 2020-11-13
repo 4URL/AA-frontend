@@ -1,9 +1,12 @@
-const getEncodingText = text => {
+const encodingText = (text, callback) => {
   const repeatCount = 100000;
   const crypto = require('crypto');
   crypto.pbkdf2(text, '', repeatCount, 64, 'sha512', (err, key) => {
-    console.log('singup key string ::: ', key.toString('base64'));
-    return key.toString('base64');
+    const encodingText = key.toString('base64');
+    console.log('singup key string ::: ', encodingText);
+    if (callback != undefined) {
+      callback(encodingText);
+    }
   });
 };
 
@@ -13,6 +16,6 @@ const onClickSnsLogin = e => {
 };
 
 module.exports = {
-  getEncodingText,
+  encodingText,
   onClickSnsLogin
 };
