@@ -1,2 +1,4 @@
 node_modules/
 .env
+dummy/
+todo.md
