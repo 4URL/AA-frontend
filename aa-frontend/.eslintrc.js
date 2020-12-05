@@ -12,9 +12,8 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module'
   },
-  plugins: ['react', 'prettier', 'html'],
+  plugins: ['react', 'html'],
   rules: {
-    'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react/prop-types': ['error', { skipUndeclared: true }],
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-unused-vars': 'warn',
