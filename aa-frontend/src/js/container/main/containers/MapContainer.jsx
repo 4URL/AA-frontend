@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import NaverMap from './NaverMap';
 import { searchPlaces } from '../js/api';
-import SearchBarVC from '../views/SearchBarVC';
+import SearchBar from './SearchBar';
 
 const Map = () => {
   const boxStyle = {
@@ -38,7 +38,7 @@ const Map = () => {
   return (
     <>
       <NaverMap />
-      <SearchBarVC />
+      <SearchBar />
     </>
   );
 };

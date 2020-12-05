@@ -1,5 +1,1 @@
-const CHANGE_LOCATION = 'CHANGE_LOCATION';
-
-module.exports = {
-  CHANGE_LOCATION
-};
+export const CHANGE_LOCATION = 'CHANGE_LOCATION';

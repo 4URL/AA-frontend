@@ -1,27 +1,42 @@
 import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+
+import { faComments } from '@fortawesome/free-solid-svg-icons';
+
+import { MapDiv } from '../views/StyledComponents';
+import { searchPlaces } from '../js/api';
+
 import { defaultPlace } from '../../../../dummy/dummyData';
 
-let map = null;
-
-const NaverMap = () => {
-  const maptStyle = {
-    width: '100%',
-    height: '100%',
-    zIndex: 1
-  };
-
+const NaverMap = ({ location }) => {
   useEffect(() => {
-    const { Latitude: dummyLat, Longitude: dummyLng } = defaultPlace;
+    const { Latitude: lat, Longitude: lng } = searchPlaces(location);
 
     const mapOptions = {
-      center: new window.naver.maps.LatLng(dummyLat, dummyLng), //지도의 중심좌표.
-      level: 5 //지도의 레벨(확대, 축소 정도)
+      center: new window.naver.maps.LatLng(lat, lng), //지도의 중심좌표.
+      level: 3 //지도의 레벨(확대, 축소 정도)
     };
 
-    map = new window.naver.maps.Map('map', mapOptions);
-  });
+    // 아직 마커 여러개가 있을 때 어떻게 해야할지 못 정함
+    // 지도 렌더링, 마커 렌더링 모두 위도, 경도 값만 있으면 됨
+    // map에 들어갈 옵션은 center, level
+    // marker에 들어갈 옵션(객체)은 position, map
+    // 검색한 결과가 없으면 없다는 표시를 해줘야 함
+    // => 웹에서는 왼쪽 영역에 검색한게 없다고 뜨고 지도에는 마커가 없어지고 지도는 그대로
+    let map = new window.naver.maps.Map('map', mapOptions);
+    let marker = new window.naver.maps.Marker({
+      position: new window.naver.maps.LatLng(lat, lng), //지도의 중심좌표.
+      map
+    });
+  }, [location]);
 
-  return <div id="map" style={maptStyle} />;
+  return <MapDiv id="map" />;
 };
 
-export default NaverMap;
+const mapStateToProps = state => {
+  const { location } = state;
+  console.log('location : ', location);
+  return location;
+};
+
+export default connect(mapStateToProps)(NaverMap);

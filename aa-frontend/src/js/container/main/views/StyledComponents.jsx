@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+export const MapDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  zindex: 1;
+`;
+
 export const SearchBarContainer = styled.div`
   display: flex;
   width: 330px;
