@@ -25,7 +25,7 @@ import { defaultPlace } from '../../../../dummy/dummyData';
 export function searchPlaces(location) {
   console.log('입력한 장소에 맞는 데이터를 가져온다.');
 
-  return location ? dummyPlacesData.filter(place => place['Place Name'] === location) : { Latitude: defaultPlace.Latitude, Longitude: defaultPlace.Longitude };
+  return dummyPlacesData;
 }
 
 export function getMarkers(location) {}
