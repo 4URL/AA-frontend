@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 
 import { MapDiv } from '../views/StyledComponents';
-import { searchPlaces } from '../js/api';
+import { getResultBounds, searchPlaces } from '../js/api';
 
 import { defaultPlace } from '../../../../dummy/dummyData';
 
@@ -12,9 +12,10 @@ const NaverMap = ({ location }) => {
   useEffect(() => {
     const results = searchPlaces(location);
 
+    const resultLatLngBounds = getResultBounds(results);
+
     const mapOptions = {
-      center: new window.naver.maps.LatLng(37.56835, 126.982252), //지도의 중심좌표.
-      level: 3 //지도의 레벨(확대, 축소 정도)
+      bounds: resultLatLngBounds // Lat,Lng 기준으로 바운드 설정 (cf. 이 옵션에 의해 Zoom, Center 옵션은 무시됨)
     };
 
     // 아직 마커 여러개가 있을 때 어떻게 해야할지 못 정함
