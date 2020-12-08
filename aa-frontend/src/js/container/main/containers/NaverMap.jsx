@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { faComments } from '@fortawesome/free-solid-svg-icons';
 
 import { MapDiv } from '../views/StyledComponents';
-import { getResultBounds, searchPlaces } from '../js/api';
+import { searchPlaces } from '../../../api/api';
+import { getResultBounds } from '../../../utility/utility';
 
 import { defaultPlace } from '../../../../dummy/dummyData';
 
