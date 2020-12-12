@@ -1,5 +1,5 @@
-import dummyPlacesData from '../../../../dummy/placesDummy';
-import { defaultPlace } from '../../../../dummy/dummyData';
+import dummyPlacesData from '../../dummy/placesDummy';
+import { defaultPlace } from '../../dummy/dummyData';
 
 // 입력한 내용에 대한 결과값이 배열로 와야한다.
 /*
@@ -22,9 +22,17 @@ import { defaultPlace } from '../../../../dummy/dummyData';
  * 입력한 장소와 db의 장소 중 'Place Name'과 동일한 데이터가 있는지 확인한다.
  * @param {string} location - 입력한 장소
  */
-export function searchPlaces(location) {
-  console.log('입력한 장소에 맞는 데이터를 가져온다.');
-
+export function searchPlaces(location, map) {
+  // fetch data from server => 가게들의 배열로 오겠지?
+  const results = dummyPlacesData.filter(place => (place.Category === location ? true : false));
+  const markers = [];
+  results.forEach(result => {
+    let marker = new window.naver.maps.Marker({
+      position: new window.naver.maps.LatLng(result.Latitude, result.Longitude), //지도의 중심좌표.
+      map
+    });
+    markers.push(marker);
+  });
   return dummyPlacesData;
 }
 

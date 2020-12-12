@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import NaverMap from './NaverMap';
-import { searchPlaces } from '../js/api';
+import { searchPlaces } from '../../../api/api';
 import SearchBar from './SearchBar';
 
 const Map = () => {
@@ -42,19 +42,5 @@ const Map = () => {
     </>
   );
 };
-
-/*
-  <Fragment>
-      <NaverMap />
-      <div style={boxStyle}>
-        <div style={searchBox}>
-          <input placeholder="검색어를 입력해주세요." type="text" value={location} name="search" onChange={handleChange} />
-        </div>
-        <div style={searchIcon}>
-          <FontAwesomeIcon icon={faSearch} />
-        </div>
-      </div>
-    </Fragment>
-*/
 
 export default Map;

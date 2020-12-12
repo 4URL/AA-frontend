@@ -1,16 +1,13 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 
-import styledVariable from '../views/StyledVariable';
 import { SearchBarContainer, SearchBarDiv, SearchBarInput, SearchBarIcon } from '../views/StyledComponents';
-import { changeLocation } from '../../../redux/actions/index';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { changeLocation } from '../../../redux/actions/index';
 
 const SearchBar = props => {
-  const history = useHistory();
-
   const [location, setLocation] = useState('');
 
   const updateInput = input => {
@@ -18,11 +15,8 @@ const SearchBar = props => {
     setLocation(input);
   };
 
-  const handleSearchLocation = () => {
-    console.log('store의 location값을 변경해주는 함수, handleSearchLocation');
+  const handleSearchLocation = props => {
     props.changeLocation(location);
-    setLocation('');
-    // history.push(`${location}`);
   };
 
   return (
@@ -32,13 +26,22 @@ const SearchBar = props => {
       </SearchBarDiv>
 
       <SearchBarIcon size={1}>
-        <FontAwesomeIcon icon={faSearch} style={{ color: '#949494' }} onClick={handleSearchLocation} />
+        <FontAwesomeIcon icon={faSearch} style={{ color: '#949494' }} onClick={() => handleSearchLocation(props)} />
       </SearchBarIcon>
     </SearchBarContainer>
   );
 };
 
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      changeLocation
+    },
+    dispatch
+  );
+};
+
 export default connect(
   null, // mapStateToProps: store와 props가 연결
-  { changeLocation } // mapDispatchProps: action과 props가 연결
+  mapDispatchToProps // mapDispatchProps: action과 props가 연결
 )(SearchBar);
