@@ -1,15 +1,16 @@
 import styled from 'styled-components';
+import { Search } from '@styled-icons/fa-solid';
 
 export const MapDiv = styled.div`
   width: 100%;
   height: 100%;
-  zindex: 1;
+  z-index: 1;
 `;
 
 export const SearchBarContainer = styled.div`
   display: flex;
   width: 330px;
-  height: 40px;
+  height: 30px;
   position: absolute;
   left: 25px;
   top: 15px;
@@ -38,9 +39,8 @@ export const SearchBarInput = styled.input`
   margin-left: 15px;
 `;
 
-// module.exports = {
-//   SearchBarContainer,
-//   SearchBarDiv,
-//   SearchBarIcon,
-//   SearchBarInput,
-// };
+export const SearchIcon = styled(Search)`
+  color: #949494;
+  width: 16px;
+  height: 16px;
+`;

@@ -1,8 +1,15 @@
 import React from 'react';
-import Map from './MapContainer';
+
+import NaverMap from './NaverMap';
+import SearchBar from './SearchBar';
 
 const Main = () => {
-  return <Map />;
+  return (
+    <>
+      <NaverMap />
+      <SearchBar />
+    </>
+  );
 };
 
 export default Main;

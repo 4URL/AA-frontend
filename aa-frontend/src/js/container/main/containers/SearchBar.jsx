@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { SearchBarContainer, SearchBarDiv, SearchBarInput, SearchBarIcon } from '../views/StyledComponents';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { SearchBarContainer, SearchBarDiv, SearchBarInput, SearchBarIcon, SearchIcon } from '../views/StyledComponents';
 import { changeLocation } from '../../../redux/actions/index';
 
 const SearchBar = props => {
@@ -26,7 +24,7 @@ const SearchBar = props => {
       </SearchBarDiv>
 
       <SearchBarIcon size={1}>
-        <FontAwesomeIcon icon={faSearch} style={{ color: '#949494' }} onClick={() => handleSearchLocation(props)} />
+        <SearchIcon onClick={() => handleSearchLocation(props)} />
       </SearchBarIcon>
     </SearchBarContainer>
   );

@@ -5,8 +5,6 @@ import { MapDiv } from '../views/StyledComponents';
 import { searchPlaces } from '../../../api/api';
 import { getResultBounds } from '../../../utility/utility';
 
-import { defaultPlace } from '../../../../dummy/dummyData';
-
 const NaverMap = props => {
   const { location } = props;
 
