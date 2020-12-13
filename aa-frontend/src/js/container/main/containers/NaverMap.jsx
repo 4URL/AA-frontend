@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
+import { clickMarker } from '../../../redux/actions/index';
 import { MapDiv } from '../views/StyledComponents';
 import { searchPlaces } from '../../../api/api';
 import { getResultBounds } from '../../../utility/utility';
 
 const NaverMap = props => {
   const { location } = props;
-
+  const [markerClicked, setMarkerClicked] = useState(false);
+  let results = [];
   useEffect(() => {
-    const results = searchPlaces(location);
+    results = searchPlaces(location);
     const resultLatLngBounds = getResultBounds(results);
 
     const mapOptions = {
@@ -19,14 +22,30 @@ const NaverMap = props => {
     let map = new window.naver.maps.Map('map', mapOptions);
 
     let markers = [];
-    results.forEach(result => {
-      let marker = new window.naver.maps.Marker({
+
+    results.forEach((result, idx) => {
+      const markerOption = {
+        map,
         position: new window.naver.maps.LatLng(result.Latitude, result.Longitude), //지도의 중심좌표.
-        map
-      });
+        title: idx
+      };
+
+      let marker = new window.naver.maps.Marker(markerOption);
+
+      marker.addListener('click', e => clickMarker(e));
       markers.push(marker);
     });
-  }, [location]);
+  }, [location, markerClicked]);
+
+  // idx로 가져와야지
+  function clickMarker(event) {
+    const place = results[event.overlay.title];
+
+    setMarkerClicked(!markerClicked);
+    props.clickMarker(!markerClicked);
+
+    console.log(place);
+  }
 
   return <MapDiv id="map" />;
 };
@@ -37,4 +56,13 @@ const mapStateToProps = state => {
   };
 };
 
-export default connect(mapStateToProps)(NaverMap);
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      clickMarker
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NaverMap);

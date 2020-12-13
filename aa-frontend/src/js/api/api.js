@@ -33,5 +33,3 @@ export function searchPlaces(location) {
     return dummyPlacesData;
   }
 }
-
-export function getMarkers(location) {}
