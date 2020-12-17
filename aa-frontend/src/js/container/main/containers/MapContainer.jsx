@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import NaverMap from './NaverMap';
-import { searchPlaces } from '../../../api/api';
+import { getPlaces } from '../../../api/api';
 import SearchBar from './SearchBar';
 
 const Map = () => {
@@ -27,7 +27,7 @@ const Map = () => {
 
   const handleSubmit = () => {
     console.log('button clicked');
-    searchPlaces(location);
+    getPlaces(location);
   };
 
   const handleChange = event => {

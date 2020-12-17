@@ -23,13 +23,40 @@ import { defaultPlace } from '../../dummy/dummyData';
  * @param {string} location - 입력한 장소
  * @returns {array} places - 검색한 장소에 대한 배열
  */
-export function searchPlaces(location) {
-  console.log('location in searchPlace function ', location);
-  // fetch data from server => 가게들의 배열로 오겠지?
-  // 현재는 여러개의 핀이 뜨도록 하는게 카테고리라서 이렇게 만들어 놓음 api 완성되면 연결하면 됨
-  if (location) {
-    return dummyPlacesData.filter(place => (place.Category === location ? true : false));
-  } else {
-    return dummyPlacesData;
-  }
+export function getPlaces(location) {
+  const endpoint = 'http://13.125.243.220:8081/graphql';
+  const categeorySeq = 0;
+  const searchValue = location || '';
+  const query = `
+    query {
+      search(param:{categorySeq:${categeorySeq},location:"",searchValue:"${searchValue}"}) {
+        categorySeq
+        convenience
+        description
+        homepage
+        lat
+        lng
+        mapUrl
+        modifiedAt
+        name
+        phoneNumber
+        seq
+        workingDay
+      }
+    }
+  `;
+
+  return fetch(endpoint, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ query })
+  })
+    .then(res => res.json())
+    .then(({ data }) => {
+      const { search } = data;
+      console.log(search);
+      return search;
+    });
 }
