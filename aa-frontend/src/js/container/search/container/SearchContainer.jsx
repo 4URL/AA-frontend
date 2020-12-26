@@ -1,6 +1,4 @@
-import React, { memo, useCallback, useMemo } from 'react';
-import { useRef } from 'react';
-import { useState } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 const SearchContainer = memo(props => {
@@ -423,4 +421,18 @@ const Category = styled.div`
         return '#ffffff';
     }
   }};
+  &[isselected='true'] {
+    background-color: ${props => {
+      switch (props.type) {
+        default:
+          return '#222222';
+      }
+    }};
+    color: ${props => {
+      switch (props.type) {
+        default:
+          return '#ffffff';
+      }
+    }};
+  }
 `;
