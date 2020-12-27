@@ -44,13 +44,3 @@ export const SearchIcon = styled(Search)`
   width: 16px;
   height: 16px;
 `;
-
-export const DetailInfoDiv = styled.div`
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 5;
-  width: 420px;
-  height: 100vh;
-  background-color: #fff;
-`;
