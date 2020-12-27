@@ -20,7 +20,8 @@ module.exports = {
     'no-unused-vars': 'warn',
     'no-undef': 'warn',
     // allow async-await
-    'generator-star-spacing': 0
+    'generator-star-spacing': 0,
+    'import/no-unresolved': 'off'
   },
   parser: 'babel-eslint',
   settings: {
