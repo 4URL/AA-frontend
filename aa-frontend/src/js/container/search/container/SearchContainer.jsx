@@ -1,5 +1,8 @@
 import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
 import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { changeLocation, showDetail } from '../../../redux/actions/index';
 
 const SearchContainer = memo(props => {
   const [categoryList, setCategoryList] = useState([]);
@@ -240,9 +243,20 @@ const SearchContainer = memo(props => {
       console.log('onClickSearchIcon postData ', postData);
       searchInputRef.current.value = '';
       // resetState();
+      handleSearchLocation();
     },
     [searchKeyJsonArr, searchLocationArr, searchValueArr]
   );
+  
+  function handleSearchLocation(props) {
+    // props.changeLocation(location);
+    console.log('searchKeyJsonArr ::: ', searchKeyJsonArr);
+    // closeDetailSection();
+  }
+
+  function closeDetailSection() {
+    props.showDetail(false);
+  }
 
   const resetState = useCallback(() => {
     setSearchKeyJsonArr([]);
@@ -436,3 +450,22 @@ const Category = styled.div`
     }};
   }
 `;
+
+const mapStateToProps = state => {
+  return state;
+};
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      changeLocation,
+      showDetail
+    },
+    dispatch
+  );
+};
+
+export default connect(
+  mapStateToProps, // mapStateToProps: store와 props가 연결
+  mapDispatchToProps // mapDispatchProps: action과 props가 연결
+)(SearchBar);
