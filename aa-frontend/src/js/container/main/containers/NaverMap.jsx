@@ -1,19 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import styled from 'styled-components';
 
-import { clickMarker } from '../../../redux/actions/index';
-import { MapDiv } from '../views/StyledComponents';
-import { getPlaces } from '../../../api/api';
+import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
 import { getResultBounds } from '../../../utility/utility';
 
 const NaverMap = props => {
-  const { location } = props;
+  const { placesList: results, showList } = props.mapState;
   const [markerClicked, setMarkerClicked] = useState(false);
 
   useEffect(async () => {
     try {
-      const results = await getPlaces(location);
       const resultLatLngBounds = getResultBounds(results);
 
       const mapOptions = {
@@ -39,34 +37,53 @@ const NaverMap = props => {
     } catch (e) {
       console.log(e);
     }
-  }, [location, markerClicked]);
+  }, [results]);
 
-  // idx로 가져와야지
   function clickMarker(event, results) {
     const place = results[event.overlay.title];
-
-    setMarkerClicked(!markerClicked);
-    props.clickMarker(!markerClicked);
-
-    console.log(place);
+    showPlaceDetail(place);
   }
 
-  return <MapDiv id="map" />;
+  function handelClick() {
+    if (!markerClicked) props.showDetail(false);
+
+    setMarkerClicked(false);
+  }
+
+  function showPlaceDetail(place) {
+    props.showDetail(true);
+    props.showList(false);
+    props.placeDetail(place);
+    setMarkerClicked(true);
+  }
+
+  return <MapDiv id="map" onClick={() => handelClick()} showList={showList} />;
 };
 
 const mapStateToProps = state => {
   return {
-    location: state.changeLocation.location
+    mapState: state.mapReducers
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      clickMarker
+      showDetail,
+      placeDetail,
+      showList
     },
     dispatch
   );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NaverMap);
+
+export const MapDiv = styled.div`
+  /* width: 100%; */
+  width: ${({ showList }) => (showList ? 'calc(100% - 420px)' : '100%')};
+  position: absolute;
+  left: ${({ showList }) => (showList ? '420px' : '0')};
+  height: 100%;
+  z-index: 1;
+`;
