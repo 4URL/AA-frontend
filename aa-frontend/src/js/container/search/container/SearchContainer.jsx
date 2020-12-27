@@ -238,20 +238,26 @@ const SearchContainer = memo(props => {
         searchKeyword += element + ' ';
       });
       searchKeyword = searchKeyword.trim();
-      const postData = { location: searchLocationArr, searchValue: searchKeyword };
+
+      let searchLocation = '';
+      if (searchLocationArr.length != 0) {
+        searchLocation = searchLocationArr[0];
+      }
+      const postData = { location: searchLocation, searchValue: searchKeyword };
 
       console.log('onClickSearchIcon postData ', postData);
       searchInputRef.current.value = '';
       // resetState();
-      handleSearchLocation();
+      console.log(props);
+      handleSearchLocation(props, postData, categoryList);
     },
-    [searchKeyJsonArr, searchLocationArr, searchValueArr]
+    [searchKeyJsonArr, searchLocationArr, searchValueArr, categoryList]
   );
-  
-  function handleSearchLocation(props) {
-    // props.changeLocation(location);
-    console.log('searchKeyJsonArr ::: ', searchKeyJsonArr);
-    // closeDetailSection();
+
+  function handleSearchLocation(props, postData, categoryList) {
+    console.log('postData ::: ', postData);
+    props.changeLocation(postData, categoryList);
+    closeDetailSection();
   }
 
   function closeDetailSection() {
@@ -278,7 +284,7 @@ const SearchContainer = memo(props => {
 });
 
 SearchContainer.displayName = 'SearchContainer';
-export default SearchContainer;
+// export default SearchContainer;
 
 // 검색 전체를 감싸고 있는 wrap div
 const SearchWrap = styled.div`
@@ -468,4 +474,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps, // mapStateToProps: store와 props가 연결
   mapDispatchToProps // mapDispatchProps: action과 props가 연결
-)(SearchBar);
+)(SearchContainer);

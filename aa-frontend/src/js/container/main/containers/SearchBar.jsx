@@ -11,7 +11,6 @@ const SearchBar = props => {
   const [location, setLocation] = useState('');
 
   return (
-
     // <SearchBarContainer>
     //   <SearchBarDiv size={6}>
     //     <SearchBarInput type="text" placeholder="지도 검색" onChange={e => updateInput(e.target.value)} />
@@ -33,7 +32,6 @@ const SearchBar = props => {
     //     <SearchIcon onClick={() => handleSearchLocation(props)} />
     //   </SearchBarIcon>
     // </SearchBarContainer>
-
   );
 
   function handleChange(input) {

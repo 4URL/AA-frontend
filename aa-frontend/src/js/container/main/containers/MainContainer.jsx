@@ -15,25 +15,26 @@ import { fetchPlaces } from '../../../api/api';
 const Main = props => {
   const [curPage, setCurPage] = useState(1);
   const [total, setTotal] = useState(0);
-  const { searchedLocation: location } = props.mapState;
+  // const { searchedLocation: location } = props.mapState;
+  const { searchData, categoryList } = props.mapState;
 
   useEffect(async () => {
     try {
-      const { stores, count } = await fetchPlaces(location, curPage);
+      const { stores, count } = await fetchPlaces(searchData, categoryList, curPage);
       props.showList(true);
       props.getPlaces(stores);
       setTotal(count);
     } catch (e) {
       console.log(e);
     }
-  }, [location, curPage]);
+  }, [searchData, curPage]);
 
   return (
     <>
       <NaverMap />
       <SearchBar />
       <PlaceDetailContainer />
-      <Popup />
+      {/* <Popup /> */}
       <PlaceList curPage={curPage} handleCurPage={setCurPage} count={total} />
     </>
   );

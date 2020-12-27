@@ -1,7 +1,9 @@
 import * as type from '../actions/actionTypes';
 
 const initialState = {
-  searchedLocation: '',
+  // searchedLocation: '',
+  searchData: { location: [], searchValue: '' },
+  categoryList: [],
   showDetail: false,
   showList: false,
   placeDetail: {},
@@ -19,11 +21,13 @@ export default function mapReducers(state = initialState, action) {
     }
 
     case type.CHANGE_LOCATION: {
-      const { searchedLocation } = action.payload;
-      console.log(searchedLocation);
+      // const { searchedLocation } = action.payload;
+      const { searchData, categoryList } = action.payload;
       return {
         ...state,
-        searchedLocation
+        // searchedLocation
+        searchData: { ...searchData },
+        categoryList: [...categoryList]
       };
     }
 
