@@ -33,7 +33,9 @@ const Popup = memo(props => {
 
         <PopupMiddle>
           {/* <div> Middle </div> */}
-          <PopupContent></PopupContent>
+          <PopupContent>
+            <PopupContentText>Text Align Center</PopupContentText>
+          </PopupContent>
         </PopupMiddle>
 
         <PopupBottom>
@@ -111,7 +113,11 @@ const PopupMiddle = styled.div`
 
 const PopupContent = styled.div`
   width: 100%;
-  height: 100%;
+`;
+
+const PopupContentText = styled.div`
+  width: 100%;
+  text-align: center;
 `;
 
 const PopupBottom = styled.div`
@@ -123,4 +129,5 @@ const BottomButton = styled.div`
   color: white;
   background-color: black;
   cursor: pointer;
+  text-align: center;
 `;

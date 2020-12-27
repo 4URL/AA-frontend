@@ -11,7 +11,7 @@ const Main = () => {
       <NaverMap />
       <SearchBar />
       <PlaceDetailContainer />
-      {/* <Popup /> */}
+      <Popup />
     </>
   );
 };

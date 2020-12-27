@@ -146,11 +146,11 @@ const SearchContainer = memo(props => {
         if (searchType == 'location') {
           setSearchLocationArr(searchLocationArr.concat(keyword));
           const keywordObj = document.getElementById('searchKey_location');
-          // keywordObj.setAttribute('show', 'off');
+          keywordObj.setAttribute('show', 'off');
         } else if (searchType == 'keyword') {
           setSearchValueArr(searchValueArr.concat(keyword));
           const keywordObj = document.getElementById('searchKey_keyword');
-          // keywordObj.setAttribute('show', 'off');
+          keywordObj.setAttribute('show', 'off');
         }
         setSearchType('');
         searchInputRef.current.value = '';
