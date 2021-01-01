@@ -1,9 +1,10 @@
 import * as type from './actionTypes';
 
-export const changeLocation = searchedLocation => ({
+export const changeLocation = (searchData, categoryList) => ({
   type: type.CHANGE_LOCATION,
   payload: {
-    searchedLocation
+    searchData,
+    categoryList
   }
 });
 
