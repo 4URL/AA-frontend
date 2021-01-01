@@ -31,7 +31,7 @@ const NaverMap = props => {
 
         let marker = new window.naver.maps.Marker(markerOption);
 
-        marker.addListener('click', e => clickMarker(e, results));
+        marker.addListener('click', e => clickMarker(e, results, marker));
         markers.push(marker);
       });
     } catch (e) {
@@ -39,8 +39,10 @@ const NaverMap = props => {
     }
   }, [results]);
 
-  function clickMarker(event, results) {
+  function clickMarker(event, results, marker) {
     const place = results[event.overlay.title];
+    console.log('place :: ', place);
+    console.log('marker :: ', marker);
     showPlaceDetail(place);
   }
 

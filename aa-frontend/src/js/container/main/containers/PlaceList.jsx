@@ -10,7 +10,7 @@ import { placeDetail, showDetail } from '../../../redux/actions/index';
 
 // pagination을 한 장소리스트가 등장
 const PlaceList = props => {
-  const [isFirstPage, setIsFirstPage] = useState(true);
+  const [isFirstPage, setIsFirstPage] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
 
   const { placesList, showList } = props.mapState;
@@ -33,7 +33,7 @@ const PlaceList = props => {
     } else if (isLastPage) {
       setIsLastPage(false);
     }
-  }, [curPage]);
+  }, [curPage, count]);
 
   return (
     <>
