@@ -34,10 +34,18 @@ export default function mapReducers(state = initialState, action) {
 
     case type.SHOW_DETAIL: {
       const { showDetail } = action.payload;
-      return {
-        ...state,
-        showDetail
-      };
+      if (showDetail) {
+        return {
+          ...state,
+          showDetail
+        };
+      } else {
+        return {
+          ...state,
+          showDetail,
+          placeDetail: {}
+        };
+      }
     }
     case type.SHOW_LIST: {
       const { showList } = action.payload;
