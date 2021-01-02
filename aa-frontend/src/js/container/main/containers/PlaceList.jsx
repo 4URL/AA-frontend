@@ -44,26 +44,28 @@ const PlaceList = props => {
       ) : (
         <BoxContainer>
           <ListTable>
-            {placesList.map((place, idx) => {
-              return (
-                <TableColumn key={idx}>
-                  <TableData>
-                    <PlaceName onClick={() => clickPlaceName(place)}>{place.name}</PlaceName>
-                    &nbsp;
-                    <SubCategory>({place.subCategory})</SubCategory>
-                  </TableData>
-                  <TableData>
-                    <Address>
-                      {place.roadAddress}
+            <TableBody>
+              {placesList.map((place, idx) => {
+                return (
+                  <TableColumn key={idx}>
+                    <TableData>
+                      <PlaceName onClick={() => clickPlaceName(place)}>{place.name}</PlaceName>
                       &nbsp;
-                      <CopyToClipboard text={place.roadAddress}>
-                        <CopiedIcon />
-                      </CopyToClipboard>
-                    </Address>
-                  </TableData>
-                </TableColumn>
-              );
-            })}
+                      <SubCategory>({place.subCategory})</SubCategory>
+                    </TableData>
+                    <TableData>
+                      <Address>
+                        {place.roadAddress}
+                        &nbsp;
+                        <CopyToClipboard text={place.roadAddress}>
+                          <CopiedIcon />
+                        </CopyToClipboard>
+                      </Address>
+                    </TableData>
+                  </TableColumn>
+                );
+              })}
+            </TableBody>
           </ListTable>
 
           <PageContainer>
@@ -169,7 +171,9 @@ const ListTable = styled.table`
   width: 100%;
 `;
 
-const TableColumn = styled.td`
+const TableBody = styled.tbody``;
+
+const TableColumn = styled.tr`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -187,7 +191,7 @@ const TableColumn = styled.td`
   }
 `;
 
-const TableData = styled.div`
+const TableData = styled.td`
   margin-left: 20px;
 
   :first-child {
