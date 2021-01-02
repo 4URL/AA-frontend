@@ -1,32 +1,49 @@
-import React, { memo, useCallback, useMemo, useRef, useState } from 'react';
+import React, { memo, useCallback, useMemo, useRef, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { changeLocation, showDetail } from '../../../redux/actions/index';
+import { changeLocation, showDetail, changePageNumber } from '../../../redux/actions/index';
+import { reqGetCategoryData } from '../../../api/api';
 
 const SearchContainer = memo(props => {
+  const [categoryData, setCategoryData] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
   const [searchKeyJsonArr, setSearchKeyJsonArr] = useState([]);
   const [searchType, setSearchType] = useState('');
-  const [searchValue, setSearchValue] = useState('');
+  // const [searchValue, setSearchValue] = useState('');
   const [searchLocationArr, setSearchLocationArr] = useState([]);
   const [searchValueArr, setSearchValueArr] = useState([]);
   const searchInputRef = useRef(null);
 
+  // useEffect(()=>{
+  //   // reqGetCategoryData();
+  // }, []);
+
+  useEffect(async () => {
+    try {
+      const data = await reqGetCategoryData();
+      setCategoryData(data.concat());
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   // 검색 하단에 보여질 카테고리 아이템 정의
-  const CATEGORY_DATA = [
-    // { type: '0', value: '0', text: '전체' },
-    { type: '1', value: '1', text: '호텔' },
-    { type: '2', value: '2', text: '카페' },
-    { type: '3', value: '3', text: '놀이터' },
-    { type: '4', value: '4', text: '아몰랑' }
-  ];
+  // const CATEGORY_DATA = [
+  //   // { type: '0', value: '0', text: '전체' },
+  //   { type: '1', value: '1', text: '호텔' },
+  //   { type: '2', value: '2', text: '카페' },
+  //   { type: '3', value: '3', text: '놀이터' },
+  //   { type: '4', value: '4', text: '아몰랑' }
+  // ];
 
   // 검색 키워드 아이템 정의
   const SEARCH_KEY_LIST = [
     { type: 'location', value: 'location', text: '지역명' },
     { type: 'keyword', value: 'keyword', text: '검색어' }
   ];
+
+  const getCategoryData = useMemo(() => {});
 
   // 카테고리 클릭시 발생할 이벤트
   const onClickCategory = useCallback(
@@ -50,18 +67,18 @@ const SearchContainer = memo(props => {
 
   // 카테고리 아이템  생성하기
   const getCategoryDomList = useMemo(() => {
-    let categoryData = CATEGORY_DATA.concat();
+    let categoryArr = categoryData.concat();
 
-    categoryData = categoryData.map((obj, idx) => {
+    categoryArr = categoryArr.map((obj, idx) => {
       return (
-        <Category key={idx} idx={idx} value={obj['value']} type={obj['type']} onClick={onClickCategory}>
-          {obj['text']}
+        <Category key={idx} idx={idx} value={obj['seq']} type={obj['seq']} onClick={onClickCategory}>
+          {obj['categoryName']}
         </Category>
       );
     });
 
-    return categoryData;
-  }, [CATEGORY_DATA]);
+    return categoryArr;
+  }, [categoryData]);
 
   // 검색 키워드 아이템 클릭 이벤트
   const onClickSearchKeyItem = useCallback(e => {
@@ -142,8 +159,9 @@ const SearchContainer = memo(props => {
   const onInputSearchInput = useCallback(
     e => {
       const eventKey = e.key;
+      const keyword = e.target.value;
+      // setSearchValue(keyword);
       if (eventKey == 'Enter') {
-        const keyword = e.target.value;
         const jsonData = { type: searchType, searchValue: keyword };
         setSearchKeyJsonArr(searchKeyJsonArr.concat(jsonData));
         if (searchType == 'location') {
@@ -155,8 +173,7 @@ const SearchContainer = memo(props => {
           const keywordObj = document.getElementById('searchKey_keyword');
           keywordObj.setAttribute('show', 'off');
         }
-        setSearchType('');
-        searchInputRef.current.value = '';
+        resetSearchValues();
         searchInputRef.current.blur();
         const keywordObj = document.getElementById('searchKey_location');
         removeAllFocus();
@@ -166,6 +183,11 @@ const SearchContainer = memo(props => {
     },
     [searchType, searchLocationArr, searchValueArr, searchKeyJsonArr]
   );
+
+  const resetSearchValues = useCallback(() => {
+    setSearchType('');
+    searchInputRef.current.value = '';
+  }, []);
 
   // 검색 키워드 리스트 보여주기
   const showSearchKeywordItemList = () => {
@@ -232,6 +254,8 @@ const SearchContainer = memo(props => {
       console.log('onClickSearchIcon searchKeyJsonArr ', searchKeyJsonArr);
       console.log('onClickSearchIcon searchLocationArr ', searchLocationArr);
       console.log('onClickSearchIcon searchValueArr ', searchValueArr);
+      // console.log('onClickSearchIcon searchValue ', searchValue);
+      console.log('onClickSearchIcon searchType ', searchType);
 
       let searchKeyword = '';
       searchValueArr.forEach(element => {
@@ -243,18 +267,20 @@ const SearchContainer = memo(props => {
       if (searchLocationArr.length != 0) {
         searchLocation = searchLocationArr[0];
       }
+
+      props.changePageNumber(1);
       const postData = { location: searchLocation, searchValue: searchKeyword };
 
       console.log('onClickSearchIcon postData ', postData);
       searchInputRef.current.value = '';
       // resetState();
-      console.log(props);
-      handleSearchLocation(props, postData, categoryList);
+      console.log('props ::: ', props);
+      handleSearchLocation(postData, categoryList);
     },
     [searchKeyJsonArr, searchLocationArr, searchValueArr, categoryList]
   );
 
-  function handleSearchLocation(props, postData, categoryList) {
+  function handleSearchLocation(postData, categoryList) {
     console.log('postData ::: ', postData);
     props.changeLocation(postData, categoryList);
     closeDetailSection();
@@ -276,7 +302,7 @@ const SearchContainer = memo(props => {
     <SearchWrap>
       <SearchItemListWrap>{getSearchItemDomList}</SearchItemListWrap>
       <SearchKeyWrap id={'keyword_list'}>{getSearchKeyItemDomList}</SearchKeyWrap>
-      <SearchKeywordInput ref={searchInputRef} onFocus={onFocusSearchInput} onKeyPress={onInputSearchInput} />
+      <SearchKeywordInput ref={searchInputRef} onFocus={onFocusSearchInput} onKeyUp={onInputSearchInput} />
       <SearchIcon onClick={onClickSearchIcon}></SearchIcon>
       <CategoryWrap>{getCategoryDomList}</CategoryWrap>
     </SearchWrap>
@@ -465,7 +491,8 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       changeLocation,
-      showDetail
+      showDetail,
+      changePageNumber
     },
     dispatch
   );

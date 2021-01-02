@@ -16,25 +16,18 @@ const getQueryOption = query => {
  * @returns {array} places - 검색한 장소에 대한 배열
  */
 export function fetchPlaces(searchData, categoryList, curPage) {
-  let categeorySeq = 0;
   const categorySeqList = categoryList.concat();
-  if (categorySeqList.length == 0) {
-    categeorySeq = 0;
-  } else {
-    categeorySeq = categorySeqList[0];
-  }
   // const searchValue = searchData['searchValue'] || '';
   // const location = searchData['location'];
   const { location, searchValue } = searchData;
   const itemCount = 6;
   console.log('categorySeqList :: ', categorySeqList);
   console.log('categoryList :: ', categoryList);
-  console.log('categeorySeq ::: ', categeorySeq);
   console.log('location ::: ', location);
 
   const query = `
     query {
-      search(param:{categorySeq:${categeorySeq},location: "${location}",searchValue:"${searchValue}", limit: ${itemCount}, page: ${curPage}}) {
+      search(param:{categoryList:[${categorySeqList}],location: "${location}",searchValue:"${searchValue}", limit: ${itemCount}, page: ${curPage}}) {
         stores {
           categorySeq
           subCategory
@@ -63,5 +56,23 @@ export function fetchPlaces(searchData, categoryList, curPage) {
     .then(({ data }) => {
       const { stores, count } = data.search;
       return { stores, count };
+    });
+}
+
+export function reqGetCategoryData() {
+  const query = `
+    query {
+      searchCategory{
+        categoryName,
+        seq
+      }
+    }
+  `;
+
+  return fetch(endpoint, getQueryOption(query))
+    .then(res => res.json())
+    .then(({ data }) => {
+      const categoryList = data.searchCategory;
+      return categoryList;
     });
 }

@@ -13,10 +13,11 @@ import { getPlaces, showList } from '../../../redux/actions/index';
 import { fetchPlaces } from '../../../api/api';
 
 const Main = props => {
-  const [curPage, setCurPage] = useState(1);
+  // const [curPage, setCurPage] = useState(1);
+
   const [total, setTotal] = useState(0);
   // const { searchedLocation: location } = props.mapState;
-  const { searchData, categoryList } = props.mapState;
+  const { searchData, categoryList, curPage } = props.mapState;
 
   useEffect(async () => {
     try {
@@ -35,7 +36,8 @@ const Main = props => {
       <SearchBar />
       <PlaceDetailContainer />
       {/* <Popup /> */}
-      <PlaceList curPage={curPage} handleCurPage={setCurPage} count={total} />
+      {/* <PlaceList curPage={curPage} handleCurPage={setCurPage} count={total} /> */}
+      <PlaceList curPage={curPage} count={total} />
     </>
   );
 };
