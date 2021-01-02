@@ -39,16 +39,12 @@ const SignupContainer = memo(props => {
     //   return;
     // }
 
-    console.log('id :: ', id);
-    console.log('pwd :: ', pwd);
-    console.log('pwdCheck :: ', pwdCheck);
-
-    console.log('signup Button Action ');
+    // console.log('signup Button Action ');
 
     if (pwd === pwdCheck) {
       console.log('signup! ');
       const encodingCallback = encodingText => {
-        console.log('signup Button onClick encodingTextCallback func encoding Text ::: ', encodingText);
+        // console.log('signup Button onClick encodingTextCallback func encoding Text ::: ', encodingText);
       };
       encodingText(pwd, encodingCallback);
       // console.log('encodingPassword :: ', encodingPassword);
@@ -60,8 +56,6 @@ const SignupContainer = memo(props => {
       //   console.log('singup key string ::: ', key.toString('base64'));
       // });
       // });
-    } else {
-      console.log('signup fail!!! ');
     }
   };
 

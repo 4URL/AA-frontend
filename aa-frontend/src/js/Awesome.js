@@ -10,20 +10,14 @@ class Awesome extends Component {
   render() {
     let { isAutoLogin } = this.props;
 
-    console.log('isAutoLogin 11111 ::: ', isAutoLogin);
-
     if (!isAutoLogin) {
       let storageLoginInfo = window.localStorage.getItem('isAutoLogin');
-
-      console.log('storageLoginInfo ::: ', storageLoginInfo);
 
       if (storageLoginInfo != undefined && storageLoginInfo != null) {
         // isAutoLogin = storageLoginInfo;
         isAutoLogin = true;
       }
     }
-
-    console.log('isAutoLogin 22222 ::: ', isAutoLogin);
 
     return (
       <Fragment>

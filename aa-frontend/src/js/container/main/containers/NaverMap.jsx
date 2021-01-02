@@ -50,7 +50,7 @@ const NaverMap = props => {
         markers.push(marker);
       });
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }, [results]);
 
@@ -71,9 +71,9 @@ const NaverMap = props => {
     const seq = marker.get('seq');
     const place = results[seq];
 
+    resetMarkers();
     marker.setIcon(selected_icon);
     showPlaceDetail(place);
-    resetMarkers();
   }
 
   // 지도 div에서 발생하는 click event handler

@@ -21,9 +21,6 @@ export function fetchPlaces(searchData, categoryList, curPage) {
   // const location = searchData['location'];
   const { location, searchValue } = searchData;
   const itemCount = 6;
-  console.log('categorySeqList :: ', categorySeqList);
-  console.log('categoryList :: ', categoryList);
-  console.log('location ::: ', location);
 
   const query = `
     query {

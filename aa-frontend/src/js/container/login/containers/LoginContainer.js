@@ -42,9 +42,6 @@ class LoginContainer extends PureComponent {
 
   onClickLoginButton = e => {
     const { id, pwd } = this.state;
-    console.log('login id ::: ', id);
-    console.log('login pwd ::: ', pwd);
-    console.log('loginButton action! return!!! ');
 
     // const repeatCount = 100000;
     // const crypto = require('crypto');
@@ -56,7 +53,7 @@ class LoginContainer extends PureComponent {
     // });
 
     const encodingCallback = encodingText => {
-      console.log('login Button onClick encodingTextCallback func encoding Text ::: ', encodingText);
+      // console.log('login Button onClick encodingTextCallback func encoding Text ::: ', encodingText);
     };
     encodingText(pwd, encodingCallback);
 
@@ -73,14 +70,9 @@ class LoginContainer extends PureComponent {
     if (reqData['resCode'] == 200) {
       let userData = reqData['data'];
 
-      console.log('login Success userData ::: ', userData);
       window.localStorage.setItem('userId', userData['userId']);
       window.localStorage.setItem('isAutoLogin', true);
     }
-  };
-
-  onClickSnsLogin = e => {
-    console.log(e.target);
   };
 
   render() {

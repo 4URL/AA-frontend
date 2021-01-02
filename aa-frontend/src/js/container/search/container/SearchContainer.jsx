@@ -252,11 +252,10 @@ const SearchContainer = memo(props => {
   // 검색 아이콘 클릭 이벤트
   const onClickSearchIcon = useCallback(
     e => {
-      console.log('onClickSearchIcon searchKeyJsonArr ', searchKeyJsonArr);
-      console.log('onClickSearchIcon searchLocationArr ', searchLocationArr);
-      console.log('onClickSearchIcon searchValueArr ', searchValueArr);
-      // console.log('onClickSearchIcon searchValue ', searchValue);
-      console.log('onClickSearchIcon searchType ', searchType);
+      // console.log('onClickSearchIcon searchKeyJsonArr ', searchKeyJsonArr);
+      // console.log('onClickSearchIcon searchLocationArr ', searchLocationArr);
+      // console.log('onClickSearchIcon searchValueArr ', searchValueArr);
+      // console.log('onClickSearchIcon searchType ', searchType);
 
       let searchKeyword = '';
       searchValueArr.forEach(element => {
@@ -277,17 +276,16 @@ const SearchContainer = memo(props => {
       props.changePageNumber(1);
       const postData = { location: searchLocation, searchValue: searchKeyword };
 
-      console.log('onClickSearchIcon postData ', postData);
+      // console.log('onClickSearchIcon postData ', postData);
       searchInputRef.current.value = '';
-      // resetState();
-      console.log('props ::: ', props);
+      // console.log('props ::: ', props);
       handleSearchLocation(postData, categoryList);
     },
     [searchKeyJsonArr, searchLocationArr, searchValueArr, categoryList]
   );
 
   function handleSearchLocation(postData, categoryList) {
-    console.log('postData ::: ', postData);
+    // console.log('postData ::: ', postData);
     props.changeLocation(postData, categoryList);
     closeDetailSection();
   }
@@ -295,14 +293,6 @@ const SearchContainer = memo(props => {
   function closeDetailSection() {
     props.showDetail(false);
   }
-
-  const resetState = useCallback(() => {
-    setSearchKeyJsonArr([]);
-    setSearchType('');
-    setSearchValue('');
-    setSearchLocationArr([]);
-    setSearchValueArr([]);
-  }, []);
 
   // return (
   //   <SearchWrap>
