@@ -162,23 +162,24 @@ const SearchContainer = memo(props => {
       const keyword = e.target.value;
       // setSearchValue(keyword);
       if (eventKey == 'Enter') {
-        const jsonData = { type: searchType, searchValue: keyword };
-        setSearchKeyJsonArr(searchKeyJsonArr.concat(jsonData));
-        if (searchType == 'location') {
-          setSearchLocationArr(searchLocationArr.concat(keyword));
-          const keywordObj = document.getElementById('searchKey_location');
-          keywordObj.setAttribute('show', 'off');
-        } else if (searchType == 'keyword') {
-          setSearchValueArr(searchValueArr.concat(keyword));
-          const keywordObj = document.getElementById('searchKey_keyword');
-          keywordObj.setAttribute('show', 'off');
-        }
-        resetSearchValues();
-        searchInputRef.current.blur();
-        const keywordObj = document.getElementById('searchKey_location');
-        removeAllFocus();
-        keywordObj.setAttribute('focused', 'true');
-        showSearchKeywordItemList();
+        onClickSearchIcon();
+        // const jsonData = { type: searchType, searchValue: keyword };
+        // setSearchKeyJsonArr(searchKeyJsonArr.concat(jsonData));
+        // if (searchType == 'location') {
+        //   setSearchLocationArr(searchLocationArr.concat(keyword));
+        //   const keywordObj = document.getElementById('searchKey_location');
+        //   keywordObj.setAttribute('show', 'off');
+        // } else if (searchType == 'keyword') {
+        //   setSearchValueArr(searchValueArr.concat(keyword));
+        //   const keywordObj = document.getElementById('searchKey_keyword');
+        //   keywordObj.setAttribute('show', 'off');
+        // }
+        // resetSearchValues();
+        // searchInputRef.current.blur();
+        // const keywordObj = document.getElementById('searchKey_location');
+        // removeAllFocus();
+        // keywordObj.setAttribute('focused', 'true');
+        // showSearchKeywordItemList();
       }
     },
     [searchType, searchLocationArr, searchValueArr, searchKeyJsonArr]
@@ -264,9 +265,14 @@ const SearchContainer = memo(props => {
       searchKeyword = searchKeyword.trim();
 
       let searchLocation = '';
-      if (searchLocationArr.length != 0) {
-        searchLocation = searchLocationArr[0];
-      }
+      // if (searchLocationArr.length != 0) {
+      //   searchLocation = searchLocationArr[0];
+      // }
+      // else
+      //   return;
+      //여기서 인풋에 입력된 텍스트 정보를 가져올수 있나요? 어떻게요?
+      searchLocation = searchInputRef.current.value;
+      if (searchLocation.trim() == '') return;
 
       props.changePageNumber(1);
       const postData = { location: searchLocation, searchValue: searchKeyword };
@@ -298,11 +304,19 @@ const SearchContainer = memo(props => {
     setSearchValueArr([]);
   }, []);
 
+  // return (
+  //   <SearchWrap>
+  //     <SearchItemListWrap>{getSearchItemDomList}</SearchItemListWrap>
+  //     <SearchKeyWrap id={'keyword_list'}>{getSearchKeyItemDomList}</SearchKeyWrap>
+  //     <SearchKeywordInput ref={searchInputRef} onFocus={onFocusSearchInput} onKeyUp={onInputSearchInput} />
+  //     <SearchIcon onClick={onClickSearchIcon}></SearchIcon>
+  //     <CategoryWrap>{getCategoryDomList}</CategoryWrap>
+  //   </SearchWrap>
+  // );
   return (
     <SearchWrap>
-      <SearchItemListWrap>{getSearchItemDomList}</SearchItemListWrap>
-      <SearchKeyWrap id={'keyword_list'}>{getSearchKeyItemDomList}</SearchKeyWrap>
-      <SearchKeywordInput ref={searchInputRef} onFocus={onFocusSearchInput} onKeyUp={onInputSearchInput} />
+      <SearchText>지역명</SearchText>
+      <SearchKeywordInput ref={searchInputRef} onKeyUp={onInputSearchInput} />
       <SearchIcon onClick={onClickSearchIcon}></SearchIcon>
       <CategoryWrap>{getCategoryDomList}</CategoryWrap>
     </SearchWrap>
@@ -315,11 +329,11 @@ SearchContainer.displayName = 'SearchContainer';
 // 검색 전체를 감싸고 있는 wrap div
 const SearchWrap = styled.div`
   display: flex;
-  width: 330px;
+  width: 380px;
   height: 30px;
   position: absolute;
-  left: 25px;
-  top: 40px;
+  left: 10px;
+  top: 10px;
   z-index: 10;
   background-color: #fff;
   border-radius: 8px;
@@ -359,9 +373,17 @@ const SearchKeyItem = styled.div`
   }
 `;
 
+// 지역명
+const SearchText = styled.div`
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  margin-right: 2px;
+`;
+
 // 검색 input
 const SearchKeywordInput = styled.input`
-  width: 280px;
+  width: 320px;
   height: 30px;
   margin-right: 10px;
   border: 1px solid #101010;
@@ -439,7 +461,7 @@ const CategoryWrap = styled.div`
   position: absolute;
   top: 60px;
   right: 0;
-  width: 60%;
+  width: 100%;
   box-sizing: border-box;
   &[show='off'] {
     display: none;
@@ -454,7 +476,9 @@ const Category = styled.div`
   display: inline-block;
   border-radius: 5px;
   cursor: pointer;
-  margin: 0 5px;
+  margin: 2px;
+  font-size: 14px;
+  padding: 0px 1px;
   background-color: ${props => {
     switch (props.type) {
       default:

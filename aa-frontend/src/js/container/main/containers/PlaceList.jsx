@@ -93,7 +93,7 @@ const PlaceList = props => {
   function nextPage() {
     if (TOTAL_PAGES <= curPage) return;
     // handleCurPage(curPage + 1);
-    props.changePageNumber(pageNum + 1);
+    props.changePageNumber(curPage + 1);
   }
 
   function clickPage(pageNum) {
