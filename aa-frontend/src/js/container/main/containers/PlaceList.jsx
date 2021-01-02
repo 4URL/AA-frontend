@@ -6,15 +6,17 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 import { ContentCopy, ArrowBackIos, ArrowForwardIos } from '@styled-icons/material-rounded';
 
-import { placeDetail, showDetail } from '../../../redux/actions/index';
+import { placeDetail, showDetail, changePageNumber } from '../../../redux/actions/index';
 
 // pagination을 한 장소리스트가 등장
 const PlaceList = props => {
   const [isFirstPage, setIsFirstPage] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
 
-  const { placesList, showList } = props.mapState;
-  const { count, curPage, handleCurPage } = props;
+  // const { placesList, showList } = props.mapState;
+  const { placesList, showList, curPage } = props.mapState;
+  // const { count, curPage, handleCurPage } = props;
+  const { count } = props;
 
   const PLACES_PER_PAGE = 6;
   const TOTAL_PAGES = Math.ceil(count / PLACES_PER_PAGE);
@@ -82,16 +84,19 @@ const PlaceList = props => {
 
   function previousPage() {
     if (curPage <= 1) return;
-    handleCurPage(curPage - 1);
+    // handleCurPage(curPage - 1);
+    props.changePageNumber(curPage - 1);
   }
 
   function nextPage() {
     if (TOTAL_PAGES <= curPage) return;
-    handleCurPage(curPage + 1);
+    // handleCurPage(curPage + 1);
+    props.changePageNumber(pageNum + 1);
   }
 
   function clickPage(pageNum) {
-    handleCurPage(pageNum);
+    // handleCurPage(pageNum);
+    props.changePageNumber(pageNum);
   }
 
   function showedPageList(curPage, totalPages) {
@@ -137,7 +142,8 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       placeDetail,
-      showDetail
+      showDetail,
+      changePageNumber
     },
     dispatch
   );

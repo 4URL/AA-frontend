@@ -42,3 +42,10 @@ export const placeDetail = placeDetail => ({
     placeDetail
   }
 });
+
+export const changePageNumber = curPage => ({
+  type: type.CHANGE_PAGE_NUMBER,
+  payload: {
+    curPage
+  }
+});
