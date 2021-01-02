@@ -4,3 +4,4 @@ export const SHOW_LIST = 'SHOW_LIST';
 export const GET_PLACES = 'GET_PLACES';
 export const SHOW_DETAIL = 'SHOW_DETAIL';
 export const PLACE_DETAIL = 'PLACE_DETAIL';
+export const CHANGE_PAGE_NUMBER = 'CHANGE_PAGE_NUMBER';

@@ -7,7 +7,8 @@ const initialState = {
   showDetail: false,
   showList: false,
   placeDetail: {},
-  placesList: []
+  placesList: [],
+  curPage: 1
 };
 
 export default function mapReducers(state = initialState, action) {
@@ -51,6 +52,14 @@ export default function mapReducers(state = initialState, action) {
       return {
         ...state,
         placeDetail: { ...placeDetail }
+      };
+    }
+
+    case type.CHANGE_PAGE_NUMBER: {
+      const { curPage } = action.payload;
+      return {
+        ...state,
+        curPage: curPage
       };
     }
 

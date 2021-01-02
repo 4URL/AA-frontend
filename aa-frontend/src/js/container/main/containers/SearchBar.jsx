@@ -8,7 +8,7 @@ import { changeLocation, showDetail } from '../../../redux/actions/index';
 import SearchContainer from '../../search/container/SearchContainer';
 
 const SearchBar = props => {
-  const [location, setLocation] = useState('');
+  // const [location, setLocation] = useState('');
 
   return (
     // <SearchBarContainer>
@@ -34,23 +34,23 @@ const SearchBar = props => {
     // </SearchBarContainer>
   );
 
-  function handleChange(input) {
-    setLocation(input);
-  }
+  // function handleChange(input) {
+  //   setLocation(input);
+  // }
 
-  function handleSearchLocation(props) {
-    props.changeLocation(location);
-    closeDetailSection();
-  }
+  // function handleSearchLocation(props) {
+  //   props.changeLocation(location);
+  //   closeDetailSection();
+  // }
 
-  function handleKeyPress(event, props) {
-    if (event.key === 'Enter') props.changeLocation(location);
-    closeDetailSection();
-  }
+  // function handleKeyPress(event, props) {
+  //   if (event.key === 'Enter') props.changeLocation(location);
+  //   closeDetailSection();
+  // }
 
-  function closeDetailSection() {
-    props.showDetail(false);
-  }
+  // function closeDetailSection() {
+  //   props.showDetail(false);
+  // }
 };
 
 const mapStateToProps = state => {
