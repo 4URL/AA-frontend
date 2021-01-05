@@ -16,7 +16,7 @@ module.exports = {
   rules: {
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
     'react/prop-types': ['error', { skipUndeclared: true }],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+    'no-console': process.env.NODE_ENV === 'production' ? 'off' : 'off',
     'no-unused-vars': 'warn',
     'no-undef': 'warn',
     // allow async-await

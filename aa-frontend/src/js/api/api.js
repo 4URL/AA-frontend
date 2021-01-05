@@ -1,4 +1,8 @@
-const endpoint = 'http://13.125.243.220:8081/graphql';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const endpoint = process.env.REACT_APP_ENDPOINT;
 
 const getQueryOption = query => {
   return {
