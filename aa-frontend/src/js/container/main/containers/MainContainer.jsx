@@ -26,7 +26,7 @@ const Main = props => {
       props.getPlaces(stores);
       setTotal(count);
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   }, [searchData, curPage]);
 

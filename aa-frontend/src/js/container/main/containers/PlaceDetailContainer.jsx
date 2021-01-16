@@ -26,64 +26,66 @@ const PlaceDetailContainer = props => {
               <SubCategory>&nbsp;({placeDetail.subCategory})</SubCategory>
             </PlaceName>
             <DetailTableContainer>
-              {placeDetail.phoneNumber ? (
-                <TableColumn>
-                  <TableHeader>
-                    <PhoneIcon />
-                  </TableHeader>
-                  <TableData>{placeDetail.phoneNumber}</TableData>
-                </TableColumn>
-              ) : (
-                <></>
-              )}
-              {placeDetail.address ? (
-                <TableColumn>
-                  <TableHeader>
-                    <AddressIcon />
-                  </TableHeader>
-                  <TableData>
-                    {placeDetail.roadAddress}
-                    &nbsp;
-                    <CopyToClipboard text={placeDetail.roadAddress}>
-                      <CopiedIcon />
-                    </CopyToClipboard>
-                  </TableData>
-                </TableColumn>
-              ) : (
-                <></>
-              )}
-              {placeDetail.workingDay ? (
-                <TableColumn>
-                  <TableHeader>
-                    <ClockIcon />
-                  </TableHeader>
-                  <TableData>{splitWorkingday(placeDetail.workingDay)}</TableData>
-                </TableColumn>
-              ) : (
-                <></>
-              )}
-              {placeDetail.homepage ? (
-                <TableColumn>
-                  <TableHeader>
-                    <HomepageIcon />
-                  </TableHeader>
-                  <TableData>
-                    <HomepageLink href={`${placeDetail.homepage}`}>{placeDetail.homepage}</HomepageLink>
-                  </TableData>
-                </TableColumn>
-              ) : (
-                <></>
-              )}
-              {placeDetail.convenience ? (
-                <TableColumn>
-                  <TableHeader>
-                    <ConvenienceIcon />
-                  </TableHeader>
-                  <TableData>{placeDetail.convenience}</TableData>
-                </TableColumn>
-              ) : (
-                <></>
-              )}
+              <TableBody>
+                {placeDetail.phoneNumber ? (
+                  <TableColumn>
+                    <TableHeader>
+                      <PhoneIcon />
+                    </TableHeader>
+                    <TableData>{placeDetail.phoneNumber}</TableData>
+                  </TableColumn>
+                ) : (
+                  <></>
+                )}
+                {placeDetail.address ? (
+                  <TableColumn>
+                    <TableHeader>
+                      <AddressIcon />
+                    </TableHeader>
+                    <TableData>
+                      {placeDetail.roadAddress}
+                      &nbsp;
+                      <CopyToClipboard text={placeDetail.roadAddress}>
+                        <CopiedIcon />
+                      </CopyToClipboard>
+                    </TableData>
+                  </TableColumn>
+                ) : (
+                  <></>
+                )}
+                {placeDetail.workingDay ? (
+                  <TableColumn>
+                    <TableHeader>
+                      <ClockIcon />
+                    </TableHeader>
+                    <TableData>{splitWorkingday(placeDetail.workingDay)}</TableData>
+                  </TableColumn>
+                ) : (
+                  <></>
+                )}
+                {placeDetail.homepage ? (
+                  <TableColumn>
+                    <TableHeader>
+                      <HomepageIcon />
+                    </TableHeader>
+                    <TableData>
+                      <HomepageLink href={`${placeDetail.homepage}`}>{placeDetail.homepage}</HomepageLink>
+                    </TableData>
+                  </TableColumn>
+                ) : (
+                  <></>
+                )}
+                {placeDetail.convenience ? (
+                  <TableColumn>
+                    <TableHeader>
+                      <ConvenienceIcon />
+                    </TableHeader>
+                    <TableData>{placeDetail.convenience}</TableData>
+                  </TableColumn>
+                ) : (
+                  <></>
+                )}
+              </TableBody>
             </DetailTableContainer>
           </DetailContainer>
         </BoxContainer>
@@ -133,6 +135,7 @@ const BoxContainer = styled.div`
   flex-direction: column;
   align-items: center;
   padding-top: 110px;
+  overflow-y: auto;
 `;
 
 const CloseIcon = styled(Close)`
@@ -168,6 +171,8 @@ const DetailTableContainer = styled.table`
   border-bottom: 1px solid lightgray;
   padding: 10px 0;
 `;
+
+const TableBody = styled.tbody``;
 
 const TableColumn = styled.tr`
   display: flex;

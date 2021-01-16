@@ -1,4 +1,8 @@
-const endpoint = 'http://13.125.243.220:8081/graphql';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const endpoint = process.env.REACT_APP_ENDPOINT;
 
 const getQueryOption = query => {
   return {
@@ -21,9 +25,6 @@ export function fetchPlaces(searchData, categoryList, curPage) {
   // const location = searchData['location'];
   const { location, searchValue } = searchData;
   const itemCount = 6;
-  console.log('categorySeqList :: ', categorySeqList);
-  console.log('categoryList :: ', categoryList);
-  console.log('location ::: ', location);
 
   const query = `
     query {
