@@ -17,11 +17,13 @@ const NaverMap = props => {
   const [markerClicked, setMarkerClicked] = useState(false);
 
   const selected_icon = {
-    content: `<img src="${SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`
+    content: `<img src="${SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(12, 37)
   };
 
   const unselected_icon = {
-    content: `<img src="${UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`
+    content: `<img src="${UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(12, 37)
   };
 
   useEffect(async () => {
