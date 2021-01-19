@@ -2,7 +2,7 @@ import * as type from '../actions/actionTypes';
 
 const initialState = {
   // searchedLocation: '',
-  searchData: { location: [], searchValue: '' },
+  searchData: { location: '', searchValue: '' },
   categoryList: [],
   showDetail: false,
   showList: false,

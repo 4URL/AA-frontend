@@ -11,13 +11,13 @@ const SearchContainer = memo(props => {
   const [searchKeyJsonArr, setSearchKeyJsonArr] = useState([]);
   const [searchType, setSearchType] = useState('');
   // const [searchValue, setSearchValue] = useState('');
-  const [searchLocationArr, setSearchLocationArr] = useState([]);
-  const [searchValueArr, setSearchValueArr] = useState([]);
+  // const [searchLocationArr, setSearchLocationArr] = useState([]);
+  // const [searchValueArr, setSearchValueArr] = useState([]);
+  const [searchData, setSearchData] = useState({
+    location: '',
+    searchValue: ''
+  });
   const searchInputRef = useRef(null);
-
-  // useEffect(()=>{
-  //   // reqGetCategoryData();
-  // }, []);
 
   useEffect(async () => {
     try {
@@ -28,14 +28,11 @@ const SearchContainer = memo(props => {
     }
   }, []);
 
-  // 검색 하단에 보여질 카테고리 아이템 정의
-  // const CATEGORY_DATA = [
-  //   // { type: '0', value: '0', text: '전체' },
-  //   { type: '1', value: '1', text: '호텔' },
-  //   { type: '2', value: '2', text: '카페' },
-  //   { type: '3', value: '3', text: '놀이터' },
-  //   { type: '4', value: '4', text: '아몰랑' }
-  // ];
+  // 검색결과와 카테고리 리스트가 변경됐을 때 작동하는 useEffect 작성
+  // searchData = { location: '', value: ''}
+  useEffect(() => {
+    handleSearchLocation(searchData, categoryList);
+  }, [searchData, categoryList]);
 
   // 검색 키워드 아이템 정의
   const SEARCH_KEY_LIST = [
@@ -54,8 +51,6 @@ const SearchContainer = memo(props => {
       if (isSelected != 'true') {
         categoryObj.setAttribute('isSelected', 'true');
         setCategoryList(categoryList.concat(value));
-
-        // setCategoryList([...categoryList, value]);
       } else {
         categoryObj.removeAttribute('isSelected');
         setCategoryList(categoryList.filter(category => category !== value));
@@ -63,7 +58,6 @@ const SearchContainer = memo(props => {
     },
     [categoryList]
   );
-  // console.log('categoryList 1111::: ', categoryList);
 
   // 카테고리 아이템  생성하기
   const getCategoryDomList = useMemo(() => {
@@ -182,7 +176,7 @@ const SearchContainer = memo(props => {
         // showSearchKeywordItemList();
       }
     },
-    [searchType, searchLocationArr, searchValueArr, searchKeyJsonArr]
+    [searchType, searchData, searchKeyJsonArr]
   );
 
   const resetSearchValues = useCallback(() => {
@@ -210,8 +204,8 @@ const SearchContainer = memo(props => {
       const value = parentObj.getAttribute('value');
       const type = parentObj.getAttribute('type');
       setSearchKeyJsonArr(searchKeyJsonArr.filter(jsonObj => jsonObj['searchValue'] !== value));
-      setSearchLocationArr(searchLocationArr.filter(element => element !== value));
-      setSearchValueArr(searchValueArr.filter(element => element !== value));
+      // setSearchLocationArr(searchLocationArr.filter(element => element !== value));
+      // setSearchValueArr(searchValueArr.filter(element => element !== value));
 
       if (type == 'location') {
         const keywordObj = document.getElementById('searchKey_location');
@@ -221,7 +215,7 @@ const SearchContainer = memo(props => {
         keywordObj.setAttribute('show', 'on');
       }
     },
-    [searchKeyJsonArr, searchLocationArr, searchValueArr]
+    [searchKeyJsonArr, searchData]
   );
 
   // console.log('searchKeyJsonArr 9999999::: ', searchKeyJsonArr);
@@ -258,9 +252,9 @@ const SearchContainer = memo(props => {
       // console.log('onClickSearchIcon searchType ', searchType);
 
       let searchKeyword = '';
-      searchValueArr.forEach(element => {
-        searchKeyword += element + ' ';
-      });
+      // searchValueArr.forEach(element => {
+      //   searchKeyword += element + ' ';
+      // });
       searchKeyword = searchKeyword.trim();
 
       let searchLocation = '';
@@ -269,23 +263,29 @@ const SearchContainer = memo(props => {
       // }
       // else
       //   return;
-      //여기서 인풋에 입력된 텍스트 정보를 가져올수 있나요? 어떻게요?
+      // 버튼을 클릭했을 때 input에 담겨 있는 값을 postData에 담아준다
       searchLocation = searchInputRef.current.value;
       if (searchLocation.trim() == '') return;
 
       props.changePageNumber(1);
-      const postData = { location: searchLocation, searchValue: searchKeyword };
+      setSearchData({
+        ...searchData,
+        location: searchLocation,
+        searchValue: searchKeyword
+      });
+      // const postData = { location: searchLocation, searchValue: searchKeyword };
 
       // console.log('onClickSearchIcon postData ', postData);
       searchInputRef.current.value = '';
       // console.log('props ::: ', props);
-      handleSearchLocation(postData, categoryList);
+      // handleSearchLocation(postData, categoryList);
     },
-    [searchKeyJsonArr, searchLocationArr, searchValueArr, categoryList]
+    [searchKeyJsonArr, searchData, categoryList]
   );
 
   function handleSearchLocation(postData, categoryList) {
-    // console.log('postData ::: ', postData);
+    // postData => searchData: { location: [], searchValue: '' },
+    // categoryList: [],
     props.changeLocation(postData, categoryList);
     closeDetailSection();
   }
