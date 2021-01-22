@@ -22,6 +22,7 @@ const Main = props => {
   useEffect(async () => {
     try {
       const { stores, count } = await fetchPlaces(searchData, categoryList, curPage);
+      // console.log('stores :: ', stores);
       props.showList(true);
       props.getPlaces(stores);
       setTotal(count);

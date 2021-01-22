@@ -28,29 +28,32 @@ const NaverMap = props => {
 
   useEffect(async () => {
     try {
-      const resultLatLngBounds = getResultBounds(results);
+      // if there are results
+      if (results.length > 0) {
+        const resultLatLngBounds = getResultBounds(results);
 
-      const mapOptions = {
-        bounds: resultLatLngBounds // Lat,Lng 기준으로 바운드 설정 (cf. 이 옵션에 의해 Zoom, Center 옵션은 무시됨)
-      };
-
-      let map = new window.naver.maps.Map('map', mapOptions);
-
-      results.forEach((result, idx) => {
-        const markerOption = {
-          map,
-          position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
-          title: result.name,
-          icon: unselected_icon
+        const mapOptions = {
+          bounds: resultLatLngBounds // Lat,Lng 기준으로 바운드 설정 (cf. 이 옵션에 의해 Zoom, Center 옵션은 무시됨)
         };
-        let marker = new window.naver.maps.Marker(markerOption);
 
-        marker.addListener('click', () => clickMarker(results, marker));
+        let map = new window.naver.maps.Map('map', mapOptions);
 
-        // marker.get('seq')를 통해서 idx값을 얻을 수 있음
-        marker.set('seq', idx);
-        markers.push(marker);
-      });
+        results.forEach((result, idx) => {
+          const markerOption = {
+            map,
+            position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
+            title: result.name,
+            icon: unselected_icon
+          };
+          let marker = new window.naver.maps.Marker(markerOption);
+
+          marker.addListener('click', () => clickMarker(results, marker));
+
+          // marker.get('seq')를 통해서 idx값을 얻을 수 있음
+          marker.set('seq', idx);
+          markers.push(marker);
+        });
+      }
     } catch (e) {
       console.error(e);
     }
