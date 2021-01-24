@@ -35,10 +35,10 @@ const Main = props => {
     <>
       <NaverMap />
       <SearchBar />
-      <PlaceDetailContainer />
+      {/* <PlaceDetailContainer /> */}
       {/* <Popup /> */}
       {/* <PlaceList curPage={curPage} handleCurPage={setCurPage} count={total} /> */}
-      <PlaceList curPage={curPage} count={total} />
+      {/* <PlaceList curPage={curPage} count={total} /> */}
     </>
   );
 };

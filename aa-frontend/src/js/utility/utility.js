@@ -36,3 +36,8 @@ export function getResultBounds(results) {
 
   return new window.naver.maps.LatLngBounds(lanLng_sw, lanLng_ne);
 }
+
+// 서로 다른 viewport width에서도 같은 px을 적용
+export function pxToVw(size, width = document.documentElement.clientWidth) {
+  return `${(size / width) * 100}vw`;
+}

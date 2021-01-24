@@ -2,8 +2,11 @@ import React, { memo, useCallback, useMemo, useRef, useState, useEffect } from '
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 import { changeLocation, showDetail, changePageNumber } from '../../../redux/actions/index';
 import { reqGetCategoryData } from '../../../api/api';
+import { pxToVw } from '../../../utility/utility';
+import size from '../../../StyledVariable';
 
 const SearchContainer = memo(props => {
   const [categoryData, setCategoryData] = useState([]);
@@ -319,7 +322,7 @@ SearchContainer.displayName = 'SearchContainer';
 // 검색 전체를 감싸고 있는 wrap div
 const SearchWrap = styled.div`
   display: flex;
-  width: 380px;
+  width: ${pxToVw(380)};
   height: 30px;
   position: absolute;
   left: 10px;
@@ -330,6 +333,10 @@ const SearchWrap = styled.div`
   padding: 10px;
   box-shadow: 1px 3px 2px #9e9e9e;
   align-items: center;
+
+  @media (max-width: ${size.mobile}) {
+    width: 88%;
+  }
 `;
 
 // 검색 키워드 감싸는 div

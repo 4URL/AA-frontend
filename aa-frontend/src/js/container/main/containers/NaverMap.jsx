@@ -126,9 +126,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(NaverMap);
 
 export const MapDiv = styled.div`
-  width: ${({ showList }) => (showList ? 'calc(100% - 420px)' : '100%')};
-  position: absolute;
-  left: ${({ showList }) => (showList ? '420px' : '0')};
+  width: 100%;
   height: 100%;
   z-index: 1;
 `;
