@@ -46,36 +46,37 @@ const NaverMap = props => {
         markers.forEach(marker => {
           marker.addListener('click', () => clickMarker(results, marker));
         });
+
+        // 지도 Drag 시, 새로운 장소 다시 검색
+        naver.maps.Event.addListener(map, 'dragend', function (e) {
+          console.log('??');
+          searchOnMapMove(map);
+        });
+        naver.maps.Event.addListener(map, 'zoom_changed', function (e) {
+          searchOnMapMove(map);
+        });
+
+        ///////////////////////
+        // naver.maps.Service.geocode(
+        //   {
+        //     query: '부산'
+        //   },
+        //   function (status, response) {
+        //     if (status === naver.maps.Service.Status.ERROR) {
+        //       console.log('Something Wrong!');
+        //     }
+
+        //     if (response.v2.meta.totalCount === 0) {
+        //       console.log('totalCount' + response.v2.meta.totalCount);
+        //     }
+
+        //     var item = response.v2.addresses[0],
+        //       point = new naver.maps.Point(item.x, item.y);
+        //     map.setCenter(point);
+        //   }
+        // );
+        ///////////////////////
       }
-
-      // 지도 Drag 시, 새로운 장소 다시 검색
-      naver.maps.Event.addListener(map, 'dragend', function (e) {
-        searchOnMapMove(map);
-      });
-      naver.maps.Event.addListener(map, 'zoom_changed', function (e) {
-        searchOnMapMove(map);
-      });
-
-      ///////////////////////
-      naver.maps.Service.geocode(
-        {
-          query: '부산'
-        },
-        function (status, response) {
-          if (status === naver.maps.Service.Status.ERROR) {
-            console.log('Something Wrong!');
-          }
-
-          if (response.v2.meta.totalCount === 0) {
-            console.log('totalCount' + response.v2.meta.totalCount);
-          }
-
-          var item = response.v2.addresses[0],
-            point = new naver.maps.Point(item.x, item.y);
-          map.setCenter(point);
-        }
-      );
-      ///////////////////////
     } catch (e) {
       console.error(e);
     }
