@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 import NaverMap from './NaverMap';
-import SearchBar from './SearchBar';
+// import SearchBar from './SearchBar';
+import SearchContainer from '../../search/container/SearchContainer';
 import PlaceDetailContainer from './PlaceDetailContainer';
 
 import Popup from '../../popup/container/Popup';
@@ -22,6 +23,7 @@ const Main = props => {
   useEffect(async () => {
     try {
       const { stores, count } = await fetchPlaces(searchData, categoryList, curPage);
+      // console.log('stores :: ', stores);
       props.showList(true);
       props.getPlaces(stores);
       setTotal(count);
@@ -33,11 +35,11 @@ const Main = props => {
   return (
     <>
       <NaverMap />
-      <SearchBar />
-      <PlaceDetailContainer />
+      <SearchContainer />
+      {/* <PlaceDetailContainer /> */}
       {/* <Popup /> */}
       {/* <PlaceList curPage={curPage} handleCurPage={setCurPage} count={total} /> */}
-      <PlaceList curPage={curPage} count={total} />
+      {/* <PlaceList curPage={curPage} count={total} /> */}
     </>
   );
 };

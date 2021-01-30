@@ -42,43 +42,49 @@ const PlaceList = props => {
       {!showList ? (
         <></>
       ) : (
-        <BoxContainer>
-          <ListTable>
-            <TableBody>
-              {placesList.map((place, idx) => {
-                return (
-                  <TableColumn key={idx}>
-                    <TableData>
-                      <PlaceName onClick={() => clickPlaceName(place)}>{place.name}</PlaceName>
-                      &nbsp;
-                      <SubCategory>({place.subCategory})</SubCategory>
-                    </TableData>
-                    <TableData>
-                      <Address>
-                        {place.roadAddress}
-                        &nbsp;
-                        <CopyToClipboard text={place.roadAddress}>
-                          <CopiedIcon />
-                        </CopyToClipboard>
-                      </Address>
-                    </TableData>
-                  </TableColumn>
-                );
-              })}
-            </TableBody>
-          </ListTable>
+        <BoxContainer noResult={placesList.length === 0}>
+          {placesList.length === 0 ? (
+            <NoResultsH1>검색 결과가 없어요.</NoResultsH1>
+          ) : (
+            <>
+              <ListTable>
+                <TableBody>
+                  {placesList.map((place, idx) => {
+                    return (
+                      <TableColumn key={idx}>
+                        <TableData>
+                          <PlaceName onClick={() => clickPlaceName(place)}>{place.name}</PlaceName>
+                          &nbsp;
+                          <SubCategory>({place.subCategory})</SubCategory>
+                        </TableData>
+                        <TableData>
+                          <Address>
+                            {place.roadAddress}
+                            &nbsp;
+                            <CopyToClipboard text={place.roadAddress}>
+                              <CopiedIcon />
+                            </CopyToClipboard>
+                          </Address>
+                        </TableData>
+                      </TableColumn>
+                    );
+                  })}
+                </TableBody>
+              </ListTable>
 
-          <PageContainer>
-            <BackArrow onClick={previousPage} isFirstPage={isFirstPage} />
-            {pageList.map((pageNum, idx) => {
-              return (
-                <PageDiv key={idx} curPage={curPage} pageIdx={Number(pageNum)} onClick={() => clickPage(pageNum)}>
-                  {pageNum}
-                </PageDiv>
-              );
-            })}
-            <FowardArrow onClick={nextPage} isLastPage={isLastPage} />
-          </PageContainer>
+              <PageContainer>
+                <BackArrow onClick={previousPage} isFirstPage={isFirstPage} />
+                {pageList.map((pageNum, idx) => {
+                  return (
+                    <PageDiv key={idx} curPage={curPage} pageIdx={Number(pageNum)} onClick={() => clickPage(pageNum)}>
+                      {pageNum}
+                    </PageDiv>
+                  );
+                })}
+                <FowardArrow onClick={nextPage} isLastPage={isLastPage} />
+              </PageContainer>
+            </>
+          )}
         </BoxContainer>
       )}
     </>
@@ -164,6 +170,7 @@ const BoxContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: ${({ noResult }) => (noResult ? 'center' : 'none')};
   padding-top: 110px;
 `;
 
@@ -260,4 +267,8 @@ const CopiedIcon = styled(ContentCopy)`
     cursor: pointer;
     color: green;
   }
+`;
+
+const NoResultsH1 = styled.h1`
+  font-family: 'Nanum Gothic', sans-serif;
 `;

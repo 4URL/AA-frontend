@@ -6,9 +6,12 @@ import styled from 'styled-components';
 import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
 import { getResultBounds } from '../../../utility/utility';
 
+// todo : 이걸 따로 빼고 싶은데
+const isMonitor = document.documentElement.clientWidth <= 768 ? true : false;
 const SELECTED_MARKER = './marker_sel.png';
 const UNSELECTED_MARKER = './marker_unsel.png';
-const ICON_STYLE = 'width: 25px; height: 34px;';
+const ICON_STYLE = isMonitor ? 'width: 20px; height: 28px;' : 'width: 25px; height: 34px;';
+const ANCHOR = { x: isMonitor ? 10 : 12, y: isMonitor ? 31 : 37 };
 
 let markers = [];
 
@@ -18,39 +21,42 @@ const NaverMap = props => {
 
   const selected_icon = {
     content: `<img src="${SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
-    anchor: new window.naver.maps.Point(12, 37)
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
   };
 
   const unselected_icon = {
     content: `<img src="${UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
-    anchor: new window.naver.maps.Point(12, 37)
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
   };
 
   useEffect(async () => {
     try {
-      const resultLatLngBounds = getResultBounds(results);
+      // if there are results
+      if (results.length > 0) {
+        const resultLatLngBounds = getResultBounds(results);
 
-      const mapOptions = {
-        bounds: resultLatLngBounds // Lat,Lng 기준으로 바운드 설정 (cf. 이 옵션에 의해 Zoom, Center 옵션은 무시됨)
-      };
-
-      let map = new window.naver.maps.Map('map', mapOptions);
-
-      results.forEach((result, idx) => {
-        const markerOption = {
-          map,
-          position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
-          title: result.name,
-          icon: unselected_icon
+        const mapOptions = {
+          bounds: resultLatLngBounds // Lat,Lng 기준으로 바운드 설정 (cf. 이 옵션에 의해 Zoom, Center 옵션은 무시됨)
         };
-        let marker = new window.naver.maps.Marker(markerOption);
 
-        marker.addListener('click', () => clickMarker(results, marker));
+        let map = new window.naver.maps.Map('map', mapOptions);
 
-        // marker.get('seq')를 통해서 idx값을 얻을 수 있음
-        marker.set('seq', idx);
-        markers.push(marker);
-      });
+        results.forEach((result, idx) => {
+          const markerOption = {
+            map,
+            position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
+            title: result.name,
+            icon: unselected_icon
+          };
+          let marker = new window.naver.maps.Marker(markerOption);
+
+          marker.addListener('click', () => clickMarker(results, marker));
+
+          // marker.get('seq')를 통해서 idx값을 얻을 수 있음
+          marker.set('seq', idx);
+          markers.push(marker);
+        });
+      }
     } catch (e) {
       console.error(e);
     }
@@ -123,9 +129,8 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(NaverMap);
 
 export const MapDiv = styled.div`
-  width: ${({ showList }) => (showList ? 'calc(100% - 420px)' : '100%')};
-  position: absolute;
-  left: ${({ showList }) => (showList ? '420px' : '0')};
+  position: relative;
+  width: 100%;
   height: 100%;
   z-index: 1;
 `;
