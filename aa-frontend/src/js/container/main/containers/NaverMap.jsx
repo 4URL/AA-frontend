@@ -4,7 +4,8 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
 import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
-import { getResultBounds } from '../../../utility/utility';
+import { getResultBounds, makeMarker } from '../../../utility/utility';
+import { fetchDisplayPlaces } from '../../../api/api';
 
 // todo : 이걸 따로 빼고 싶은데
 const isMonitor = document.documentElement.clientWidth <= 768 ? true : false;
@@ -16,7 +17,7 @@ const ANCHOR = { x: isMonitor ? 10 : 12, y: isMonitor ? 31 : 37 };
 let markers = [];
 
 const NaverMap = props => {
-  const { placesList: results, showList, showDetail, placeDetail } = props.mapState;
+  const { placesList: results, showList, showDetail, placeDetail, categoryList } = props.mapState;
   const [markerClicked, setMarkerClicked] = useState(false);
 
   const selected_icon = {
@@ -41,21 +42,40 @@ const NaverMap = props => {
 
         let map = new window.naver.maps.Map('map', mapOptions);
 
-        results.forEach((result, idx) => {
-          const markerOption = {
-            map,
-            position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
-            title: result.name,
-            icon: unselected_icon
-          };
-          let marker = new window.naver.maps.Marker(markerOption);
-
+        markers = makeMarker(results, map, unselected_icon);
+        markers.forEach(marker => {
           marker.addListener('click', () => clickMarker(results, marker));
-
-          // marker.get('seq')를 통해서 idx값을 얻을 수 있음
-          marker.set('seq', idx);
-          markers.push(marker);
         });
+
+        // 지도 Drag 시, 새로운 장소 다시 검색
+        naver.maps.Event.addListener(map, 'dragend', function (e) {
+          console.log('??');
+          searchOnMapMove(map);
+        });
+        naver.maps.Event.addListener(map, 'zoom_changed', function (e) {
+          searchOnMapMove(map);
+        });
+
+        ///////////////////////
+        // naver.maps.Service.geocode(
+        //   {
+        //     query: '부산'
+        //   },
+        //   function (status, response) {
+        //     if (status === naver.maps.Service.Status.ERROR) {
+        //       console.log('Something Wrong!');
+        //     }
+
+        //     if (response.v2.meta.totalCount === 0) {
+        //       console.log('totalCount' + response.v2.meta.totalCount);
+        //     }
+
+        //     var item = response.v2.addresses[0],
+        //       point = new naver.maps.Point(item.x, item.y);
+        //     map.setCenter(point);
+        //   }
+        // );
+        ///////////////////////
       }
     } catch (e) {
       console.error(e);
@@ -103,6 +123,17 @@ const NaverMap = props => {
   function resetMarkers() {
     markers.forEach(marker => {
       marker.setIcon(unselected_icon);
+    });
+  }
+
+  function searchOnMapMove(map) {
+    var promise = fetchDisplayPlaces(categoryList, map.bounds._ne, map.bounds._sw);
+    promise.then(value => {
+      for (var i = 0; i < markers.length; i++) markers[i].setMap(null);
+      markers = makeMarker(value.stores, map, unselected_icon);
+      markers.forEach(marker => {
+        marker.addListener('click', () => clickMarker(value.stores, marker));
+      });
     });
   }
 

@@ -60,6 +60,56 @@ export function fetchPlaces(searchData, categoryList, curPage) {
     });
 }
 
+/**
+ * 현재 화면 영역 안에 영역을 기준으로 장소를 검색한다.
+ * @param {Object} latlng_ne - 현재 화면의 우측 상단 위도경도
+ * @param {Object} latlng_sw - 현재 화면의 좌측 하단 위도경도
+ */
+export function fetchDisplayPlaces(categoryList, latlng_ne, latlng_sw) {
+  const query = `
+  query {
+    search(
+      param:{
+        categoryList:[${categoryList}],
+        location: "",
+        searchValue:"",
+        limit: 6,
+        page: 1,
+        ne: {lat: ${latlng_ne._lat}, lng: ${latlng_ne._lng}},
+        ws: {lat: ${latlng_sw._lat}, lng: ${latlng_sw._lng}}
+      }
+    ) {
+      stores {
+        categorySeq
+        subCategory
+        convenience
+        description
+        homepage
+        lat
+        lng
+        mapUrl
+        modifiedAt
+        name
+        phoneNumber
+        seq
+        workingDay
+        shortAddress
+        address
+        roadAddress
+      }
+      count
+    }
+  }
+  `;
+
+  return fetch(endpoint, getQueryOption(query))
+    .then(res => res.json())
+    .then(({ data }) => {
+      const { stores, count } = data.search;
+      return { stores, count };
+    });
+}
+
 export function reqGetCategoryData() {
   const query = `
     query {

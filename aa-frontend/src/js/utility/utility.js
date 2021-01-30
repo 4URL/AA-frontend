@@ -37,6 +37,24 @@ export function getResultBounds(results) {
   return new window.naver.maps.LatLngBounds(lanLng_sw, lanLng_ne);
 }
 
+export function makeMarker(results, map, iconImage) {
+  var markers = [];
+  results.forEach((result, idx) => {
+    const markerOption = {
+      map,
+      position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
+      title: result.name,
+      icon: iconImage
+    };
+    let marker = new window.naver.maps.Marker(markerOption);
+
+    // marker.get('seq')를 통해서 idx값을 얻을 수 있음
+    marker.set('seq', idx);
+    markers.push(marker);
+  });
+  return markers;
+}
+
 // 서로 다른 viewport width에서도 같은 px을 적용
 export function pxToVw(size, width = document.documentElement.clientWidth) {
   return `${(size / width) * 100}vw`;
