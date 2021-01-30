@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 
 import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
-import { getResultBounds } from '../../../utility/utility';
+import { getResultBounds, makeMarker } from '../../../utility/utility';
 
 // todo : 이걸 따로 빼고 싶은데
 const isMonitor = document.documentElement.clientWidth <= 768 ? true : false;
@@ -41,20 +41,9 @@ const NaverMap = props => {
 
         let map = new window.naver.maps.Map('map', mapOptions);
 
-        results.forEach((result, idx) => {
-          const markerOption = {
-            map,
-            position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
-            title: result.name,
-            icon: unselected_icon
-          };
-          let marker = new window.naver.maps.Marker(markerOption);
-
+        markers = makeMarker(results, map, unselected_icon);
+        markers.forEach(marker => {
           marker.addListener('click', () => clickMarker(results, marker));
-
-          // marker.get('seq')를 통해서 idx값을 얻을 수 있음
-          marker.set('seq', idx);
-          markers.push(marker);
         });
       }
     } catch (e) {
