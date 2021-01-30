@@ -6,9 +6,12 @@ import styled from 'styled-components';
 import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
 import { getResultBounds } from '../../../utility/utility';
 
+// todo : 이걸 따로 빼고 싶은데
+const isMonitor = document.documentElement.clientWidth <= 768 ? true : false;
 const SELECTED_MARKER = './marker_sel.png';
 const UNSELECTED_MARKER = './marker_unsel.png';
-const ICON_STYLE = 'width: 25px; height: 34px;';
+const ICON_STYLE = isMonitor ? 'width: 20px; height: 28px;' : 'width: 25px; height: 34px;';
+const ANCHOR = { x: isMonitor ? 10 : 12, y: isMonitor ? 31 : 37 };
 
 let markers = [];
 
@@ -18,12 +21,12 @@ const NaverMap = props => {
 
   const selected_icon = {
     content: `<img src="${SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
-    anchor: new window.naver.maps.Point(12, 37)
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
   };
 
   const unselected_icon = {
     content: `<img src="${UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
-    anchor: new window.naver.maps.Point(12, 37)
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
   };
 
   useEffect(async () => {
@@ -126,6 +129,7 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(NaverMap);
 
 export const MapDiv = styled.div`
+  position: relative;
   width: 100%;
   height: 100%;
   z-index: 1;

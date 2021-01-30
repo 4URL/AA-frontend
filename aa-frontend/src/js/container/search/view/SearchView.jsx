@@ -14,20 +14,19 @@ const SearchView = ({ searchInputRef, onInputSearchInput, onClickSearchIcon, get
   );
 };
 
-// SearchView.displayName = 'SearchView';
-
 // 검색 전체를 감싸고 있는 wrap div
 const SearchWrap = styled.div`
   display: flex;
+  justify-content: space-between;
   width: ${pxToVw(380)};
-  height: 30px;
+  height: 48px;
   position: absolute;
   left: 10px;
-  top: 10px;
+  top: 20px;
   z-index: 10;
   background-color: #fff;
   border-radius: 8px;
-  padding: 10px;
+  padding: 10px 20px;
   box-shadow: 1px 3px 2px #9e9e9e;
   align-items: center;
 
@@ -35,24 +34,37 @@ const SearchWrap = styled.div`
     width: ${pxToVw(330)};
   }
 
-  @media (max-width: ${size.mobile}) {
+  @media (max-width: ${size.mobileL}) {
+    position: absolute;
+    //모바일이면 중앙에 위치
+    left: 50%;
+    transform: translateX(-50%);
     width: 88%;
+  }
+
+  @media (max-width: ${size.mobileS}) {
+    width: 90%;
   }
 `;
 
 // 검색 input
 const SearchKeywordInput = styled.input`
   width: 320px;
-  height: 30px;
-  margin-right: 10px;
-  margin-left: 5px;
+  height: 20px;
+  /* margin-right: 10px; */
+  /* margin-left: 5px; */
   /* border: 1px solid #101010; */
-  padding: 0px 10px;
+  /* padding: 0px 10px; */
   outline: none;
   border-radius: 5px;
   font-size: 15px;
   /* line-height: 14px; */
   font-family: 'Nanum Gothic', sans-serif;
+  /* background-color: teal; */
+
+  @media (max-width: ${size.mobile}) {
+    width: 100%;
+  }
 `;
 
 // 삭제 아이콘
@@ -71,6 +83,7 @@ const DeleteSearchItemIcon = styled(Close)`
 import { Search } from '@styled-icons/fa-solid';
 
 const SearchIcon = styled(Search)`
+  /* background-color: yellowgreen; */
   color: #949494;
   width: 20px;
   height: 20px;
@@ -85,7 +98,7 @@ const SearchIcon = styled(Search)`
 // 카테고리 아이템을 감싸는 div
 const CategoryWrap = styled.div`
   position: absolute;
-  top: 60px;
+  top: 55px;
   right: 0;
   width: 100%;
   box-sizing: border-box;
