@@ -1,11 +1,12 @@
 import React, { memo, useCallback, useMemo, useRef, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'lodash';
 
 import { changeLocation, showDetail, changePageNumber } from '../../../redux/actions/index';
 import { reqGetCategoryData } from '../../../api/api';
-import SearchView from '../view/SearchView';
-import CategoryView from '../view/CategoryView';
+import SearchView from '../views/SearchView';
+import CategoryView from '../views/CategoryView';
 
 const SearchContainer = memo(props => {
   const [categoryData, setCategoryData] = useState([]);
@@ -61,6 +62,7 @@ const SearchContainer = memo(props => {
   // 검색 input의 input 이벤트
   const onInputSearchInput = useCallback(
     e => {
+      console.log('searchData :: ', searchData);
       const eventKey = e.key;
       // setSearchValue(keyword);
       if (eventKey == 'Enter') {
@@ -69,6 +71,8 @@ const SearchContainer = memo(props => {
     },
     [searchData]
   );
+
+  const debouncedSearchInput = _.debounce(onInputSearchInput, 500);
 
   // 검색 아이콘 클릭 이벤트
   const onClickSearchIcon = useCallback(() => {
@@ -82,7 +86,7 @@ const SearchContainer = memo(props => {
     searchLocation = searchInputRef.current.value;
     // 입력한 값이 공백이면 동작 안함
     if (searchLocation.trim() == '') return;
-
+    console.log('searchLocation :: ', searchLocation);
     props.changePageNumber(1);
     setSearchData({
       ...searchData,
@@ -111,7 +115,7 @@ const SearchContainer = memo(props => {
   return (
     <SearchView
       searchInputRef={searchInputRef}
-      onInputSearchInput={onInputSearchInput}
+      onInputSearchInput={debouncedSearchInput}
       onClickSearchIcon={onClickSearchIcon}
       getCategoryDomList={getCategoryDomList}
     />
