@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
-import Main from './js/container/main/containers/MainContainer';
-import LoginMain from './js/container/login/LoginMain';
+import Main from './js/components/main/containers/MainContainer';
+import LoginMain from './js/components/login/LoginMain';
 import NotFound from './js/NotFound';
 // import Awesome from './js/Awesome';
 import Global from './js/styles/global';
