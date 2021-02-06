@@ -28,7 +28,7 @@ export function fetchPlaces(searchData, categoryList, curPage) {
 
   const query = `
     query {
-      search(param:{categoryList:[${categorySeqList}],location: "${location}",searchValue:"${searchValue}", limit: ${itemCount}, page: ${curPage}}) {
+      search(param:{categoryList:[${categorySeqList}],location: "${location}",searchValue:"${searchValue}", page: ${curPage}}) {
         stores {
           categorySeq
           subCategory
