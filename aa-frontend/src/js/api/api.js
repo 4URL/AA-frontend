@@ -28,7 +28,7 @@ export function fetchPlaces(searchData, categoryList, curPage) {
 
   const query = `
     query {
-      search(param:{categoryList:[${categorySeqList}],location: "${location}",searchValue:"${searchValue}", limit: ${itemCount}, page: ${curPage}}) {
+      search(param:{categoryList:[${categorySeqList}],location: "${location}",searchValue:"${searchValue}", page: ${curPage}}) {
         stores {
           categorySeq
           subCategory
@@ -73,7 +73,6 @@ export function fetchDisplayPlaces(categoryList, latlng_ne, latlng_sw) {
         categoryList:[${categoryList}],
         location: "",
         searchValue:"",
-        limit: 6,
         page: 1,
         ne: {lat: ${latlng_ne._lat}, lng: ${latlng_ne._lng}},
         ws: {lat: ${latlng_sw._lat}, lng: ${latlng_sw._lng}}

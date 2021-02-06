@@ -15,6 +15,7 @@ const ICON_STYLE = isMonitor ? 'width: 20px; height: 28px;' : 'width: 25px; heig
 const ANCHOR = { x: isMonitor ? 10 : 12, y: isMonitor ? 31 : 37 };
 
 let markers = [];
+let bDragging = false;
 let map = null;
 
 const NaverMap = props => {
@@ -49,12 +50,15 @@ const NaverMap = props => {
         });
 
         // 지도 Drag 시, 새로운 장소 다시 검색
-        naver.maps.Event.addListener(map, 'dragend', function (e) {
-          console.log('??');
-          searchOnMapMove(map);
+        naver.maps.Event.addListener(map, 'dragstart', function (e) {
+          bDragging = true;
         });
-        naver.maps.Event.addListener(map, 'zoom_changed', function (e) {
+        naver.maps.Event.addListener(map, 'dragend', function (e) {
           searchOnMapMove(map);
+          bDragging = false;
+        });
+        naver.maps.Event.addListener(map, 'bounds_changed', function (e) {
+          if (!bDragging) searchOnMapMove(map);
         });
 
         ///////////////////////
