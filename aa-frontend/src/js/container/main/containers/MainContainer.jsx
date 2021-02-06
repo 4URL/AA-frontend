@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import NaverMap from './NaverMap';
 // import SearchBar from './SearchBar';
-import SearchContainer from '../../search/container/SearchContainer';
+import SearchContainer from '../../search/containers/SearchContainer';
 import PlaceDetailContainer from './PlaceDetailContainer';
 
 import Popup from '../../popup/container/Popup';
