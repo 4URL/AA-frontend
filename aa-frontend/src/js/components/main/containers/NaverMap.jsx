@@ -18,7 +18,7 @@ let markers = [];
 let map;
 
 const NaverMap = props => {
-  const { placesList: results, showList, showDetail, placeDetail, categoryList } = props.mapState;
+  const { placesList: results, showList, showDetail, placeDetail, categoryList, searchData } = props.mapState;
   const [markerClicked, setMarkerClicked] = useState(false);
 
   const selected_icon = {
@@ -64,26 +64,26 @@ const NaverMap = props => {
         naver.maps.Event.addListener(map, 'zoom_changed', function (e) {
           searchOnMapMove(map);
         });
-
+        // 이 부분을 searchbar를 통해 수정
         ///////////////////////
-        // naver.maps.Service.geocode(
-        //   {
-        //     query: '부산'
-        //   },
-        //   function (status, response) {
-        //     if (status === naver.maps.Service.Status.ERROR) {
-        //       console.log('Something Wrong!');
-        //     }
+        naver.maps.Service.geocode(
+          {
+            query: searchData.location
+          },
+          function (status, response) {
+            if (status === naver.maps.Service.Status.ERROR) {
+              console.log('Something Wrong!');
+            }
 
-        //     if (response.v2.meta.totalCount === 0) {
-        //       console.log('totalCount' + response.v2.meta.totalCount);
-        //     }
+            if (response.v2.meta.totalCount === 0) {
+              console.log('totalCount' + response.v2.meta.totalCount);
+            }
 
-        //     var item = response.v2.addresses[0],
-        //       point = new naver.maps.Point(item.x, item.y);
-        //     map.setCenter(point);
-        //   }
-        // );
+            var item = response.v2.addresses[0],
+              point = new naver.maps.Point(item.x, item.y);
+            map.setCenter(point);
+          }
+        );
         ///////////////////////
       }
     } catch (e) {

@@ -95,7 +95,7 @@ const SearchContainer = memo(props => {
     });
 
     // input 초기화
-    searchInputRef.current.value = '';
+    // searchInputRef.current.value = '';
   }, [searchData, categoryList]);
 
   /**
