@@ -16,6 +16,7 @@ const ANCHOR = { x: isMonitor ? 10 : 12, y: isMonitor ? 31 : 37 };
 
 let markers = [];
 let bDragging = false;
+let map = null;
 
 const NaverMap = props => {
   const { placesList: results, showList, showDetail, placeDetail, categoryList } = props.mapState;
@@ -41,7 +42,7 @@ const NaverMap = props => {
           bounds: resultLatLngBounds // Lat,Lng 기준으로 바운드 설정 (cf. 이 옵션에 의해 Zoom, Center 옵션은 무시됨)
         };
 
-        let map = new window.naver.maps.Map('map', mapOptions);
+        if (!map) map = new window.naver.maps.Map('map', mapOptions);
 
         markers = makeMarker(results, map, unselected_icon);
         markers.forEach(marker => {
