@@ -1,24 +1,33 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { pxToVw } from '../../../utility/utility';
+
 const CategoryView = ({ obj, idxValue, onClickCategory }) => {
   return (
-    <Category idx={idxValue} value={obj['seq']} type={obj['seq']} onClick={onClickCategory}>
-      {obj['categoryName']}
-    </Category>
+    <CategoryWrap idx={idxValue} value={obj['seq']} type={obj['seq']} onClick={onClickCategory}>
+      <Category>{obj['categoryName']}</Category>
+    </CategoryWrap>
   );
 };
 
-export default CategoryView;
+const CategoryWrap = styled.div`
+  height: 60px;
+  /* width: ${pxToVw(60)}; */
+`;
 
 // 카테고리 아이템 div
 const Category = styled.div`
-  display: inline-block;
+  width: ${pxToVw(60)};
+  height: 60px;
+  /* flex: 0 0 auto; */
+  /* display: inline-block; */
   border-radius: 5px;
   cursor: pointer;
-  margin: 2px;
+  /* margin: 2px; */
   font-size: 14px;
-  padding: 0px 1px;
+  margin-right: 5px;
+  /* padding: 0px 1px; */
   background-color: ${props => {
     switch (props.type) {
       default:
@@ -46,3 +55,5 @@ const Category = styled.div`
     }};
   }
 `;
+
+export default CategoryView;
