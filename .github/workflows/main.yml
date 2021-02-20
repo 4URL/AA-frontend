@@ -29,6 +29,8 @@ jobs:
       - name: build project
         run: npm run build:production
         working-directory: ./aa-frontend
+        env:
+          CI: false
 
       - name: Deploy S3 bucket
         env:
