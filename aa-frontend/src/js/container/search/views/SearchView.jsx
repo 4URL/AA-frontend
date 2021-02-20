@@ -1,17 +1,32 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css, keyframes } from 'styled-components';
+import { KeyboardArrowDown, KeyboardArrowUp } from '@styled-icons/material-rounded';
 
 import { pxToVw } from '../../../utility/utility';
 import size from '../../../StyledVariable';
 
 const SearchView = ({ searchInputRef, onInputSearchInput, onClickSearchIcon, getCategoryDomList }) => {
+  const [toggleCategory, setToggleCategory] = useState(false);
+
+  // todo: 이 부분이 7번 호출됨 왜?
+  console.log('getCategoryDomList :: ', getCategoryDomList);
+
   return (
     <SearchWrap>
       <SearchKeywordInput ref={searchInputRef} onKeyUp={onInputSearchInput} placeholder="지역명으로 검색" />
       <SearchIcon onClick={onClickSearchIcon}></SearchIcon>
-      <CategoryWrap>{getCategoryDomList}</CategoryWrap>
+      {/* <CategoryWrap>{getCategoryDomList}</CategoryWrap> */}
+      <CategoryContainer toggled={toggleCategory}>
+        <CategoryList>{getCategoryDomList}</CategoryList>
+        <ToggleButtonDiv onClick={() => setToggleCategory(!toggleCategory)}>{toggleCategory ? <ToggleButtonUp /> : <ToggleButtonDown />}</ToggleButtonDiv>
+      </CategoryContainer>
     </SearchWrap>
   );
+
+  // function clickToggleButton() {
+  //   const toggle = !toggleCategory;
+  //   setToggleCategory(toggle);
+  // }
 };
 
 // 검색 전체를 감싸고 있는 wrap div
@@ -83,7 +98,6 @@ const DeleteSearchItemIcon = styled(Close)`
 import { Search } from '@styled-icons/fa-solid';
 
 const SearchIcon = styled(Search)`
-  /* background-color: yellowgreen; */
   color: #949494;
   width: 20px;
   height: 20px;
@@ -95,12 +109,32 @@ const SearchIcon = styled(Search)`
   }
 `;
 
+// CategoryContainer를 위한 toggle animation
+const easeOut = css`
+  height: 145px;
+  transition: height 0.15s ease-out;
+`;
+
+const easeIn = css`
+  height: 85px;
+  transition: height 0.15s ease-in;
+`;
+
 // 카테고리 아이템을 감싸는 div
-const CategoryWrap = styled.div`
+const CategoryContainer = styled.div`
+  background-color: #fff;
   position: absolute;
   top: 55px;
   right: 0;
-  width: 100%;
+  width: ${pxToVw(380)};
+  ${({ toggled }) => (toggled ? easeOut : easeIn)};
+  border-radius: 8px;
+  box-shadow: 1px 3px 2px #9e9e9e;
+  display: flex;
+  flex-direction: column;
+  /* flex-wrap: nowrap; */
+  /* overflow-x: auto; */
+  /* padding: 0 30px; */
   box-sizing: border-box;
   &[show='off'] {
     display: none;
@@ -108,6 +142,45 @@ const CategoryWrap = styled.div`
   &[show='on'] {
     display: block;
   }
+`;
+
+const CategoryList = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  /* justify-content: space-around; */
+  overflow: hidden;
+  width: 100%;
+  height: 120px;
+  padding: 0 20px;
+`;
+
+const ToggleButtonDiv = styled.div`
+  position: relative;
+  border-top: 1px solid #e5e5e5;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const toggleButton = css`
+  height: 30px;
+  width: 30px;
+  color: #808080;
+
+  ${ToggleButtonDiv}:hover & {
+    color: #000;
+  }
+`;
+
+const ToggleButtonUp = styled(KeyboardArrowUp)`
+  ${toggleButton}
+`;
+
+const ToggleButtonDown = styled(KeyboardArrowDown)`
+  ${toggleButton}
 `;
 
 export default SearchView;
