@@ -32,17 +32,23 @@ const NaverMap = props => {
     anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
   };
 
+  // 첫 렌더링 시 유저 위치 파악
+  useEffect(() => {
+    map = new window.naver.maps.Map('map');
+    getUserLocation(map);
+  }, []);
+
   useEffect(async () => {
     try {
       // if there are results
       if (results.length > 0) {
-        const resultLatLngBounds = getResultBounds(results);
+        // const resultLatLngBounds = getResultBounds(results);
 
-        const mapOptions = {
-          bounds: resultLatLngBounds // Lat,Lng 기준으로 바운드 설정 (cf. 이 옵션에 의해 Zoom, Center 옵션은 무시됨)
-        };
+        // const mapOptions = {
+        //   bounds: resultLatLngBounds // Lat,Lng 기준으로 바운드 설정 (cf. 이 옵션에 의해 Zoom, Center 옵션은 무시됨)
+        // };
 
-        if (!map) map = new window.naver.maps.Map('map', mapOptions);
+        // if (!map) map = new window.naver.maps.Map('map', mapOptions);
 
         markers = makeMarker(results, map, unselected_icon);
         markers.forEach(marker => {
@@ -140,6 +146,39 @@ const NaverMap = props => {
         marker.addListener('click', () => clickMarker(value.stores, marker));
       });
     });
+  }
+
+  /**
+   * 현재 위치를 지정해주는 함수
+   * @param {naver map object} map
+   */
+  function getUserLocation(map) {
+    let navigator = window.navigator;
+    // Try HTML5 geolocation
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          console.log('get user location');
+          const options = {
+            center: new window.naver.maps.LatLng(position.coords.latitude, position.coords.longitude),
+            zoom: 15
+          };
+          map.setOptions(options);
+        },
+        error => {
+          // error가 발생했을 때
+          console.error(error);
+        },
+        {
+          // 옵션
+          enableHighAccuracy: false, // 배터리를 사용해서 더 정확한 위치를 검색
+          maximumAge: 0, // 한 번 찾은 위치를 몇소동안 캐생할 지
+          timeout: Infinity // 주어진 초 안에 찾지 못하면 에러 발생
+        }
+      );
+    } else {
+      // HTML5가 아니어서 geolocation을 사용할 수 없을 때
+    }
   }
 
   return <MapDiv id="map" onClick={() => handleClick()} showList={showList} />;
