@@ -50,12 +50,18 @@ const NaverMap = props => {
 
         // if (!map) map = new window.naver.maps.Map('map', mapOptions);
 
+        markers.forEach(marker => {
+          marker.setMap(null);
+        });
         markers = makeMarker(results, map, unselected_icon);
         markers.forEach(marker => {
           marker.addListener('click', () => clickMarker(results, marker));
         });
 
         // 지도 Drag 시, 새로운 장소 다시 검색
+        naver.maps.Event.clearListeners(map, 'dragstart');
+        naver.maps.Event.clearListeners(map, 'dragend');
+        naver.maps.Event.clearListeners(map, 'bounds_changed');
         naver.maps.Event.addListener(map, 'dragstart', function (e) {
           bDragging = true;
         });

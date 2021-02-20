@@ -9,17 +9,17 @@ const SearchView = ({ searchInputRef, onInputSearchInput, onClickSearchIcon, get
   const [toggleCategory, setToggleCategory] = useState(false);
 
   // todo: 이 부분이 7번 호출됨 왜?
-  console.log('getCategoryDomList :: ', getCategoryDomList);
+  //console.log('getCategoryDomList :: ', getCategoryDomList);
 
   return (
     <SearchWrap>
       <SearchKeywordInput ref={searchInputRef} onKeyUp={onInputSearchInput} placeholder="지역명으로 검색" />
       <SearchIcon onClick={onClickSearchIcon}></SearchIcon>
       {/* <CategoryWrap>{getCategoryDomList}</CategoryWrap> */}
-      <CategoryContainer toggled={toggleCategory}>
+      {/* <CategoryContainer toggled={toggleCategory}>
         <CategoryList>{getCategoryDomList}</CategoryList>
         <ToggleButtonDiv onClick={() => setToggleCategory(!toggleCategory)}>{toggleCategory ? <ToggleButtonUp /> : <ToggleButtonDown />}</ToggleButtonDiv>
-      </CategoryContainer>
+      </CategoryContainer> */}
     </SearchWrap>
   );
 
