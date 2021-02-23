@@ -28,13 +28,13 @@ jobs:
 
       - name: create env file
         run: |
-          touch .env
-          echo REACT_APP_ENDPOINT=${{ secrets.REACT_APP_ENDPOINT }} >> .env
-          echo REACT_APP_NAVER_MAP_ID=${{ secrets.REACT_APP_NAVER_MAP_ID }} >> .env
-          cat .env
+          touch .env.production
+          echo REACT_APP_ENDPOINT=${{ secrets.REACT_APP_ENDPOINT }} >> .env.production
+          echo REACT_APP_NAVER_MAP_ID=${{ secrets.REACT_APP_NAVER_MAP_ID }} >> .env.production
+          cat .env.production
 
       - name: build project
-        run: npm run build
+        run: npm run build:production
         working-directory: ./aa-frontend
         env:
           CI: false
