@@ -2,6 +2,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+console.log('REACT_APP_ENV_TEST :: ', process.env.REACT_APP_ENV_TEST);
+
 const endpoint = process.env.REACT_APP_ENDPOINT;
 
 const getQueryOption = query => {

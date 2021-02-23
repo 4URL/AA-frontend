@@ -4,6 +4,9 @@ on:
   pull_request:
     branches:
       - main
+  push:
+    branches:
+      - Starcush/feature/githubaction-error
 
 jobs:
   build-and-deploy:
@@ -31,6 +34,7 @@ jobs:
           touch .env.production
           echo REACT_APP_ENDPOINT=${{ secrets.REACT_APP_ENDPOINT }} >> .env.production
           echo REACT_APP_NAVER_MAP_ID=${{ secrets.REACT_APP_NAVER_MAP_ID }} >> .env.production
+          echo REACT_APP_ENV_TEST=${{ secrets.REACT_APP_ENV_TEST }} >> .env.production
           cat .env.production
         working-directory: ./aa-frontend
 
