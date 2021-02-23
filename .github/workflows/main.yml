@@ -26,13 +26,18 @@ jobs:
         run: npm install
         working-directory: ./aa-frontend
 
+      - name: create env file
+        run: |
+          touch .env
+          echo REACT_APP_ENDPOINT=${{ secrets.REACT_APP_ENDPOINT }} >> .env
+          echo REACT_APP_NAVER_MAP_ID=${{ secrets.REACT_APP_NAVER_MAP_ID }} >> .env
+          cat .env
+
       - name: build project
         run: npm run build
         working-directory: ./aa-frontend
         env:
           CI: false
-          REACT_APP_ENDPOINT: ${{ secrets.REACT_APP_ENDPOINT }}
-          REACT_APP_NAVER_MAP_ID: ${{ secrets.REACT_APP_NAVER_MAP_ID }}
 
       - name: Deploy S3 bucket
         env:
