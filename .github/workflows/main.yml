@@ -32,6 +32,7 @@ jobs:
           echo REACT_APP_ENDPOINT=${{ secrets.REACT_APP_ENDPOINT }} >> .env.production
           echo REACT_APP_NAVER_MAP_ID=${{ secrets.REACT_APP_NAVER_MAP_ID }} >> .env.production
           cat .env.production
+        working-directory: ./aa-frontend
 
       - name: build project
         run: npm run build:production
