@@ -4,13 +4,12 @@ on:
   pull_request:
     branches:
       - main
-  push:
-    branches:
-      - Starcush/feature/githubaction-error
+    types: [closed]
 
 jobs:
   build-and-deploy:
     name:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout source code.
@@ -34,7 +33,6 @@ jobs:
           touch .env.production
           echo REACT_APP_ENDPOINT=${{ secrets.REACT_APP_ENDPOINT }} >> .env.production
           echo REACT_APP_NAVER_MAP_ID=${{ secrets.REACT_APP_NAVER_MAP_ID }} >> .env.production
-          echo REACT_APP_ENV_TEST=${{ secrets.REACT_APP_ENV_TEST }} >> .env.production
           cat .env.production
         working-directory: ./aa-frontend
 
