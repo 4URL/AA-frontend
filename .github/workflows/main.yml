@@ -4,10 +4,12 @@ on:
   pull_request:
     branches:
       - main
+    types: [closed]
 
 jobs:
   build-and-deploy:
     name:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout source code.
