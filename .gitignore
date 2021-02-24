@@ -1,1 +1,5 @@
-nodemodules/
+node_modules/
+.env.production
+.env.development
+dummy/
+todo.md

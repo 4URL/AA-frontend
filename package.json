@@ -1,0 +1,24 @@
+{
+  "name": "aa-frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/4URL/AA-frontend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/4URL/AA-frontend/issues"
+  },
+  "homepage": "https://github.com/4URL/AA-frontend#readme",
+  "dependencies": {
+    "@styled-icons/bootstrap": "^10.19.0",
+    "@styled-icons/fa-solid": "^10.22.0",
+    "styled-icons": "^10.22.0"
+  }
+}
