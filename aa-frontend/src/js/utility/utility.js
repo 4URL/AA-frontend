@@ -40,6 +40,8 @@ export function getResultBounds(results) {
 export function makeMarker(results, map, iconImage) {
   var markers = [];
   results.forEach((result, idx) => {
+    console.log('makeMarker에서의 lat, lng :: ', result.lat);
+    console.log('그리고 type :: ', typeof result.lat);
     const markerOption = {
       map,
       position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
