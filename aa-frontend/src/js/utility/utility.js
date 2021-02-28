@@ -48,6 +48,28 @@ export function makeMarker(results, map, iconImage) {
     };
     let marker = new window.naver.maps.Marker(markerOption);
 
+    var contentString = '<div class="iw_inner">';
+    if (result.name) contentString += '<h3>' + result.name + '</h3>';
+    contentString += '<p>';
+    if (result.description) contentString += result.description + '<br />';
+    if (result.convenience) contentString += result.convenience + '<br />';
+    if (result.homepage) contentString += '<a href="' + result.homepage + '" target="_blank">Homepage</a><br/>';
+    if (result.mapUrl) contentString += '<a href="' + result.mapUrl + '" target="_blank">Place Info</a>';
+    contentString += '</p>';
+    contentString += '</div>';
+
+    var infowindow = new naver.maps.InfoWindow({
+      content: contentString
+    });
+
+    naver.maps.Event.addListener(marker, 'click', function (e) {
+      if (infowindow.getMap()) {
+        infowindow.close();
+      } else {
+        infowindow.open(map, marker);
+      }
+    });
+
     // marker.get('seq')를 통해서 idx값을 얻을 수 있음
     marker.set('seq', idx);
     markers.push(marker);
