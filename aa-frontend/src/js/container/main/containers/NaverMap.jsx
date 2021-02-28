@@ -13,12 +13,22 @@ import icon from '../views/iconStyles';
 let markers = [];
 let bDragging = false;
 let map = null;
-let results = null;
+// let results = null;
 
 const NaverMap = props => {
-  const { /* placesList: results, */ showList, /* showDetail, placeDetail, */ categoryList } = props.mapState;
+  const { /* placesList: results, */ showList, /* showDetail, placeDetail, */ categoryList, searchData } = props.mapState;
   // const [markerClicked, setMarkerClicked] = useState(false);
   const [boundary, setBoundary] = useState({});
+
+  const { loading, error, data } = useQuery(FETCH_PLACES, {
+    variables: {
+      categoryList,
+      ne_lat: boundary.ne_lat,
+      ne_lng: boundary.ne_lng,
+      sw_lat: boundary.sw_lat,
+      sw_lng: boundary.sw_lng
+    }
+  });
 
   // 첫 렌더링 시 유저 위치 파악
   useEffect(async () => {
@@ -41,22 +51,9 @@ const NaverMap = props => {
     updateBoundary(map.bounds._ne, map.bounds._sw);
   }, []);
 
-  const { loading, error, data } = useQuery(FETCH_PLACES, {
-    variables: {
-      categoryList,
-      ne_lat: boundary.ne_lat,
-      ne_lng: boundary.ne_lng,
-      sw_lat: boundary.sw_lat,
-      sw_lng: boundary.sw_lng
-    }
-  });
-
-  if (!loading) {
-    results = data.search.stores;
-  }
-
   useEffect(() => {
-    if (results && results.length > 0) {
+    if (!loading) {
+      const results = data.search.stores;
       markers.forEach(marker => {
         marker.setMap(null);
       });
@@ -65,29 +62,32 @@ const NaverMap = props => {
       markers.forEach(marker => {
         marker.addListener('click', () => clickMarker(results, marker));
       });
-
-      ///////////////////////
-      // naver.maps.Service.geocode(
-      //   {
-      //     query: '부산'
-      //   },
-      //   function (status, response) {
-      //     if (status === naver.maps.Service.Status.ERROR) {
-      //       console.log('Something Wrong!');
-      //     }
-
-      //     if (response.v2.meta.totalCount === 0) {
-      //       console.log('totalCount' + response.v2.meta.totalCount);
-      //     }
-
-      //     var item = response.v2.addresses[0],
-      //       point = new naver.maps.Point(item.x, item.y);
-      //     map.setCenter(point);
-      //   }
-      // );
-      ///////////////////////
     }
-  }, [results]);
+  }, [data]);
+
+  useEffect(() => {
+    if (searchData.location) {
+      naver.maps.Service.geocode(
+        {
+          query: searchData.location
+        },
+        function (status, response) {
+          if (status === naver.maps.Service.Status.ERROR) {
+            console.log('Something Wrong!');
+          }
+
+          if (response.v2.meta.totalCount === 0) {
+            console.log('totalCount' + response.v2.meta.totalCount);
+          }
+
+          var item = response.v2.addresses[0],
+            point = new naver.maps.Point(item.x, item.y);
+          map.setCenter(point);
+        }
+      );
+      updateBoundary(map.bounds._ne, map.bounds._sw);
+    }
+  }, [searchData]);
 
   // list중에서 하나를 클릭하면 핀도 같이 반응 하기 위해 작성
   // useEffect(() => {
