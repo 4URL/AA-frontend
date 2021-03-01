@@ -3,9 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^1.2.32",
-    "@fortawesome/free-solid-svg-icons": "^5.15.1",
-    "@fortawesome/react-fontawesome": "^0.1.13",
+    "@apollo/client": "^3.3.11",
     "@styled-icons/bootstrap": "^10.19.0",
     "@styled-icons/boxicons-regular": "^10.18.0",
     "@styled-icons/fa-solid": "^10.22.0",
@@ -15,6 +13,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "dotenv": "^8.2.0",
+    "graphql": "^15.5.0",
     "lodash": "^4.17.20",
     "react": "^17.0.1",
     "react-copy-to-clipboard": "^5.0.2",
