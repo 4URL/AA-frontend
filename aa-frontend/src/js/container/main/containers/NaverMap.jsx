@@ -58,10 +58,10 @@ const NaverMap = props => {
         marker.setMap(null);
       });
 
-      markers = makeMarker(results, map, icon.unselected_icon);
-      markers.forEach(marker => {
-        marker.addListener('click', () => clickMarker(results, marker));
-      });
+      markers = makeMarker(results, map, icon);
+      // markers.forEach(marker => {
+      //   marker.addListener('click', () => clickMarker(results, marker));
+      // });
     }
   }, [data]);
 
@@ -80,8 +80,13 @@ const NaverMap = props => {
             console.log('totalCount' + response.v2.meta.totalCount);
           }
 
-          var item = response.v2.addresses[0],
-            point = new naver.maps.Point(item.x, item.y);
+          if (!response.v2.addresses[0]) {
+            alert('장소를 찾을 수 없습니다. (검색어 : ' + searchData.location + ')');
+            return;
+          }
+
+          var item = response.v2.addresses[0];
+          var point = new naver.maps.Point(item.x, item.y);
           map.setCenter(point);
         }
       );
