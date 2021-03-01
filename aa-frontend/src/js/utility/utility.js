@@ -37,9 +37,16 @@ export function getResultBounds(results) {
   return new window.naver.maps.LatLngBounds(lanLng_sw, lanLng_ne);
 }
 
-export function makeMarker(results, map, iconImage) {
+export function makeMarker(results, map, icon) {
   var markers = [];
   results.forEach((result, idx) => {
+    var iconImage;
+    if (result.categorySeq == 1) iconImage = icon.restaurant_unselected_icon;
+    else if (result.categorySeq == 2) iconImage = icon.cafe_unselected_icon;
+    else if (result.categorySeq == 3 || result.categorySeq == 5) iconImage = icon.room_unselected_icon;
+    else if (result.categorySeq == 4) iconImage = icon.doghouse_unselected_icon;
+    else if (result.categorySeq == 6) iconImage = icon.playground_unselected_icon;
+    else iconImage = icon.etc_unselected_icon;
     const markerOption = {
       map,
       position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
@@ -48,18 +55,29 @@ export function makeMarker(results, map, iconImage) {
     };
     let marker = new window.naver.maps.Marker(markerOption);
 
-    var contentString = '<div class="iw_inner">';
-    if (result.name) contentString += '<h3>' + result.name + '</h3>';
-    contentString += '<p>';
-    if (result.description) contentString += result.description + '<br />';
-    if (result.convenience) contentString += result.convenience + '<br />';
-    if (result.homepage) contentString += '<a href="' + result.homepage + '" target="_blank">Homepage</a><br/>';
-    if (result.mapUrl) contentString += '<a href="' + result.mapUrl + '" target="_blank">Place Info</a>';
-    contentString += '</p>';
-    contentString += '</div>';
+    if (!result.name) return;
+
+    const storeTitle = result.subCategory
+      ? `<div class='info'><h3 style="display: inline-block;">${result.name}</h3><p style="display: inline-block;">&nbsp${result.subCategory}</p></div>`
+      : `<h3><div>${result.name}</div></h3>`;
+    const description = result.description ? `${result.description}<br />` : '';
+    const convenience = result.convenience ? `${result.convenience}<br />` : '';
+    const homepage = result.homepage ? `<a href="${result.homepage}" target="_blank">Homepage</a><br/>` : '';
+    const mapUrl = result.mapUrl ? `<a href="${result.mapUrl}" target="_blank">Naver map</a><br/>` : '';
+    const newContent = `
+    <div class="iw_inner">
+      ${storeTitle}
+      <p>
+      ${window.innerWidth > 768 ? description : ''}
+      ${window.innerWidth > 768 ? convenience : ''}
+      ${homepage}
+      ${mapUrl}
+      </p>
+    </div>
+    `;
 
     var infowindow = new naver.maps.InfoWindow({
-      content: contentString
+      content: newContent
     });
 
     naver.maps.Event.addListener(marker, 'click', function (e) {

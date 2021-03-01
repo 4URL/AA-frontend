@@ -1,11 +1,73 @@
+const RESTAURANT_SELECTED_MARKER = './restaurant_sel.png';
+const RESTAURANT_UNSELECTED_MARKER = './restaurant_unsel.png';
+const CAFE_SELECTED_MARKER = './cafe_sel.png';
+const CAFE_UNSELECTED_MARKER = './cafe_unsel.png';
+const ROOM_SELECTED_MARKER = './room_sel.png';
+const ROOM_UNSELECTED_MARKER = './room_unsel.png';
+const DOGHOUSE_SELECTED_MARKER = './doghouse_sel.png';
+const DOGHOUSE_UNSELECTED_MARKER = './doghouse_unsel.png';
+const PLAYGROUND_SELECTED_MARKER = './playground_sel.png';
+const PLAYGROUND_UNSELECTED_MARKER = './playground_unsel.png';
+const ETC_SELECTED_MARKER = './etc_sel.png';
+const ETC_UNSELECTED_MARKER = './etc_unsel.png';
+
 const SELECTED_MARKER = './marker_sel.png';
 const UNSELECTED_MARKER = './marker_unsel.png';
 
 const isMonitor = document.documentElement.clientWidth <= 768 ? true : false;
-const ICON_STYLE = isMonitor ? 'width: 20px; height: 28px;' : 'width: 25px; height: 34px;';
-const ANCHOR = { x: isMonitor ? 10 : 12, y: isMonitor ? 31 : 37 };
+const ICON_STYLE = isMonitor ? 'width: 22px; height: 25px;' : 'width: 30px; height: 34px;';
+const ANCHOR = { x: isMonitor ? 11 : 15, y: isMonitor ? 25 : 34 };
 
 export default {
+  restaurant_selected_icon: {
+    content: `<img src="${RESTAURANT_SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  restaurant_unselected_icon: {
+    content: `<img src="${RESTAURANT_UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  cafe_selected_icon: {
+    content: `<img src="${CAFE_SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  cafe_unselected_icon: {
+    content: `<img src="${CAFE_UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  room_selected_icon: {
+    content: `<img src="${ROOM_SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  room_unselected_icon: {
+    content: `<img src="${ROOM_UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  doghouse_selected_icon: {
+    content: `<img src="${DOGHOUSE_SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  doghouse_unselected_icon: {
+    content: `<img src="${DOGHOUSE_UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  playground_selected_icon: {
+    content: `<img src="${PLAYGROUND_SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  playground_unselected_icon: {
+    content: `<img src="${PLAYGROUND_UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  etc_selected_icon: {
+    content: `<img src="${ETC_SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+  etc_unselected_icon: {
+    content: `<img src="${ETC_UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
+    anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
+  },
+
   selected_icon: {
     content: `<img src="${SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
     anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
@@ -15,13 +77,3 @@ export default {
     anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
   }
 };
-
-// const selected_icon = {
-//   content: `<img src="${SELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
-//   anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
-// };
-
-// const unselected_icon = {
-//   content: `<img src="${UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
-//   anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
-// };
