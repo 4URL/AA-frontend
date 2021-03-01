@@ -15,8 +15,8 @@ const SELECTED_MARKER = './marker_sel.png';
 const UNSELECTED_MARKER = './marker_unsel.png';
 
 const isMonitor = document.documentElement.clientWidth <= 768 ? true : false;
-const ICON_STYLE = isMonitor ? 'width: 22px; height: 25px;' : 'width: 30px; height: 34px;';
-const ANCHOR = { x: isMonitor ? 11 : 15, y: isMonitor ? 25 : 34 };
+const ICON_STYLE = isMonitor ? 'width: 26px; height: 30px;' : 'width: 30px; height: 34px;';
+const ANCHOR = { x: isMonitor ? 13 : 15, y: isMonitor ? 30 : 34 };
 
 export default {
   restaurant_selected_icon: {
