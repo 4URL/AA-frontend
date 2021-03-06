@@ -13,6 +13,7 @@ import icon from '../views/iconStyles';
 let markers = [];
 let bDragging = false;
 let map = null;
+let curPos = null; // type : window.naver.maps.LatLng
 // let results = null;
 
 const NaverMap = props => {
@@ -48,17 +49,21 @@ const NaverMap = props => {
       if (!bDragging) updateBoundary(map.bounds._ne, map.bounds._sw);
     });
 
+    curPos = map.center;
     updateBoundary(map.bounds._ne, map.bounds._sw);
   }, []);
 
   useEffect(() => {
     if (!loading) {
+      if (curPos.x > map.bounds._sw.x && curPos.x < map.bounds._ne.x && curPos.y > map.bounds._sw.y && curPos.y < map.bounds._ne.y) return;
+
       const results = data.search.stores;
       markers.forEach(marker => {
         marker.setMap(null);
       });
 
       markers = makeMarker(results, map, icon);
+      curPos = map.center;
       // markers.forEach(marker => {
       //   marker.addListener('click', () => clickMarker(results, marker));
       // });
