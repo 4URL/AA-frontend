@@ -61,23 +61,38 @@ export function makeMarker(results, map, icon) {
       ? `<div class='info'><h3 style="display: inline-block;">${result.name}</h3><p style="display: inline-block;">&nbsp${result.subCategory}</p></div>`
       : `<h3><div>${result.name}</div></h3>`;
     const description = result.description ? `${result.description}<br />` : '';
-    const convenience = result.convenience ? `${result.convenience}<br />` : '';
-    const homepage = result.homepage ? `<a href="${result.homepage}" target="_blank">Homepage</a><br/>` : '';
-    const mapUrl = result.mapUrl ? `<a href="${result.mapUrl}" target="_blank">Naver map</a><br/>` : '';
+    let convenience = '';
+    if (result.convenience) {
+      let convList = result.convenience.split('#');
+      for (let i = 1; i < convList.length; i++) {
+        convenience += `#${convList[i]}`;
+        if (i % 6 == 0) convenience += '<br />';
+        else if (i == convList.length - 1) convenience += '<br />';
+      }
+    }
+    const homepage = result.homepage ? `<a href="${result.homepage}"><img src="homepage.png" alt="Homepage" width="25" height="25"></a>` : '';
+    const mapUrl = result.mapUrl ? `<a href="${result.mapUrl}"><img src="map.png" alt="Naver Map" width="25" height="25"></a><br/>` : '';
     const newContent = `
-    <div class="iw_inner">
+    <div class="iw_inner" style="padding: 5px font-family: 'Roboto','Noto Sans KR',AppleSDGothicNeo-Regular,'Malgun Gothic','맑은 고딕',dotum,'돋움',sans-serif">
       ${storeTitle}
       <p>
       ${window.innerWidth > 768 ? description : ''}
-      ${window.innerWidth > 768 ? convenience : ''}
-      ${homepage}
-      ${mapUrl}
+      <div style="color:#6e96ff;">
+        ${window.innerWidth > 768 ? convenience : ''}
+      </div>
+      <div style="padding-top: 12px">
+        ${homepage}
+        ${mapUrl}
+      <div>
       </p>
     </div>
     `;
 
     var infowindow = new naver.maps.InfoWindow({
-      content: newContent
+      content: newContent,
+      borderColor: '#E6C128',
+      borderWidth: 3,
+      anchorSkew: true
     });
 
     naver.maps.Event.addListener(marker, 'click', function (e) {
