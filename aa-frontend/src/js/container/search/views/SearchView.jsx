@@ -9,17 +9,16 @@ const SearchView = ({ searchInputRef, onInputSearchInput, onClickSearchIcon, get
   const [toggleCategory, setToggleCategory] = useState(false);
 
   // todo: 이 부분이 7번 호출됨 왜?
-  //console.log('getCategoryDomList :: ', getCategoryDomList);
+  console.log('getCategoryDomList :: ', getCategoryDomList);
 
   return (
     <SearchWrap>
       <SearchKeywordInput ref={searchInputRef} onKeyUp={onInputSearchInput} placeholder="지역명으로 검색" />
       <SearchIcon onClick={onClickSearchIcon}></SearchIcon>
       {/* <CategoryWrap>{getCategoryDomList}</CategoryWrap> */}
-      {/* <CategoryContainer toggled={toggleCategory}>
+      <CategoryContainer toggled={toggleCategory}>
         <CategoryList>{getCategoryDomList}</CategoryList>
-        <ToggleButtonDiv onClick={() => setToggleCategory(!toggleCategory)}>{toggleCategory ? <ToggleButtonUp /> : <ToggleButtonDown />}</ToggleButtonDiv>
-      </CategoryContainer> */}
+      </CategoryContainer>
     </SearchWrap>
   );
 
@@ -151,36 +150,8 @@ const CategoryList = styled.div`
   /* justify-content: space-around; */
   overflow: hidden;
   width: 100%;
-  height: 120px;
-  padding: 0 20px;
-`;
-
-const ToggleButtonDiv = styled.div`
-  position: relative;
-  border-top: 1px solid #e5e5e5;
-  height: 25px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-`;
-
-const toggleButton = css`
-  height: 30px;
-  width: 30px;
-  color: #808080;
-
-  ${ToggleButtonDiv}:hover & {
-    color: #000;
-  }
-`;
-
-const ToggleButtonUp = styled(KeyboardArrowUp)`
-  ${toggleButton}
-`;
-
-const ToggleButtonDown = styled(KeyboardArrowDown)`
-  ${toggleButton}
+  /* height: 120px; */
+  /* padding: 0 20px; */
 `;
 
 export default SearchView;
