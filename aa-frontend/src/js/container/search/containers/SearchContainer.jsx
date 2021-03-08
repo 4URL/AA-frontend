@@ -20,7 +20,7 @@ const SearchContainer = memo(props => {
   useEffect(async () => {
     try {
       const data = await reqGetCategoryData();
-      setCategoryData(data.concat());
+      setCategoryData([...categoryData, ...data]);
     } catch (e) {
       console.log(e);
     }
@@ -35,9 +35,10 @@ const SearchContainer = memo(props => {
   const onClickCategory = useCallback(
     e => {
       const categoryObj = e.target;
+      console.log(categoryObj);
       const isSelected = categoryObj.getAttribute('isSelected');
       const value = categoryObj.getAttribute('value');
-      if (isSelected != 'true') {
+      if (isSelected !== 'true') {
         categoryObj.setAttribute('isSelected', 'true');
         setCategoryList(categoryList.concat(value));
       } else {
@@ -50,9 +51,10 @@ const SearchContainer = memo(props => {
 
   // 카테고리 아이템  생성하기
   const getCategoryDomList = useMemo(() => {
+    console.log('categoryData :: ', categoryData);
     let categoryArr = categoryData.concat();
 
-    categoryArr = categoryArr.map((obj, idx) => {
+    categoryArr = categoryData.map((obj, idx) => {
       return <CategoryView key={idx} obj={obj} idxValue={idx} onClickCategory={onClickCategory} />;
     });
 

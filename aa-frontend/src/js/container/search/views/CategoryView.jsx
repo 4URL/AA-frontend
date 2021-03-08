@@ -8,86 +8,72 @@ import { Campground, Guitar } from '@styled-icons/fa-solid';
 import { pxToVw } from '../../../utility/utility';
 
 const CategoryView = ({ obj, idxValue, onClickCategory }) => {
+  // 이 부분이 클릭될 때 마다 다시 렌더링 되야하는거 아닌가?
   return (
     <CategoryWrap idx={idxValue} value={obj['seq']} type={obj['seq']} onClick={onClickCategory}>
-      <Category>{categorySwitch(obj['categoryName'])}</Category>
+      {categorySwitch(obj['categoryName'])}
     </CategoryWrap>
   );
 
   function categorySwitch(name) {
+    let icon = null;
+    let categoryName = null;
+
     switch (name) {
       case '식당':
-        return (
-          <>
-            <RestaurantIcon />
-            식당
-          </>
-        );
+        icon = <RestaurantIcon />;
+        categoryName = '식당';
+        break;
       case '카페':
-        return (
-          <>
-            <CafeIcon />
-            카페
-          </>
-        );
+        icon = <CafeIcon />;
+        categoryName = '카페';
+        break;
       case '호텔&리조트':
-        return (
-          <>
-            <HotelIcon />
-            {'숙소'}
-          </>
-        );
+        icon = <HotelIcon />;
+        categoryName = '숙소';
+        break;
       case '반려동물호텔':
-        return (
-          <>
-            <PetsIcon />
-            {'호텔'}
-          </>
-        );
+        icon = <PetsIcon />;
+        categoryName = '호텔';
+        break;
       case '펜션':
-        return (
-          <>
-            <HomeIcon />
-            펜션
-          </>
-        );
+        icon = <HomeIcon />;
+        categoryName = '펜션';
+        break;
       case '애견놀이터':
-        return (
-          <>
-            <CampgroundIcon />
-            {'놀이터'}
-          </>
-        );
+        icon = <CampgroundIcon />;
+        categoryName = '놀이터';
+        break;
       default:
-        return (
-          <>
-            <GuitarIcon />
-            기타
-          </>
-        );
+        icon = <GuitarIcon />;
+        categoryName = '기타';
+        break;
     }
+
+    return (
+      <Category>
+        <IconWrap>{icon}</IconWrap>
+        <ContentsWrap>{categoryName}</ContentsWrap>
+      </Category>
+    );
   }
 };
 
 const CategoryWrap = styled.div`
   box-sizing: border-box;
+  border: 2px solid #fff;
   height: 35px;
   width: ${pxToVw(90)};
-  margin-left: 4px;
-  margin-bottom: 5px;
   border-radius: 6px;
 
   &:nth-child(-n + 4) {
-    margin-top: 5px;
+    margin-top: 3px;
   }
 
   &:nth-child(4) {
     margin-right: 4px;
   }
 
-  &:hover {
-    background-color: #3f4040;
-  }
   /* background-color: ${props => {
     switch (props.type) {
       default:
@@ -99,71 +85,84 @@ const CategoryWrap = styled.div`
       default:
         return '#ffffff';
     }
-  }};
+  }}; */
   &[isselected='true'] {
     background-color: ${props => {
-    switch (props.type) {
-      default:
-        return '#222222';
-    }
-  }};
-    color: ${props => {
-    switch (props.type) {
-      default:
-        return '#ffffff';
-    }
-  }};
-  } */
+      switch (props.type) {
+        default:
+          return 'blue';
+      }
+    }};
+  }
 `;
 
 // 카테고리 아이템 div
 const Category = styled.div`
   display: flex;
-  justify-content: center;
+  padding-left: 15px;
   align-items: center;
   height: 35px;
   cursor: pointer;
-  font-size: 14px;
-  /* line-height: 30px; */
   color: #3f4040;
-
-  ${CategoryWrap}:hover & {
-    color: #ffffff;
-  }
+  font-weight: 600;
 `;
 
 const category = css`
-  margin: 0 5px;
   height: 25px;
   width: 25px;
 `;
 
+const IconWrap = styled.div`
+  display: inline-block;
+  height: 25px;
+  width: 25px;
+  margin-right: 5px;
+  line-height: 25px;
+`;
+
 const RestaurantIcon = styled(Restaurant)`
   ${category}
+  color: #FFBC42;
 `;
 
 const HotelIcon = styled(Hotel)`
   ${category}
+  color: #8F2D56;
 `;
 
 const CafeIcon = styled(Cafe)`
   ${category}
+  color: #FFBC42;
 `;
 
 const PetsIcon = styled(Pets)`
   ${category}
+  color: #79bd9a;
 `;
 
 const HomeIcon = styled(Home)`
   ${category}
+  color: #8F2D56;
 `;
 
 const CampgroundIcon = styled(Campground)`
   ${category}
+  color: #79bd9a;
 `;
 
 const GuitarIcon = styled(Guitar)`
   ${category}
+`;
+
+const ContentsWrap = styled.div`
+  height: 20px;
+  font-size: 14px;
+  line-height: 20px;
+  display: inline-block;
+
+  ${CategoryWrap}:hover & {
+    color: #1e90ff;
+  }
 `;
 
 export default CategoryView;
