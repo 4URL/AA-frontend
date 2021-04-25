@@ -27,7 +27,7 @@ export function makeInfowindow(result) {
             </div>
             <p style="font-size: ${bodySize}px">
                 ${description}
-                <div style="width: 300px; color:#6e96ff; font-size: ${bodySize}px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" onclick="event.srcElement.style.whiteSpace = null;">
+                <div style="width: ${max_width}px; color:#6e96ff; font-size: ${bodySize}px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;" onclick="event.srcElement.style.whiteSpace = null;">
                     ${convenience}
                 </div>
             </p>
