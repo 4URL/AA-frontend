@@ -75,5 +75,9 @@ export default {
   unselected_icon: {
     content: `<img src="${UNSELECTED_MARKER}" style="${ICON_STYLE}" class="marker" />`,
     anchor: new window.naver.maps.Point(ANCHOR.x, ANCHOR.y)
-  }
+  },
+
+  homepage_svg: 'homepage.svg',
+  instagram_svg: 'instagram.svg',
+  naver_svg: 'naver.svg'
 };

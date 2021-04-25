@@ -5,10 +5,11 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
 import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
-import { getResultBounds, makeMarker } from '../../../utility/utility';
+import { getResultBounds } from '../../../utility/utility';
 import { fetchDisplayPlaces } from '../../../api/api';
 import { FETCH_PLACES } from '../../../api/query';
 import icon from '../views/iconStyles';
+import { makeMarker } from '../subcontainers/marker';
 
 let markers = [];
 let bDragging = false;
