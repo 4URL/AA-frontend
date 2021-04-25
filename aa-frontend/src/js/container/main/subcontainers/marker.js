@@ -7,12 +7,13 @@ export function makeMarker(results, map) {
     if (!result.name) return;
 
     var iconImage;
-    if (result.categorySeq == 1) iconImage = icon.restaurant_unselected_icon;
-    else if (result.categorySeq == 2) iconImage = icon.cafe_unselected_icon;
-    else if (result.categorySeq == 3 || result.categorySeq == 5) iconImage = icon.room_unselected_icon;
-    else if (result.categorySeq == 4) iconImage = icon.doghouse_unselected_icon;
-    else if (result.categorySeq == 6) iconImage = icon.playground_unselected_icon;
-    else iconImage = icon.etc_unselected_icon;
+    if (result.categorySeq == 1) iconImage = icon.restaurant_icon;
+    else if (result.categorySeq == 2) iconImage = icon.cafe_icon;
+    else if (result.categorySeq == 3) iconImage = icon.hotel_icon;
+    else if (result.categorySeq == 4) iconImage = icon.pets_icon;
+    else if (result.categorySeq == 5) iconImage = icon.home_icon;
+    else if (result.categorySeq == 6) iconImage = icon.campground_icon;
+    else iconImage = icon.guitar_icon;
 
     const markerOption = {
       map,
