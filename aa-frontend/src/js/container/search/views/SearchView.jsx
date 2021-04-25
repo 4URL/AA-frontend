@@ -130,7 +130,9 @@ const CategoryContainer = styled.div`
   border-radius: 8px;
   box-shadow: 1px 3px 2px #9e9e9e;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  /* justify-content: center; */
+  /* flex-direction: column; */
   /* flex-wrap: nowrap; */
   /* overflow-x: auto; */
   /* padding: 0 30px; */
@@ -144,14 +146,17 @@ const CategoryContainer = styled.div`
 `;
 
 const CategoryList = styled.div`
-  display: flex;
-  flex-direction: row;
+  /* position: relative; */
+  /* width: 100%; */
+  /* height: 100%; */
+  /* position: absolute;
+  left: 50%;
+  transform: translateX(-50%); */
+  display: inline-block;
+  /* display: flex;
   flex-wrap: wrap;
-  /* justify-content: space-around; */
-  overflow: hidden;
-  width: 100%;
-  /* height: 120px; */
-  /* padding: 0 20px; */
+  overflow: hidden; */
+  /* justify-content: space-between; */
 `;
 
 export default SearchView;

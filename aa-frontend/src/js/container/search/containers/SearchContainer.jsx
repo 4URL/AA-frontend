@@ -32,9 +32,10 @@ const SearchContainer = memo(props => {
   }, [searchData, categoryList]);
 
   // 카테고리 클릭시 발생할 이벤트
+  // TODO: 클릭했을 때 목록이 추가되도록, default는 전체임
   const onClickCategory = useCallback(
     e => {
-      const categoryObj = e.target;
+      const categoryObj = e.currentTarget;
       console.log(categoryObj);
       const isSelected = categoryObj.getAttribute('isSelected');
       const value = categoryObj.getAttribute('value');

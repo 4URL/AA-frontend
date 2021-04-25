@@ -6,6 +6,9 @@ import { Home } from '@styled-icons/boxicons-regular';
 import { Campground, Guitar } from '@styled-icons/fa-solid';
 
 import { pxToVw } from '../../../utility/utility';
+/*
+  TODO: 클릭시 배경색이 바뀌므로 padding이나 그런게 맞도록 할 것
+*/
 
 const CategoryView = ({ obj, idxValue, onClickCategory }) => {
   // 이 부분이 클릭될 때 마다 다시 렌더링 되야하는거 아닌가?
@@ -51,28 +54,46 @@ const CategoryView = ({ obj, idxValue, onClickCategory }) => {
     }
 
     return (
-      <Category>
+      // <Category>
+      //   <IconWrap>{icon}</IconWrap>
+      //   <ContentsWrap>{categoryName}</ContentsWrap>
+      // </Category>
+      <>
         <IconWrap>{icon}</IconWrap>
         <ContentsWrap>{categoryName}</ContentsWrap>
-      </Category>
+      </>
     );
   }
 };
 
-const CategoryWrap = styled.div`
+const CategoryWrap = styled.button`
+  /* TODO: click 됨에 따라 contents의 width, height가 변한다 padding은 2가 추가된다 */
+  // 기본은 border: 2px에 71*31인데 클릭하고 나면 boder: 0에 75*35로 바뀐다
+  // div일때는 안그러는데 button으로 바꿨더니 문제가 발생
+  background: none;
   box-sizing: border-box;
-  border: 2px solid #fff;
+  /* border: 2px solid #fff; */
   height: 35px;
   width: ${pxToVw(90)};
   border-radius: 6px;
+  /* display: flex; */
+  /* padding-left: 15px; */
+  /* align-items: center; */
+  cursor: pointer;
+  color: #3f4040;
+  font-weight: 600;
+  /* position: absolute;
+  left: 50%;
+  transform: translateX(-50%); */
+  /* display: inline-block; */
 
-  &:nth-child(-n + 4) {
+  /* &:nth-child(-n + 4) {
     margin-top: 3px;
   }
 
   &:nth-child(4) {
     margin-right: 4px;
-  }
+  } */
 
   /* background-color: ${props => {
     switch (props.type) {
@@ -90,7 +111,7 @@ const CategoryWrap = styled.div`
     background-color: ${props => {
       switch (props.type) {
         default:
-          return 'blue';
+          return '#f0f0f0';
       }
     }};
   }
@@ -98,13 +119,7 @@ const CategoryWrap = styled.div`
 
 // 카테고리 아이템 div
 const Category = styled.div`
-  display: flex;
-  padding-left: 15px;
-  align-items: center;
-  height: 35px;
-  cursor: pointer;
-  color: #3f4040;
-  font-weight: 600;
+  /* height: 100%; */
 `;
 
 const category = css`
