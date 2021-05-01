@@ -21,61 +21,100 @@ const CategoryView = ({ obj, idxValue, onClickCategory }) => {
   function categorySwitch(name) {
     let icon = null;
     let categoryName = null;
+    /*
+      const categorySeq = {
+        RESTAURANT: 1,
+        CAFE: 2,
+        HOTEL_RESORT: 3,
+        PET_HOTEL: 4,
+        PENSION: 5,
+        PLAYGROUND: 6,
+        ETC: 99
+      };
+    */
+    let type = 0;
 
     switch (name) {
       case '식당':
         icon = <RestaurantIcon />;
         categoryName = '식당';
+        type = 1;
         break;
       case '카페':
         icon = <CafeIcon />;
         categoryName = '카페';
+        type = 2;
         break;
       case '호텔&리조트':
         icon = <HotelIcon />;
         categoryName = '숙소';
+        type = 3;
         break;
       case '반려동물호텔':
         icon = <PetsIcon />;
         categoryName = '호텔';
+        type = 4;
         break;
       case '펜션':
         icon = <HomeIcon />;
         categoryName = '펜션';
+        type = 5;
         break;
       case '애견놀이터':
         icon = <CampgroundIcon />;
         categoryName = '놀이터';
+        type = 6;
         break;
       default:
         icon = <GuitarIcon />;
         categoryName = '기타';
+        type = 99;
         break;
     }
 
     return (
-      // <Category>
-      //   <IconWrap>{icon}</IconWrap>
-      //   <ContentsWrap>{categoryName}</ContentsWrap>
-      // </Category>
-      <>
+      <Category>
         <IconWrap>{icon}</IconWrap>
         <ContentsWrap>{categoryName}</ContentsWrap>
-      </>
+      </Category>
+      // <>
+      //   <IconWrap>{icon}</IconWrap>
+      //   <ContentsWrap>{categoryName}</ContentsWrap>
+      // </>
     );
   }
 };
 
 const CategoryWrap = styled.button`
-  /* TODO: click 됨에 따라 contents의 width, height가 변한다 padding은 2가 추가된다 */
-  // 기본은 border: 2px에 71*31인데 클릭하고 나면 boder: 0에 75*35로 바뀐다
-  // div일때는 안그러는데 button으로 바꿨더니 문제가 발생
+  // TODO: row별로 해야 한다
+  // grid를 사용하면 될듯?
+  // => 내가 개별적으로 해줘야한다는 단점이 있지만 카테고리를 추가하는 건 자동화가 필요한 부분은 아니기 때문에
+  // 괜찮을거 같음
   background: none;
   box-sizing: border-box;
   /* border: 2px solid #fff; */
   height: 35px;
-  width: ${pxToVw(90)};
+  /* width: ${pxToVw(90)}; */
+  width: 100%;
   border-radius: 6px;
+  grid-area: ${props => {
+    switch (props.type) {
+      case 1:
+        return 'restaurant';
+      case 2:
+        return 'hotel';
+      case 3:
+        return 'cafe';
+      case 4:
+        return 'pets';
+      case 5:
+        return 'home';
+      case 6:
+        return 'campground';
+      default:
+        return 'guitar';
+    }
+  }};
   /* display: flex; */
   /* padding-left: 15px; */
   /* align-items: center; */
