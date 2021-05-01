@@ -37,64 +37,6 @@ export function getResultBounds(results) {
   return new window.naver.maps.LatLngBounds(lanLng_sw, lanLng_ne);
 }
 
-export function makeMarker(results, map, icon) {
-  var markers = [];
-  results.forEach((result, idx) => {
-    var iconImage;
-    if (result.categorySeq == 1) iconImage = icon.restaurant_unselected_icon;
-    else if (result.categorySeq == 2) iconImage = icon.cafe_unselected_icon;
-    else if (result.categorySeq == 3 || result.categorySeq == 5) iconImage = icon.room_unselected_icon;
-    else if (result.categorySeq == 4) iconImage = icon.doghouse_unselected_icon;
-    else if (result.categorySeq == 6) iconImage = icon.playground_unselected_icon;
-    else iconImage = icon.etc_unselected_icon;
-    const markerOption = {
-      map,
-      position: new window.naver.maps.LatLng(result.lat, result.lng), //지도의 중심좌표.
-      title: result.name,
-      icon: iconImage
-    };
-    let marker = new window.naver.maps.Marker(markerOption);
-
-    if (!result.name) return;
-
-    const storeTitle = result.subCategory
-      ? `<div class='info'><h3 style="display: inline-block;">${result.name}</h3><p style="display: inline-block;">&nbsp${result.subCategory}</p></div>`
-      : `<h3><div>${result.name}</div></h3>`;
-    const description = result.description ? `${result.description}<br />` : '';
-    const convenience = result.convenience ? `${result.convenience}<br />` : '';
-    const homepage = result.homepage ? `<a href="${result.homepage}" target="_blank">Homepage</a><br/>` : '';
-    const mapUrl = result.mapUrl ? `<a href="${result.mapUrl}" target="_blank">Naver map</a><br/>` : '';
-    const newContent = `
-    <div class="iw_inner">
-      ${storeTitle}
-      <p>
-      ${window.innerWidth > 768 ? description : ''}
-      ${window.innerWidth > 768 ? convenience : ''}
-      ${homepage}
-      ${mapUrl}
-      </p>
-    </div>
-    `;
-
-    var infowindow = new naver.maps.InfoWindow({
-      content: newContent
-    });
-
-    naver.maps.Event.addListener(marker, 'click', function (e) {
-      if (infowindow.getMap()) {
-        infowindow.close();
-      } else {
-        infowindow.open(map, marker);
-      }
-    });
-
-    // marker.get('seq')를 통해서 idx값을 얻을 수 있음
-    marker.set('seq', idx);
-    markers.push(marker);
-  });
-  return markers;
-}
-
 // 서로 다른 viewport width에서도 같은 px을 적용
 export function pxToVw(size, width = document.documentElement.clientWidth) {
   return `${(size / width) * 100}vw`;
