@@ -121,21 +121,15 @@ const easeIn = css`
 
 // 카테고리 아이템을 감싸는 div
 const CategoryContainer = styled.div`
+  // TODO: display grid를 이용해서 category가 가운데 올 수 있도록 할 것
   background-color: #fff;
   position: absolute;
   top: 55px;
   right: 0;
   width: ${pxToVw(380)};
-  ${({ toggled }) => (toggled ? easeOut : easeIn)};
+  height: 85px;
   border-radius: 8px;
   box-shadow: 1px 3px 2px #9e9e9e;
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-  /* flex-direction: column; */
-  /* flex-wrap: nowrap; */
-  /* overflow-x: auto; */
-  /* padding: 0 30px; */
   box-sizing: border-box;
   &[show='off'] {
     display: none;
@@ -146,17 +140,17 @@ const CategoryContainer = styled.div`
 `;
 
 const CategoryList = styled.div`
-  /* position: relative; */
-  /* width: 100%; */
-  /* height: 100%; */
-  /* position: absolute;
-  left: 50%;
-  transform: translateX(-50%); */
-  display: inline-block;
-  /* display: flex;
-  flex-wrap: wrap;
-  overflow: hidden; */
-  /* justify-content: space-between; */
+  // TODO: 카테고리들을 가운데에 몰아 넣고, 주변 테두리? 간격을 늘린다
+  display: grid;
+  grid-template-columns: auto ${pxToVw(90)} ${pxToVw(90)} ${pxToVw(90)} ${pxToVw(90)} auto;
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    '. restaurant cafe hotel pets .'
+    '. home campground guitar . .';
+  height: 100%;
+  align-items: center;
+  justify-items: center;
+  gap: 2px;
 `;
 
 export default SearchView;

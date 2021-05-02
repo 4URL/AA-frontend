@@ -5,14 +5,15 @@ import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
 import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
-import { getResultBounds, makeMarker } from '../../../utility/utility';
+import { getResultBounds } from '../../../utility/utility';
 import { fetchDisplayPlaces } from '../../../api/api';
 import { FETCH_PLACES } from '../../../api/query';
-import icon from '../views/iconStyles';
+import { makeMarker } from '../subcontainers/marker';
 
 let markers = [];
 let bDragging = false;
 let map = null;
+let curPos = null; // type : window.naver.maps.LatLng
 // let results = null;
 
 const NaverMap = props => {
@@ -48,17 +49,21 @@ const NaverMap = props => {
       if (!bDragging) updateBoundary(map.bounds._ne, map.bounds._sw);
     });
 
+    curPos = map.center;
     updateBoundary(map.bounds._ne, map.bounds._sw);
   }, []);
 
   useEffect(() => {
     if (!loading) {
+      //if (curPos.x > map.bounds._sw.x && curPos.x < map.bounds._ne.x && curPos.y > map.bounds._sw.y && curPos.y < map.bounds._ne.y) return;
+
       const results = data.search.stores;
       markers.forEach(marker => {
         marker.setMap(null);
       });
 
-      markers = makeMarker(results, map, icon);
+      markers = makeMarker(results, map);
+      curPos = map.center;
       // markers.forEach(marker => {
       //   marker.addListener('click', () => clickMarker(results, marker));
       // });
@@ -106,14 +111,14 @@ const NaverMap = props => {
   // }, [showDetail]);
 
   // marker를 클릭했을 때만 동작하는 함수
-  function clickMarker(results, marker) {
-    // const seq = marker.get('seq');
-    // const place = results[seq];
+  // function clickMarker(results, marker) {
+  //   // const seq = marker.get('seq');
+  //   // const place = results[seq];
 
-    resetMarkers();
-    marker.setIcon(icon.selected_icon);
-    // showPlaceDetail(place);
-  }
+  //   resetMarkers();
+  //   marker.setIcon(icon.selected_icon);
+  //   // showPlaceDetail(place);
+  // }
 
   // 지도 div에서 발생하는 click event handler
   // function handleClick() {
@@ -131,11 +136,11 @@ const NaverMap = props => {
   // }
 
   // 모든 marker들의 핀 이미지를 초기화 해주는 함수
-  function resetMarkers() {
-    markers.forEach(marker => {
-      marker.setIcon(icon.unselected_icon);
-    });
-  }
+  // function resetMarkers() {
+  //   markers.forEach(marker => {
+  //     marker.setIcon(icon.unselected_icon);
+  //   });
+  // }
 
   /**
    * 현재 위치를 지정해주는 함수
