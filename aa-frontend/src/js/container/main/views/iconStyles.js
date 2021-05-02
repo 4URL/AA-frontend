@@ -1,10 +1,10 @@
-const CAFE_MARKER = './cafe.png';
-const CAMPGROUND_MARKER = './campground.png';
-const GUITAR_MARKER = './guitar.png';
-const HOME_MARKER = './home.png';
-const HOTEL_MARKER = './hotel.png';
-const PETS_MARKER = './pets.png';
-const RESTAURANT_MARKER = './restaurant.png';
+const CAFE_MARKER = './cafe.svg';
+const CAMPGROUND_MARKER = './campground.svg';
+const GUITAR_MARKER = './guitar.svg';
+const HOME_MARKER = './home.svg';
+const HOTEL_MARKER = './hotel.svg';
+const PETS_MARKER = './pets.svg';
+const RESTAURANT_MARKER = './restaurant.svg';
 
 const isMonitor = document.documentElement.clientWidth <= 768 ? true : false;
 const ICON_STYLE = isMonitor ? 'width: 26px; height: 30px;' : 'width: 30px; height: 34px;';
