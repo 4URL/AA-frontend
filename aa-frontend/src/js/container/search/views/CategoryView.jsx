@@ -176,17 +176,17 @@ const IconWrap = styled.div`
 
 const RestaurantIcon = styled(Restaurant)`
   ${category}
-  color: #FFBC42;
+  color: #1e90ff;
 `;
 
 const HotelIcon = styled(Hotel)`
   ${category}
-  color: #8F2D56;
+  color: #FFBC42;
 `;
 
 const CafeIcon = styled(Cafe)`
   ${category}
-  color: #FFBC42;
+  color: #1e90ff;
 `;
 
 const PetsIcon = styled(Pets)`
@@ -196,7 +196,7 @@ const PetsIcon = styled(Pets)`
 
 const HomeIcon = styled(Home)`
   ${category}
-  color: #8F2D56;
+  color: #FFBC42;
 `;
 
 const CampgroundIcon = styled(Campground)`
