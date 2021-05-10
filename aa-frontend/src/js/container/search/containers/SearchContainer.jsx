@@ -10,7 +10,14 @@ import CategoryView from '../views/CategoryView';
 
 const SearchContainer = memo(props => {
   const [categoryData, setCategoryData] = useState([]);
-  const [categoryList, setCategoryList] = useState([]);
+  // const [categoryList, setCategoryList] = useState([]);
+  const [categoryList, setCategoryList] = useState(() => {
+    const seqList = [];
+    props.categoryData.forEach(category => {
+      seqList.push(category['seq']);
+    });
+    return seqList;
+  });
   const [searchData, setSearchData] = useState({
     location: '',
     searchValue: ''
@@ -19,8 +26,15 @@ const SearchContainer = memo(props => {
 
   useEffect(async () => {
     try {
-      const data = await reqGetCategoryData();
-      setCategoryData([...categoryData, ...data]);
+      // const data = await reqGetCategoryData();
+      // const seqList = [];
+      // data.forEach((category) => {
+      //   seqList.push(category['seq']);
+      // });
+      // setCategoryData([...categoryData, ...data]);
+      // setCategoryList([...categoryList, ...seqList]);
+      // console.log('first');
+      // console.log('seqList :: ', seqList);
     } catch (e) {
       console.log(e);
     }
@@ -33,29 +47,31 @@ const SearchContainer = memo(props => {
 
   // 카테고리 클릭시 발생할 이벤트
   // TODO: 클릭했을 때 목록이 추가되도록, default는 전체임
+  // 클릭할 때만 하는게 아니라 기본적으로 이 과정이 이뤄져야 한다
   const onClickCategory = useCallback(
     e => {
       const categoryObj = e.currentTarget;
       console.log(categoryObj);
-      const isSelected = categoryObj.getAttribute('isSelected');
+      // const isSelected = categoryObj.getAttribute('data-isselected');
       const value = categoryObj.getAttribute('value');
-      if (isSelected !== 'true') {
-        categoryObj.setAttribute('isSelected', 'true');
-        setCategoryList(categoryList.concat(value));
-      } else {
-        categoryObj.removeAttribute('isSelected');
-        setCategoryList(categoryList.filter(category => category !== value));
-      }
+      changeCategoryBackground(categoryObj);
+      // if (isSelected !== 'true') {
+      //   categoryObj.setAttribute('data-isselected', 'true');
+      //   setCategoryList(categoryList.concat(value));
+      // } else {
+      //   categoryObj.removeAttribute('data-isselected');
+      //   setCategoryList(categoryList.filter(category => category !== value));
+      // }
     },
     [categoryList]
   );
 
   // 카테고리 아이템  생성하기
   const getCategoryDomList = useMemo(() => {
-    console.log('categoryData :: ', categoryData);
     let categoryArr = categoryData.concat();
-
-    categoryArr = categoryData.map((obj, idx) => {
+    // @ 여기서 모든 카테고리 컴포넌트가 만들어진다
+    categoryArr = props.categoryData.map((obj, idx) => {
+      // setCategoryList([...categoryList], obj['seq']);
       return <CategoryView key={idx} obj={obj} idxValue={idx} onClickCategory={onClickCategory} />;
     });
 
@@ -65,7 +81,6 @@ const SearchContainer = memo(props => {
   // 검색 input의 input 이벤트
   const onInputSearchInput = useCallback(
     e => {
-      console.log('searchData :: ', searchData);
       const eventKey = e.key;
       // setSearchValue(keyword);
       if (eventKey == 'Enter') {
@@ -89,7 +104,6 @@ const SearchContainer = memo(props => {
     searchLocation = searchInputRef.current.value;
     // 입력한 값이 공백이면 동작 안함
     if (searchLocation.trim() == '') return;
-    console.log('searchLocation :: ', searchLocation);
     props.changePageNumber(1);
     setSearchData({
       ...searchData,
@@ -106,14 +120,48 @@ const SearchContainer = memo(props => {
    * @param {Object} postData : { location: [], searchValue: '' }
    * @param {Array} categoryList : []
    */
-  function handleSearchLocation(postData, categoryList) {
-    props.changeLocation(postData, categoryList);
-    closeDetailSection();
-  }
+  const handleSearchLocation = useCallback(
+    (postData, categoryList) => {
+      props.changeLocation(postData, categoryList);
+      closeDetailSection();
+    },
+    [categoryList]
+  );
 
   function closeDetailSection() {
     props.showDetail(false);
   }
+
+  // TODO: 컴포넌트를 파라미터로 받고 attribute를 바꿔 줌으로써 background-color를 바꿔주는 함수가 필요하다
+  // handleCategoryList, background를 따로 하면 처음에 component가 형성 될 때도 사용할 수 있을 듯?
+  const changeCategoryBackground = useCallback(component => {
+    const isSelected = component.getAttribute('data-isselected');
+    if (isSelected === 'true') {
+      component.removeAttribute('data-isselected');
+      handleCategoryList(component, 'remove');
+    } else {
+      component.setAttribute('data-isselected', 'true');
+      handleCategoryList(component, 'add');
+    }
+  }, []);
+
+  // TODO: 검색할 category를 관리하는 state를 변경한다
+  const handleCategoryList = useCallback((component, action) => {
+    console.log('categoryList :: ', categoryList);
+    const componentValue = parseInt(component.getAttribute('value'));
+    if (action === 'add') {
+      // 카테고리가 배열에 추가되야 하고
+      // 새로운 값이고
+      // setCategoryList([...categoryList, componentValue]);
+    } else {
+      // 원하는 값이 배열에서 없어져야 한다
+      // 그러면 이게 배열이 맞는가? 객체가 맞는가?
+      const categories = [...categoryList];
+      console.log('categories before click :: ', categories);
+      // const result = categories.filter(category => category !== componentValue);
+      // setCategoryList([result]);
+    }
+  }, []);
 
   return (
     <SearchView

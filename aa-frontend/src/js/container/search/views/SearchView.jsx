@@ -21,18 +21,13 @@ const SearchView = ({ searchInputRef, onInputSearchInput, onClickSearchIcon, get
       </CategoryContainer>
     </SearchWrap>
   );
-
-  // function clickToggleButton() {
-  //   const toggle = !toggleCategory;
-  //   setToggleCategory(toggle);
-  // }
 };
 
 // 검색 전체를 감싸고 있는 wrap div
 const SearchWrap = styled.div`
   display: flex;
   justify-content: space-between;
-  width: ${pxToVw(380)};
+  width: 395px;
   height: 48px;
   position: absolute;
   left: 10px;
@@ -65,16 +60,10 @@ const SearchWrap = styled.div`
 const SearchKeywordInput = styled.input`
   width: 320px;
   height: 20px;
-  /* margin-right: 10px; */
-  /* margin-left: 5px; */
-  /* border: 1px solid #101010; */
-  /* padding: 0px 10px; */
   outline: none;
   border-radius: 5px;
   font-size: 15px;
-  /* line-height: 14px; */
   font-family: 'Nanum Gothic', sans-serif;
-  /* background-color: teal; */
 
   @media (max-width: ${size.mobile}) {
     width: 100%;
@@ -121,13 +110,12 @@ const easeIn = css`
 
 // 카테고리 아이템을 감싸는 div
 const CategoryContainer = styled.div`
-  // TODO: display grid를 이용해서 category가 가운데 올 수 있도록 할 것
   background-color: #fff;
   position: absolute;
   top: 55px;
-  right: 0;
-  width: ${pxToVw(380)};
-  height: 85px;
+  left: 0;
+  width: 395px;
+  height: 95px;
   border-radius: 8px;
   box-shadow: 1px 3px 2px #9e9e9e;
   box-sizing: border-box;
@@ -140,9 +128,8 @@ const CategoryContainer = styled.div`
 `;
 
 const CategoryList = styled.div`
-  // TODO: 카테고리들을 가운데에 몰아 넣고, 주변 테두리? 간격을 늘린다
   display: grid;
-  grid-template-columns: auto ${pxToVw(90)} ${pxToVw(90)} ${pxToVw(90)} ${pxToVw(90)} auto;
+  grid-template-columns: auto repeat(4, 90px) auto;
   grid-template-rows: repeat(2, 1fr);
   grid-template-areas:
     '. restaurant cafe hotel pets .'
@@ -150,7 +137,8 @@ const CategoryList = styled.div`
   height: 100%;
   align-items: center;
   justify-items: center;
-  gap: 2px;
+  gap: 5px;
+  padding: 10px 5px;
 `;
 
 export default SearchView;

@@ -5,11 +5,6 @@ import { Cafe } from '@styled-icons/ionicons-outline';
 import { Home } from '@styled-icons/boxicons-regular';
 import { Campground, Guitar } from '@styled-icons/fa-solid';
 
-import { pxToVw } from '../../../utility/utility';
-/*
-  TODO: 클릭시 배경색이 바뀌므로 padding이나 그런게 맞도록 할 것
-*/
-
 const CategoryView = ({ obj, idxValue, onClickCategory }) => {
   // 이 부분이 클릭될 때 마다 다시 렌더링 되야하는거 아닌가?
   return (
@@ -21,17 +16,6 @@ const CategoryView = ({ obj, idxValue, onClickCategory }) => {
   function categorySwitch(name) {
     let icon = null;
     let categoryName = null;
-    /*
-      const categorySeq = {
-        RESTAURANT: 1,
-        CAFE: 2,
-        HOTEL_RESORT: 3,
-        PET_HOTEL: 4,
-        PENSION: 5,
-        PLAYGROUND: 6,
-        ETC: 99
-      };
-    */
     let type = 0;
 
     switch (name) {
@@ -85,16 +69,15 @@ const CategoryView = ({ obj, idxValue, onClickCategory }) => {
   }
 };
 
-const CategoryWrap = styled.button`
-  // TODO: row별로 해야 한다
-  // grid를 사용하면 될듯?
-  // => 내가 개별적으로 해줘야한다는 단점이 있지만 카테고리를 추가하는 건 자동화가 필요한 부분은 아니기 때문에
-  // 괜찮을거 같음
+const CategoryWrap = styled.button.attrs({
+  'data-isselected': 'true'
+})`
+  &[data-isselected='true'] {
+    background-color: #f0f0f0;
+  }
   background: none;
   box-sizing: border-box;
-  /* border: 2px solid #fff; */
   height: 35px;
-  /* width: ${pxToVw(90)}; */
   width: 100%;
   border-radius: 6px;
   grid-area: ${props => {
@@ -115,9 +98,6 @@ const CategoryWrap = styled.button`
         return 'guitar';
     }
   }};
-  /* display: flex; */
-  /* padding-left: 15px; */
-  /* align-items: center; */
   cursor: pointer;
   color: #3f4040;
   font-weight: 600;
@@ -146,14 +126,6 @@ const CategoryWrap = styled.button`
         return '#ffffff';
     }
   }}; */
-  &[isselected='true'] {
-    background-color: ${props => {
-      switch (props.type) {
-        default:
-          return '#f0f0f0';
-      }
-    }};
-  }
 `;
 
 // 카테고리 아이템 div

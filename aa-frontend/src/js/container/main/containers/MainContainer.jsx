@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { useQuery } from '@apollo/client';
 
 import NaverMap from './NaverMap';
 // import SearchBar from './SearchBar';
@@ -11,7 +12,8 @@ import Popup from '../../popup/container/Popup';
 
 import PlaceList from './PlaceList';
 import { getPlaces, showList } from '../../../redux/actions/index';
-import { fetchPlaces } from '../../../api/api';
+import { fetchPlaces, reqGetCategoryData } from '../../../api/api';
+import { FETCH_CATEGORIES } from '../../../api/query';
 
 /*
   검색의 흐름
@@ -26,6 +28,8 @@ import { fetchPlaces } from '../../../api/api';
 */
 
 const Main = () => {
+  // TODO: category data를 여기서 넘긴다
+  const { loading, error, data } = useQuery(FETCH_CATEGORIES);
   // const [curPage, setCurPage] = useState(1);
 
   // const [total, setTotal] = useState(0);
@@ -47,7 +51,7 @@ const Main = () => {
   return (
     <>
       <NaverMap />
-      <SearchContainer />
+      {!loading && <SearchContainer categoryData={data.searchCategory} />}
       {/* <PlaceDetailContainer /> */}
       {/* <Popup /> */}
       {/* <PlaceList curPage={curPage} handleCurPage={setCurPage} count={total} /> */}
