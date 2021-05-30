@@ -2,8 +2,8 @@ import icon from '../views/iconStyles';
 
 export function makeInfowindow(result) {
   var outlineColor;
-  if (result.categorySeq == 1 || result.categorySeq == 2) outlineColor = '#ffbc42';
-  else if (result.categorySeq == 3 || result.categorySeq == 5) outlineColor = '#8f2d56';
+  if (result.categorySeq == 1 || result.categorySeq == 2) outlineColor = '#1e90ff';
+  else if (result.categorySeq == 3 || result.categorySeq == 5) outlineColor = '#ffbc42';
   else if (result.categorySeq == 4 || result.categorySeq == 6) outlineColor = '#79bd5a';
   else outlineColor = '#000000';
 

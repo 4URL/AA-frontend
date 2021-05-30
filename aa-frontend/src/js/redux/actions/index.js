@@ -15,10 +15,10 @@ export const clickMarker = clicked => ({
   }
 });
 
-export const getPlaces = placesList => ({
-  type: type.GET_PLACES,
+export const handleCategoryList = categoryList => ({
+  type: type.HANDLE_CATEGORYLIST,
   payload: {
-    placesList
+    categoryList
   }
 });
 

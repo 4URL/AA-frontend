@@ -13,11 +13,11 @@ const initialState = {
 
 export default function mapReducers(state = initialState, action) {
   switch (action.type) {
-    case type.GET_PLACES: {
-      const { placesList } = action.payload;
+    case type.HANDLE_CATEGORYLIST: {
+      const { categoryList } = action.payload;
       return {
         ...state,
-        placesList: [...placesList]
+        categoryList: [...categoryList]
       };
     }
 

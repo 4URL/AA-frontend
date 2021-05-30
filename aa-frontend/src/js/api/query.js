@@ -27,3 +27,12 @@ export const FETCH_PLACES = gql`
     }
   }
 `;
+
+export const FETCH_CATEGORIES = gql`
+  query searchCategory {
+    searchCategory {
+      categoryName
+      seq
+    }
+  }
+`;
