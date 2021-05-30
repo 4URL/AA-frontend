@@ -5,46 +5,45 @@ import { Cafe } from '@styled-icons/ionicons-outline';
 import { Home } from '@styled-icons/boxicons-regular';
 import { Campground, Guitar } from '@styled-icons/fa-solid';
 
-const CategoryView = ({ obj, idxValue, onClickCategory }) => {
-  // 이 부분이 클릭될 때 마다 다시 렌더링 되야하는거 아닌가?
+const CategoryView = ({ category, idxValue, onClickCategory }) => {
   return (
-    <CategoryWrap idx={idxValue} value={obj['seq']} type={obj['seq']} onClick={onClickCategory}>
-      {categorySwitch(obj['categoryName'])}
+    <CategoryWrap idx={idxValue} value={category['seq']} type={category['seq']} onClick={onClickCategory}>
+      {categorySwitch(category['seq'])}
     </CategoryWrap>
   );
 
-  function categorySwitch(name) {
+  function categorySwitch(seq) {
     let icon = null;
     let categoryName = null;
     let type = 0;
 
-    switch (name) {
-      case '식당':
+    switch (seq) {
+      case 1:
         icon = <RestaurantIcon />;
         categoryName = '식당';
         type = 1;
         break;
-      case '카페':
+      case 2:
         icon = <CafeIcon />;
         categoryName = '카페';
         type = 2;
         break;
-      case '호텔&리조트':
+      case 3:
         icon = <HotelIcon />;
         categoryName = '숙소';
         type = 3;
         break;
-      case '반려동물호텔':
+      case 4:
         icon = <PetsIcon />;
         categoryName = '호텔';
         type = 4;
         break;
-      case '펜션':
+      case 5:
         icon = <HomeIcon />;
         categoryName = '펜션';
         type = 5;
         break;
-      case '애견놀이터':
+      case 6:
         icon = <CampgroundIcon />;
         categoryName = '놀이터';
         type = 6;
@@ -61,10 +60,6 @@ const CategoryView = ({ obj, idxValue, onClickCategory }) => {
         <IconWrap>{icon}</IconWrap>
         <ContentsWrap>{categoryName}</ContentsWrap>
       </Category>
-      // <>
-      //   <IconWrap>{icon}</IconWrap>
-      //   <ContentsWrap>{categoryName}</ContentsWrap>
-      // </>
     );
   }
 };
