@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
-import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
+import { showDetail, placeDetail, showList, setShowAreaSearch } from '../../../redux/actions/index';
 import { getResultBounds } from '../../../utility/utility';
 import { fetchDisplayPlaces } from '../../../api/api';
 import { FETCH_PLACES } from '../../../api/query';
@@ -37,15 +37,18 @@ const NaverMap = props => {
     map = new window.naver.maps.Map('map', mapOption);
 
     naver.maps.Event.addListener(map, 'dragstart', function (e) {
+      console.log('::dragstart');
       bDragging = true;
     });
 
     naver.maps.Event.addListener(map, 'dragend', function (e) {
+      console.log('::dragend');
       updateBoundary(map.bounds._ne, map.bounds._sw);
       bDragging = false;
     });
 
     naver.maps.Event.addListener(map, 'bounds_changed', function (e) {
+      console.log('::bounds_changed');
       if (!bDragging) updateBoundary(map.bounds._ne, map.bounds._sw);
     });
 
@@ -177,6 +180,9 @@ const NaverMap = props => {
   }
 
   function updateBoundary(ne, sw) {
+    setShowAreaSearch(true);
+    console.log('::ne : ' + ne);
+    console.log('::sw : ' + sw);
     setBoundary({
       ...boundary,
       ne_lat: ne._lat,
@@ -200,7 +206,8 @@ const mapDispatchToProps = dispatch => {
     {
       showDetail,
       placeDetail,
-      showList
+      showList,
+      setShowAreaSearch
     },
     dispatch
   );

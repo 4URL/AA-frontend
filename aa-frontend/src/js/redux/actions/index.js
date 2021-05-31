@@ -49,3 +49,17 @@ export const changePageNumber = curPage => ({
     curPage
   }
 });
+
+export const changeBound = curMapBound => ({
+  type: type.CHANGE_BOUND,
+  payload: {
+    curMapBound
+  }
+});
+
+export const setShowAreaSearch = showAreaSearch => ({
+  type: type.SHOW_AREA_SEARCH,
+  payload: {
+    showAreaSearch
+  }
+});
