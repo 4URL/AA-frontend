@@ -6,6 +6,7 @@ import _ from 'lodash';
 import { changeLocation, showDetail, changePageNumber } from '../../../redux/actions/index';
 import InputView from './InputView';
 
+// input 이랑 category가 너비 별로 변경되는게 다르다
 const SearchContainer = memo(props => {
   const [searchData, setSearchData] = useState({
     location: '',

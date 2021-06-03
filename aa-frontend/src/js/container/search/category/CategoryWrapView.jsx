@@ -1,6 +1,12 @@
 import React, { useMemo } from 'react';
 import styled from 'styled-components';
 
+import size from '../../../StyledVariable';
+
+// 모바일의 경우 swipe action에 반응하도록
+// width는 padding, margin 없이 100%
+// 카테고리를 선택 안했을 때는 흰색
+// 선택했을 때는 border에 색이 들어가도록
 const CategoryWrapView = ({ categoryDomList, categoryData }) => {
   return (
     <CategoryWrapper>
@@ -27,6 +33,12 @@ const CategoryWrapper = styled.div`
   }
   &[show='on'] {
     display: block;
+  }
+
+  @media (max-width: ${size.mobileL}) {
+    width: 100%;
+    background-color: transparent;
+    box-shadow: none;
   }
 `;
 
