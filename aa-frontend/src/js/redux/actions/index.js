@@ -59,7 +59,5 @@ export const changeBound = curMapBound => ({
 
 export const setShowAreaSearch = showAreaSearch => ({
   type: type.SHOW_AREA_SEARCH,
-  payload: {
-    showAreaSearch
-  }
+  payload: showAreaSearch
 });

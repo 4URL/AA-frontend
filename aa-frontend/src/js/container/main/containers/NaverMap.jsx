@@ -13,7 +13,6 @@ import { makeMarker } from '../subcontainers/marker';
 let markers = [];
 let bDragging = false;
 let map = null;
-let curPos = null; // type : window.naver.maps.LatLng
 // let results = null;
 
 const NaverMap = props => {
@@ -21,6 +20,8 @@ const NaverMap = props => {
   // const [markerClicked, setMarkerClicked] = useState(false);
   const [boundary, setBoundary] = useState({});
 
+  // 얘가처음에 말고 다음에 호출되게 되는 react redux 조건이 뭐가뭐가 있나? 코드로 어덯ㅔ?
+  console.log('useQuery!!');
   const { loading, error, data } = useQuery(FETCH_PLACES, {
     variables: {
       categoryList,
@@ -37,39 +38,27 @@ const NaverMap = props => {
     map = new window.naver.maps.Map('map', mapOption);
 
     naver.maps.Event.addListener(map, 'dragstart', function (e) {
-      console.log('::dragstart');
       bDragging = true;
     });
 
     naver.maps.Event.addListener(map, 'dragend', function (e) {
-      console.log('::dragend');
       updateBoundary(map.bounds._ne, map.bounds._sw);
       bDragging = false;
     });
 
     naver.maps.Event.addListener(map, 'bounds_changed', function (e) {
-      console.log('::bounds_changed');
       if (!bDragging) updateBoundary(map.bounds._ne, map.bounds._sw);
     });
-
-    curPos = map.center;
-    updateBoundary(map.bounds._ne, map.bounds._sw);
   }, []);
 
   useEffect(() => {
     if (!loading) {
-      //if (curPos.x > map.bounds._sw.x && curPos.x < map.bounds._ne.x && curPos.y > map.bounds._sw.y && curPos.y < map.bounds._ne.y) return;
-
       const results = data.search.stores;
       markers.forEach(marker => {
         marker.setMap(null);
       });
 
       markers = makeMarker(results, map);
-      curPos = map.center;
-      // markers.forEach(marker => {
-      //   marker.addListener('click', () => clickMarker(results, marker));
-      // });
     }
   }, [data]);
 
@@ -180,16 +169,14 @@ const NaverMap = props => {
   }
 
   function updateBoundary(ne, sw) {
-    setShowAreaSearch(true);
-    console.log('::ne : ' + ne);
-    console.log('::sw : ' + sw);
-    setBoundary({
-      ...boundary,
-      ne_lat: ne._lat,
-      ne_lng: ne._lng,
-      sw_lat: sw._lat,
-      sw_lng: sw._lng
-    });
+    props.setShowAreaSearch(true);
+    // setBoundary({
+    //   ...boundary,
+    //   ne_lat: ne._lat,
+    //   ne_lng: ne._lng,
+    //   sw_lat: sw._lat,
+    //   sw_lng: sw._lng
+    // });
   }
 
   return <MapDiv id="map" /* showList={showList} */ />;
@@ -197,7 +184,11 @@ const NaverMap = props => {
 
 const mapStateToProps = state => {
   return {
-    mapState: state.mapReducers
+    mapState: {
+      categoryList: state.mapReducers.categoryList,
+      showList: state.mapReducers.showList,
+      searchData: state.mapReducers.searchData
+    }
   };
 };
 

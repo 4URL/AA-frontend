@@ -91,7 +91,6 @@ export default function mapReducers(state = initialState, action) {
 
     case type.SHOW_AREA_SEARCH: {
       const showArea = action.payload;
-      console.log('showArea :: ', showArea);
       return {
         ...state,
         showAreaSearch: showArea

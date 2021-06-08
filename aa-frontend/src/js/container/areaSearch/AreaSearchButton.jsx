@@ -8,29 +8,23 @@ import { setShowAreaSearch } from '../../redux/actions/index';
 
 const AreaSearchButton = props => {
   const { showAreaSearch } = props.mapState;
-  console.log('???????');
+
+  const onClickAreaSearch = () => {
+    props.setShowAreaSearch(false);
+  };
+
   return (
-    <AreaSearch onClick={onClickAreaSearch} data-showButton={showAreaSearch}>
+    <AreaSearch onClick={onClickAreaSearch} showButton={showAreaSearch}>
       <RefreshIcon />
       현재 위치에서 검색
     </AreaSearch>
   );
 };
 
-const onClickAreaSearch = () => {
-  setShowAreaSearch(false);
-  console.log('aa');
-};
-
-const AreaSearch = styled.button.attrs({
-  'data-showButton': 'false'
-})`
-  &[data-showButton='true'] {
-    display: inline_block;
-  }
-  &[data-showButton='false'] {
-    display: none;
-  }
+const AreaSearch = styled.button`
+  display: ${props => {
+    return props.showButton ? 'inline-block' : 'none';
+  }};
   height: 45px;
   padding: 0 18px;
   border-radius: 23px;
