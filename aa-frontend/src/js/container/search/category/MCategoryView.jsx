@@ -1,16 +1,17 @@
 import React from 'react';
+import { SwiperSlide } from 'swiper/react';
 import styled, { css } from 'styled-components';
-// import { Restaurant, Hotel, Pets } from '@styled-icons/material-rounded';
-// import { Cafe } from '@styled-icons/ionicons-outline';
-// import { Home } from '@styled-icons/boxicons-regular';
-// import { Campground, Guitar } from '@styled-icons/fa-solid';
+
 import { RestaurantIcon, HotelIcon, CafeIcon, PetsIcon, HomeIcon, CampgroundIcon, GuitarIcon } from './IconComponents';
 
-const CategoryView = ({ category, idxValue, onClickCategory }) => {
+import 'swiper/swiper.min.css';
+import './style.css';
+
+const MCategoryView = ({ category, idxValue, onClickCategory }) => {
   return (
-    <CategoryWrap idx={idxValue} value={category['seq']} type={category['seq']} onClick={onClickCategory}>
+    <SwiperSlide idx={idxValue} value={category['seq']} onClick={onClickCategory}>
       {categorySwitch(category['seq'])}
-    </CategoryWrap>
+    </SwiperSlide>
   );
 
   function categorySwitch(seq) {
@@ -76,24 +77,6 @@ const CategoryWrap = styled.button.attrs({
   height: 35px;
   width: 100%;
   border-radius: 6px;
-  grid-area: ${props => {
-    switch (props.type) {
-      case 1:
-        return 'restaurant';
-      case 2:
-        return 'hotel';
-      case 3:
-        return 'cafe';
-      case 4:
-        return 'pets';
-      case 5:
-        return 'home';
-      case 6:
-        return 'campground';
-      default:
-        return 'guitar';
-    }
-  }};
   cursor: pointer;
   color: #3f4040;
   font-weight: 600;
@@ -104,11 +87,6 @@ const Category = styled.div`
   /* height: 100%; */
 `;
 
-// const category = css`
-//   height: 25px;
-//   width: 25px;
-// `;
-
 const IconWrap = styled.div`
   display: inline-block;
   height: 25px;
@@ -116,40 +94,6 @@ const IconWrap = styled.div`
   margin-right: 5px;
   line-height: 25px;
 `;
-
-// const RestaurantIcon = styled(Restaurant)`
-//   ${category}
-//   color: #1e90ff;
-// `;
-
-// const HotelIcon = styled(Hotel)`
-//   ${category}
-//   color: #FFBC42;
-// `;
-
-// const CafeIcon = styled(Cafe)`
-//   ${category}
-//   color: #1e90ff;
-// `;
-
-// const PetsIcon = styled(Pets)`
-//   ${category}
-//   color: #79bd9a;
-// `;
-
-// const HomeIcon = styled(Home)`
-//   ${category}
-//   color: #FFBC42;
-// `;
-
-// const CampgroundIcon = styled(Campground)`
-//   ${category}
-//   color: #79bd9a;
-// `;
-
-// const GuitarIcon = styled(Guitar)`
-//   ${category}
-// `;
 
 const ContentsWrap = styled.div`
   height: 20px;
@@ -162,4 +106,4 @@ const ContentsWrap = styled.div`
   }
 `;
 
-export default CategoryView;
+export default MCategoryView;
