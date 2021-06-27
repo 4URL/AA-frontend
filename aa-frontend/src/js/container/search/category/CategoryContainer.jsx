@@ -4,7 +4,10 @@ import { bindActionCreators } from 'redux';
 
 import CategoryWrapView from './CategoryWrapView';
 import CategoryView from './CategoryView';
+import MCategoryWrapView from './MCategoryWrapView';
 import { handleCategoryList } from '../../../redux/actions/index';
+
+import size from '../../../StyledVariable';
 
 // Category를 만들어서 반환하는 Container
 const CategoryContainer = ({ handleCategoryList, categories }) => {
@@ -51,14 +54,16 @@ const CategoryContainer = ({ handleCategoryList, categories }) => {
 
   // make category DOM list
   const categoryDomList = useMemo(() => {
-    const categoryDomList = categories.map((category, idx) => {
+    return categories.map((category, idx) => {
       return <CategoryView key={idx} category={category} idxValue={idx} onClickCategory={onClickCategory} />;
     });
-
-    return categoryDomList;
   }, [categories]);
 
-  return <CategoryWrapView categoryData={categories} categoryDomList={categoryDomList} />;
+  if (window.matchMedia(`(max-width: ${size.mobileL})`).matches) {
+    return <MCategoryWrapView categories={categories} onClickCategory={onClickCategory} />;
+  } else {
+    return <CategoryWrapView categoryData={categories} categoryDomList={categoryDomList} />;
+  }
 };
 
 const mapDispatchToProps = dispatch => {

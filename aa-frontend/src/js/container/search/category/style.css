@@ -1,0 +1,20 @@
+.swiper-container {
+  position: absolute;
+  top: 55px;
+  left: 0;
+  width: 100%;
+}
+
+.swiper-slide {
+  background-color: #fff;
+  /* width: 50px; */
+  padding: 5px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-slide[data-isselected='true'] {
+  background-color: #f0f0f0;
+}

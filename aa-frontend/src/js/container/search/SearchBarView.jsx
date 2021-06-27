@@ -33,10 +33,6 @@ const SearchWrap = styled.div`
   box-shadow: 1px 3px 2px #9e9e9e;
   align-items: center;
 
-  @media (max-width: ${size.laptop}) {
-    width: ${pxToVw(330)};
-  }
-
   @media (max-width: ${size.mobileL}) {
     position: absolute;
     //모바일이면 중앙에 위치

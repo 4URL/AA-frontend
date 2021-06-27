@@ -1,9 +1,10 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import { Restaurant, Hotel, Pets } from '@styled-icons/material-rounded';
-import { Cafe } from '@styled-icons/ionicons-outline';
-import { Home } from '@styled-icons/boxicons-regular';
-import { Campground, Guitar } from '@styled-icons/fa-solid';
+// import { Restaurant, Hotel, Pets } from '@styled-icons/material-rounded';
+// import { Cafe } from '@styled-icons/ionicons-outline';
+// import { Home } from '@styled-icons/boxicons-regular';
+// import { Campground, Guitar } from '@styled-icons/fa-solid';
+import { RestaurantIcon, HotelIcon, CafeIcon, PetsIcon, HomeIcon, CampgroundIcon, GuitarIcon } from './IconComponents';
 
 const CategoryView = ({ category, idxValue, onClickCategory }) => {
   return (
@@ -96,31 +97,6 @@ const CategoryWrap = styled.button.attrs({
   cursor: pointer;
   color: #3f4040;
   font-weight: 600;
-  /* position: absolute;
-  left: 50%;
-  transform: translateX(-50%); */
-  /* display: inline-block; */
-
-  /* &:nth-child(-n + 4) {
-    margin-top: 3px;
-  }
-
-  &:nth-child(4) {
-    margin-right: 4px;
-  } */
-
-  /* background-color: ${props => {
-    switch (props.type) {
-      default:
-        return '#666666';
-    }
-  }};
-  color: ${props => {
-    switch (props.type) {
-      default:
-        return '#ffffff';
-    }
-  }}; */
 `;
 
 // 카테고리 아이템 div
@@ -128,10 +104,10 @@ const Category = styled.div`
   /* height: 100%; */
 `;
 
-const category = css`
-  height: 25px;
-  width: 25px;
-`;
+// const category = css`
+//   height: 25px;
+//   width: 25px;
+// `;
 
 const IconWrap = styled.div`
   display: inline-block;
@@ -141,39 +117,39 @@ const IconWrap = styled.div`
   line-height: 25px;
 `;
 
-const RestaurantIcon = styled(Restaurant)`
-  ${category}
-  color: #1e90ff;
-`;
+// const RestaurantIcon = styled(Restaurant)`
+//   ${category}
+//   color: #1e90ff;
+// `;
 
-const HotelIcon = styled(Hotel)`
-  ${category}
-  color: #FFBC42;
-`;
+// const HotelIcon = styled(Hotel)`
+//   ${category}
+//   color: #FFBC42;
+// `;
 
-const CafeIcon = styled(Cafe)`
-  ${category}
-  color: #1e90ff;
-`;
+// const CafeIcon = styled(Cafe)`
+//   ${category}
+//   color: #1e90ff;
+// `;
 
-const PetsIcon = styled(Pets)`
-  ${category}
-  color: #79bd9a;
-`;
+// const PetsIcon = styled(Pets)`
+//   ${category}
+//   color: #79bd9a;
+// `;
 
-const HomeIcon = styled(Home)`
-  ${category}
-  color: #FFBC42;
-`;
+// const HomeIcon = styled(Home)`
+//   ${category}
+//   color: #FFBC42;
+// `;
 
-const CampgroundIcon = styled(Campground)`
-  ${category}
-  color: #79bd9a;
-`;
+// const CampgroundIcon = styled(Campground)`
+//   ${category}
+//   color: #79bd9a;
+// `;
 
-const GuitarIcon = styled(Guitar)`
-  ${category}
-`;
+// const GuitarIcon = styled(Guitar)`
+//   ${category}
+// `;
 
 const ContentsWrap = styled.div`
   height: 20px;
