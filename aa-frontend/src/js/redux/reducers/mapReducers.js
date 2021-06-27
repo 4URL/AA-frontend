@@ -8,7 +8,9 @@ const initialState = {
   showList: false,
   placeDetail: {},
   placesList: [],
-  curPage: 1
+  curPage: 1,
+  showAreaSearch: false,
+  doAreaSearch: false
 };
 
 export default function mapReducers(state = initialState, action) {
@@ -68,6 +70,22 @@ export default function mapReducers(state = initialState, action) {
       return {
         ...state,
         curPage: curPage
+      };
+    }
+
+    case type.SHOW_AREA_SEARCH: {
+      const showArea = action.payload;
+      return {
+        ...state,
+        showAreaSearch: showArea
+      };
+    }
+
+    case type.DO_AREA_SEARCH: {
+      const doArea = action.payload;
+      return {
+        ...state,
+        doAreaSearch: doArea
       };
     }
 

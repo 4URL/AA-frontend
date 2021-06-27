@@ -49,3 +49,13 @@ export const changePageNumber = curPage => ({
     curPage
   }
 });
+
+export const setShowAreaSearch = showAreaSearch => ({
+  type: type.SHOW_AREA_SEARCH,
+  payload: showAreaSearch
+});
+
+export const setDoAreaSearch = doAreaSearch => ({
+  type: type.DO_AREA_SEARCH,
+  payload: doAreaSearch
+});
