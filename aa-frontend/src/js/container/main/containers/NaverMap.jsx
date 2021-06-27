@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
-import { showDetail, placeDetail, showList, setShowAreaSearch } from '../../../redux/actions/index';
+import { showDetail, placeDetail, showList, setShowAreaSearch, setDoAreaSearch } from '../../../redux/actions/index';
 import { getResultBounds } from '../../../utility/utility';
 import { fetchDisplayPlaces } from '../../../api/api';
 import { FETCH_PLACES } from '../../../api/query';
@@ -13,15 +13,12 @@ import { makeMarker } from '../subcontainers/marker';
 let markers = [];
 let bDragging = false;
 let map = null;
-// let results = null;
 
 const NaverMap = props => {
-  const { /* placesList: results, */ showList, /* showDetail, placeDetail, */ categoryList, searchData } = props.mapState;
+  const { /* placesList: results, */ showList, /* showDetail, placeDetail, */ categoryList, searchData, doAreaSearch } = props.mapState;
   // const [markerClicked, setMarkerClicked] = useState(false);
   const [boundary, setBoundary] = useState({});
 
-  // 얘가처음에 말고 다음에 호출되게 되는 react redux 조건이 뭐가뭐가 있나? 코드로 어덯ㅔ?
-  console.log('useQuery!!');
   const { loading, error, data } = useQuery(FETCH_PLACES, {
     variables: {
       categoryList,
@@ -42,12 +39,20 @@ const NaverMap = props => {
     });
 
     naver.maps.Event.addListener(map, 'dragend', function (e) {
-      updateBoundary(map.bounds._ne, map.bounds._sw);
+      props.setShowAreaSearch(true);
       bDragging = false;
     });
 
     naver.maps.Event.addListener(map, 'bounds_changed', function (e) {
-      if (!bDragging) updateBoundary(map.bounds._ne, map.bounds._sw);
+      if (!bDragging) props.setShowAreaSearch(true);
+    });
+
+    setBoundary({
+      ...boundary,
+      ne_lat: map.bounds._ne._lat,
+      ne_lng: map.bounds._ne._lng,
+      sw_lat: map.bounds._sw._lat,
+      sw_lng: map.bounds._sw._lng
     });
   }, []);
 
@@ -90,6 +95,20 @@ const NaverMap = props => {
       updateBoundary(map.bounds._ne, map.bounds._sw);
     }
   }, [searchData]);
+
+  // Area Serach 버튼 동작 처리
+  useEffect(() => {
+    if (doAreaSearch && map) {
+      props.setDoAreaSearch(false);
+      setBoundary({
+        ...boundary,
+        ne_lat: map.bounds._ne._lat,
+        ne_lng: map.bounds._ne._lng,
+        sw_lat: map.bounds._sw._lat,
+        sw_lng: map.bounds._sw._lng
+      });
+    }
+  }, [doAreaSearch, map]);
 
   // list중에서 하나를 클릭하면 핀도 같이 반응 하기 위해 작성
   // useEffect(() => {
@@ -168,17 +187,6 @@ const NaverMap = props => {
     }
   }
 
-  function updateBoundary(ne, sw) {
-    props.setShowAreaSearch(true);
-    // setBoundary({
-    //   ...boundary,
-    //   ne_lat: ne._lat,
-    //   ne_lng: ne._lng,
-    //   sw_lat: sw._lat,
-    //   sw_lng: sw._lng
-    // });
-  }
-
   return <MapDiv id="map" /* showList={showList} */ />;
 };
 
@@ -187,7 +195,8 @@ const mapStateToProps = state => {
     mapState: {
       categoryList: state.mapReducers.categoryList,
       showList: state.mapReducers.showList,
-      searchData: state.mapReducers.searchData
+      searchData: state.mapReducers.searchData,
+      doAreaSearch: state.mapReducers.doAreaSearch
     }
   };
 };
@@ -198,7 +207,8 @@ const mapDispatchToProps = dispatch => {
       showDetail,
       placeDetail,
       showList,
-      setShowAreaSearch
+      setShowAreaSearch,
+      setDoAreaSearch
     },
     dispatch
   );

@@ -9,8 +9,8 @@ const initialState = {
   placeDetail: {},
   placesList: [],
   curPage: 1,
-  curMapBound: { ne_lat: 0, ne_lng: 0, sw_lat: 0, sw_lng: 0 },
-  showAreaSearch: false
+  showAreaSearch: false,
+  doAreaSearch: false
 };
 
 export default function mapReducers(state = initialState, action) {
@@ -73,27 +73,19 @@ export default function mapReducers(state = initialState, action) {
       };
     }
 
-    case type.CHANGE_BOUND: {
-      const { curMapBound } = action.payload;
-      if (
-        state.curMapBound.ne_lat === curMapBound.ne_lat &&
-        state.curMapBound.ne_lng === curMapBound.ne_lng &&
-        state.curMapBound.sw_lat === curMapBound.sw_lat &&
-        state.curMapBound.sw_lng === curMapBound.sw_lng
-      )
-        return state;
-      else
-        return {
-          ...state,
-          curMapBound: { ...curMapBound }
-        };
-    }
-
     case type.SHOW_AREA_SEARCH: {
       const showArea = action.payload;
       return {
         ...state,
         showAreaSearch: showArea
+      };
+    }
+
+    case type.DO_AREA_SEARCH: {
+      const doArea = action.payload;
+      return {
+        ...state,
+        doAreaSearch: doArea
       };
     }
 

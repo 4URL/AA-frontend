@@ -50,14 +50,12 @@ export const changePageNumber = curPage => ({
   }
 });
 
-export const changeBound = curMapBound => ({
-  type: type.CHANGE_BOUND,
-  payload: {
-    curMapBound
-  }
-});
-
 export const setShowAreaSearch = showAreaSearch => ({
   type: type.SHOW_AREA_SEARCH,
   payload: showAreaSearch
+});
+
+export const setDoAreaSearch = doAreaSearch => ({
+  type: type.DO_AREA_SEARCH,
+  payload: doAreaSearch
 });

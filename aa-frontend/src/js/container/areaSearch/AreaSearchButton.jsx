@@ -4,13 +4,14 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { Refresh } from '@styled-icons/evaicons-solid';
 import size from '../../StyledVariable';
-import { setShowAreaSearch } from '../../redux/actions/index';
+import { setShowAreaSearch, setDoAreaSearch } from '../../redux/actions/index';
 
 const AreaSearchButton = props => {
   const { showAreaSearch } = props.mapState;
 
   const onClickAreaSearch = () => {
     props.setShowAreaSearch(false);
+    props.setDoAreaSearch(true);
   };
 
   return (
@@ -61,14 +62,17 @@ const RefreshIcon = styled(Refresh)`
 
 const mapStateToProps = state => {
   return {
-    mapState: state.mapReducers
+    mapState: {
+      showAreaSearch: state.mapReducers.showAreaSearch
+    }
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      setShowAreaSearch
+      setShowAreaSearch,
+      setDoAreaSearch
     },
     dispatch
   );
