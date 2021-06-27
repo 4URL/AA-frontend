@@ -4,19 +4,18 @@ import { bindActionCreators } from 'redux';
 import styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 
-import { showDetail, placeDetail, showList } from '../../../redux/actions/index';
-import { getResultBounds, makeMarker } from '../../../utility/utility';
+import { showDetail, placeDetail, showList, setShowAreaSearch, setDoAreaSearch } from '../../../redux/actions/index';
+import { getResultBounds } from '../../../utility/utility';
 import { fetchDisplayPlaces } from '../../../api/api';
 import { FETCH_PLACES } from '../../../api/query';
-import icon from '../views/iconStyles';
+import { makeMarker } from '../subcontainers/marker';
 
 let markers = [];
 let bDragging = false;
 let map = null;
-// let results = null;
 
 const NaverMap = props => {
-  const { /* placesList: results, */ showList, /* showDetail, placeDetail, */ categoryList, searchData } = props.mapState;
+  const { /* placesList: results, */ showList, /* showDetail, placeDetail, */ categoryList, searchData, doAreaSearch } = props.mapState;
   // const [markerClicked, setMarkerClicked] = useState(false);
   const [boundary, setBoundary] = useState({});
 
@@ -40,15 +39,21 @@ const NaverMap = props => {
     });
 
     naver.maps.Event.addListener(map, 'dragend', function (e) {
-      updateBoundary(map.bounds._ne, map.bounds._sw);
+      props.setShowAreaSearch(true);
       bDragging = false;
     });
 
     naver.maps.Event.addListener(map, 'bounds_changed', function (e) {
-      if (!bDragging) updateBoundary(map.bounds._ne, map.bounds._sw);
+      if (!bDragging) props.setShowAreaSearch(true);
     });
 
-    updateBoundary(map.bounds._ne, map.bounds._sw);
+    setBoundary({
+      ...boundary,
+      ne_lat: map.bounds._ne._lat,
+      ne_lng: map.bounds._ne._lng,
+      sw_lat: map.bounds._sw._lat,
+      sw_lng: map.bounds._sw._lng
+    });
   }, []);
 
   useEffect(() => {
@@ -58,10 +63,7 @@ const NaverMap = props => {
         marker.setMap(null);
       });
 
-      markers = makeMarker(results, map, icon);
-      // markers.forEach(marker => {
-      //   marker.addListener('click', () => clickMarker(results, marker));
-      // });
+      markers = makeMarker(results, map);
     }
   }, [data]);
 
@@ -94,6 +96,20 @@ const NaverMap = props => {
     }
   }, [searchData]);
 
+  // Area Serach 버튼 동작 처리
+  useEffect(() => {
+    if (doAreaSearch && map) {
+      props.setDoAreaSearch(false);
+      setBoundary({
+        ...boundary,
+        ne_lat: map.bounds._ne._lat,
+        ne_lng: map.bounds._ne._lng,
+        sw_lat: map.bounds._sw._lat,
+        sw_lng: map.bounds._sw._lng
+      });
+    }
+  }, [doAreaSearch, map]);
+
   // list중에서 하나를 클릭하면 핀도 같이 반응 하기 위해 작성
   // useEffect(() => {
   //   if (showDetail) {
@@ -106,14 +122,14 @@ const NaverMap = props => {
   // }, [showDetail]);
 
   // marker를 클릭했을 때만 동작하는 함수
-  function clickMarker(results, marker) {
-    // const seq = marker.get('seq');
-    // const place = results[seq];
+  // function clickMarker(results, marker) {
+  //   // const seq = marker.get('seq');
+  //   // const place = results[seq];
 
-    resetMarkers();
-    marker.setIcon(icon.selected_icon);
-    // showPlaceDetail(place);
-  }
+  //   resetMarkers();
+  //   marker.setIcon(icon.selected_icon);
+  //   // showPlaceDetail(place);
+  // }
 
   // 지도 div에서 발생하는 click event handler
   // function handleClick() {
@@ -131,11 +147,11 @@ const NaverMap = props => {
   // }
 
   // 모든 marker들의 핀 이미지를 초기화 해주는 함수
-  function resetMarkers() {
-    markers.forEach(marker => {
-      marker.setIcon(icon.unselected_icon);
-    });
-  }
+  // function resetMarkers() {
+  //   markers.forEach(marker => {
+  //     marker.setIcon(icon.unselected_icon);
+  //   });
+  // }
 
   /**
    * 현재 위치를 지정해주는 함수
@@ -171,22 +187,17 @@ const NaverMap = props => {
     }
   }
 
-  function updateBoundary(ne, sw) {
-    setBoundary({
-      ...boundary,
-      ne_lat: ne._lat,
-      ne_lng: ne._lng,
-      sw_lat: sw._lat,
-      sw_lng: sw._lng
-    });
-  }
-
   return <MapDiv id="map" /* showList={showList} */ />;
 };
 
 const mapStateToProps = state => {
   return {
-    mapState: state.mapReducers
+    mapState: {
+      categoryList: state.mapReducers.categoryList,
+      showList: state.mapReducers.showList,
+      searchData: state.mapReducers.searchData,
+      doAreaSearch: state.mapReducers.doAreaSearch
+    }
   };
 };
 
@@ -195,7 +206,9 @@ const mapDispatchToProps = dispatch => {
     {
       showDetail,
       placeDetail,
-      showList
+      showList,
+      setShowAreaSearch,
+      setDoAreaSearch
     },
     dispatch
   );

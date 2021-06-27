@@ -15,10 +15,10 @@ export const clickMarker = clicked => ({
   }
 });
 
-export const getPlaces = placesList => ({
-  type: type.GET_PLACES,
+export const handleCategoryList = categoryList => ({
+  type: type.HANDLE_CATEGORYLIST,
   payload: {
-    placesList
+    categoryList
   }
 });
 
@@ -48,4 +48,14 @@ export const changePageNumber = curPage => ({
   payload: {
     curPage
   }
+});
+
+export const setShowAreaSearch = showAreaSearch => ({
+  type: type.SHOW_AREA_SEARCH,
+  payload: showAreaSearch
+});
+
+export const setDoAreaSearch = doAreaSearch => ({
+  type: type.DO_AREA_SEARCH,
+  payload: doAreaSearch
 });
