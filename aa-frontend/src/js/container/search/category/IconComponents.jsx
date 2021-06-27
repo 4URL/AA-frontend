@@ -4,7 +4,13 @@ import { Cafe } from '@styled-icons/ionicons-outline';
 import { Home } from '@styled-icons/boxicons-regular';
 import { Campground, Guitar } from '@styled-icons/fa-solid';
 
+import size from '../../../StyledVariable';
+
 const category = css`
+  @media (max-width: ${size.mobileL}) {
+    height: 20px;
+    width: 20px;
+  }
   height: 25px;
   width: 25px;
 `;

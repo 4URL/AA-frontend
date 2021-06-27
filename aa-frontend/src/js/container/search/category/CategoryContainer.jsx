@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import CategoryWrapView from './CategoryWrapView';
 import CategoryView from './CategoryView';
 import MCategoryWrapView from './MCategoryWrapView';
-import MCategoryView from './MCategoryView';
 import { handleCategoryList } from '../../../redux/actions/index';
 
 import size from '../../../StyledVariable';
@@ -55,22 +54,16 @@ const CategoryContainer = ({ handleCategoryList, categories }) => {
 
   // make category DOM list
   const categoryDomList = useMemo(() => {
-    let categoryDomList = [];
-    if (window.matchMedia(`(max-width: ${size.mobileL})`).matches) {
-      console.log('for mobile');
-      categoryDomList = categories.map((category, idx) => {
-        return <MCategoryView key={idx} category={category} idxValue={idx} onClickCategory={onClickCategory} />;
-      });
-    } else {
-      categoryDomList = categories.map((category, idx) => {
-        return <CategoryView key={idx} category={category} idxValue={idx} onClickCategory={onClickCategory} />;
-      });
-    }
-    return categoryDomList;
+    return categories.map((category, idx) => {
+      return <CategoryView key={idx} category={category} idxValue={idx} onClickCategory={onClickCategory} />;
+    });
   }, [categories]);
 
-  // return <CategoryWrapView categoryData={categories} categoryDomList={categoryDomList} />;
-  return <MCategoryWrapView categoryDomList={categoryDomList} />;
+  if (window.matchMedia(`(max-width: ${size.mobileL})`).matches) {
+    return <MCategoryWrapView categories={categories} onClickCategory={onClickCategory} />;
+  } else {
+    return <CategoryWrapView categoryData={categories} categoryDomList={categoryDomList} />;
+  }
 };
 
 const mapDispatchToProps = dispatch => {
