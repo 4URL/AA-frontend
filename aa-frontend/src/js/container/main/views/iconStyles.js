@@ -41,6 +41,6 @@ export default {
   },
 
   homepage_svg: 'homepage.svg',
-  instagram_svg: 'instagram.svg',
+  instagram_svg: 'instagram_icon.svg',
   naver_svg: 'naver.svg'
 };

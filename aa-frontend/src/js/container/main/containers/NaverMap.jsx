@@ -171,8 +171,12 @@ const NaverMap = props => {
             resolve(options);
           },
           error => {
+            const options = {
+              zoom: 15
+            };
+            resolve(options);
             // error가 발생했을 때
-            reject(error);
+            //reject(error);
           },
           {
             // 옵션
